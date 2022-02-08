@@ -2,19 +2,6 @@ import React, { useEffect, useState } from "react";
 import useGetHorses from "../hooks/useGetHorses";
 import styled from "@emotion/styled";
 import Header from "../components/Header";
-import { useAuthContext } from "../contexts/AuthContext";
-import {
-  collection,
-  query,
-  where,
-  deleteDoc,
-  doc,
-  setDoc,
-  onSnapshot,
-  updateDoc,
-} from "firebase/firestore";
-import { useFirestoreQueryData } from "@react-query-firebase/firestore";
-import { db } from "../firebase";
 
 const CompetitorContainer = styled.div({
   display: "flex",
@@ -103,30 +90,10 @@ const Game = () => {
     }
   }, [guessedValue, guessedWinner, winner]);
 
-  const newWins = [...(horses[0].wins + 1)];
-
-  const startRace = async (e) => {
-    e.preventDefault();
-
-    if (!horses) {
-      return;
-    }
-
-    console.log("hej");
-
+  const startRace = () => {
     const data = horses[Math.floor(Math.random() * horses.length)];
     setWinner(data);
     setRenderGame(false);
-
-    newWins.push({
-      name: data && data[0].wins + 1,
-    });
-
-    const collectionRef = doc(db, "horses", data && data[0].wins);
-    const docData = {
-      wins: newWins,
-    };
-    await updateDoc(collectionRef, docData);
   };
 
   const playAgain = () => {
@@ -138,67 +105,62 @@ const Game = () => {
 
   return (
     <>
-      <form handleSubmit={startRace}>
-        {renderGame && (
-          <>
-            {horses && (
-              <>
-                <Header title={"CHOOSE A HORSE"} />
-                <CompetitorContainer>
-                  {horses &&
-                    horses.map((horse) => {
-                      return (
-                        <CompetitorWrapper key={horse.id}>
-                          <Competitor
-                            image={horse.image}
-                            onClick={() => {
-                              setActiveId(horse.id);
-                              setGuessedWinner(horse.title);
-                            }}
-                            className={activeId === horse.id && "Active"}
-                          />
-                          <H3>{horse.title}</H3>
-                          <H3>Wins: {horse.wins}</H3>
-                        </CompetitorWrapper>
-                      );
-                    })}
-                </CompetitorContainer>
-                {activeId && (
-                  <>
-                    <label>Enter coins</label>
-                    <input
-                      type="number"
-                      min="1"
-                      max="100"
-                      value={guessedValue}
-                      onChange={(e) => setGuessedValue(e.target.value)}
-                    />
-                    <Button type="submit">START RACE</Button>
-                  </>
-                )}
-              </>
-            )}
-          </>
-        )}
-        {!renderGame && (
-          <>
-            <CompetitorContainer>
-              <Winner image={winner.image} />
-            </CompetitorContainer>
-            <Header
-              title={winner && `${winner.title} WON`.toLocaleUpperCase()}
-            />
-            {winner && (
-              <H3>
-                {guessedWinner === winner.title
-                  ? "Congratz, you won!"
-                  : "Nice try, you lost!"}
-              </H3>
-            )}
-            {winner && <Button onClick={playAgain}>PLAY AGAIN</Button>}
-          </>
-        )}
-      </form>
+      {renderGame && (
+        <>
+          {horses && (
+            <>
+              <Header title={"CHOOSE A HORSE"} />
+              <CompetitorContainer>
+                {horses &&
+                  horses.map((horse) => {
+                    return (
+                      <CompetitorWrapper key={horse.id}>
+                        <Competitor
+                          image={horse.image}
+                          onClick={() => {
+                            setActiveId(horse.id);
+                            setGuessedWinner(horse.title);
+                          }}
+                          className={activeId === horse.id && "Active"}
+                        />
+                        <H3>{horse.title}</H3>
+                      </CompetitorWrapper>
+                    );
+                  })}
+              </CompetitorContainer>
+              {activeId && (
+                <>
+                  <label>Enter coins</label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="100"
+                    value={guessedValue}
+                    onChange={(e) => setGuessedValue(e.target.value)}
+                  />
+                  <Button onSubmit={startRace}>START RACE</Button>
+                </>
+              )}
+            </>
+          )}
+        </>
+      )}
+      {!renderGame && (
+        <>
+          <CompetitorContainer>
+            <Winner image={winner.image} />
+          </CompetitorContainer>
+          <Header title={winner && `${winner.title} WON`.toLocaleUpperCase()} />
+          {winner && (
+            <H3>
+              {guessedWinner === winner.title
+                ? "Congratz, you won!"
+                : "Nice try, you lost!"}
+            </H3>
+          )}
+          {winner && <Button onClick={playAgain}>PLAY AGAIN</Button>}
+        </>
+      )}
     </>
   );
 };
