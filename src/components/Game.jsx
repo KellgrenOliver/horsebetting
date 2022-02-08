@@ -77,16 +77,10 @@ const Game = () => {
   const [guessedValue, setGuessedValue] = useState("");
 
   useEffect(() => {
-    console.log(coins);
-    console.log("Gissat antal:", guessedValue);
-    console.log("Gissat på:", guessedWinner);
-    console.log("Vinnare:", winner && winner.title);
     if (winner && guessedWinner === winner.title) {
       setCoins(coins + guessedValue);
-      console.log("Du vann");
     } else {
       setCoins(coins - guessedValue);
-      console.log("Du förlorade");
     }
   }, [guessedValue, guessedWinner, winner]);
 
@@ -138,7 +132,7 @@ const Game = () => {
                     value={guessedValue}
                     onChange={(e) => setGuessedValue(e.target.value)}
                   />
-                  <Button onSubmit={startRace}>START RACE</Button>
+                  <Button onClick={startRace}>START RACE</Button>
                 </>
               )}
             </>
