@@ -69,7 +69,7 @@ const NavLinks = () => {
         <>
           <LinkWrapper to="/game">
             <Icon icon={faGamepad} />
-            <NavLink>GAME123</NavLink>
+            <NavLink>GAME</NavLink>
           </LinkWrapper>
           <LinkWrapper to="/horses">
             <Icon icon={faHorse} />
