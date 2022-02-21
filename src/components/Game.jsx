@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from "react";
-import useGetHorses from "../hooks/useGetHorses";
 import styled from "@emotion/styled";
 import Header from "../components/Header";
+import { useAuthContext } from "../contexts/AuthContext";
+import {
+  doc,
+  updateDoc,
+  collection,
+  query,
+  where,
+  onSnapshot,
+  getDoc,
+} from "firebase/firestore";
+import { db } from "../firebase";
+import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 
 const CompetitorContainer = styled.div({
   display: "flex",
@@ -68,32 +79,84 @@ const H3 = styled.h3({
 });
 
 const Game = () => {
-  const { horses } = useGetHorses();
   const [winner, setWinner] = useState();
-  const [coins, setCoins] = useState(500);
   const [guessedWinner, setGuessedWinner] = useState();
   const [renderGame, setRenderGame] = useState(true);
   const [activeId, setActiveId] = useState();
-  const [guessedValue, setGuessedValue] = useState("");
+  const [horses, setHorses] = useState();
+  const [user, setUser] = useState();
+  //   const [guessedValue, setGuessedValue] = useState("");
+  const { currentUser } = useAuthContext();
+
+  const userRef = query(
+    collection(db, "users"),
+    where("uid", "==", currentUser && currentUser.uid)
+  );
+
+  let { data: userData } = useFirestoreQueryData(["users"], userRef);
 
   useEffect(() => {
-    if (winner && guessedWinner === winner.title) {
-      setCoins(coins + guessedValue);
-    } else {
-      setCoins(coins - guessedValue);
-    }
-  }, [guessedValue, guessedWinner, winner]);
+    onSnapshot(userRef, (snapshot) => {
+      userData = [];
+      snapshot.docs.forEach((doc) => {
+        userData.push({ ...doc.data(), id: doc.id });
+      });
+      setUser(userData);
+    });
+  }, []);
 
-  const startRace = () => {
-    const data = horses[Math.floor(Math.random() * horses.length)];
-    setWinner(data);
+  const horsesRef = query(collection(db, "horses"));
+
+  let { data: horsesData } = useFirestoreQueryData(["horses"], horsesRef);
+
+  useEffect(() => {
+    onSnapshot(horsesRef, (snapshot) => {
+      horsesData = [];
+      snapshot.docs.forEach((doc) => {
+        horsesData.push({ ...doc.data(), id: doc.id });
+      });
+      setHorses(horsesData);
+    });
+  }, []);
+
+  //   const horseRef = query(
+  //       collection(db, "horses"),
+  //       where("title", "==", winner?.title)
+  //     );
+
+  // const { data: horse } = useFirestoreQueryData(["horses"], horseRef);
+
+  const startRace = async () => {
+    const winner = horses[Math.floor(Math.random() * horses.length)];
+    setWinner(winner);
     setRenderGame(false);
+    if (!user) return null;
+
+    const userData = {
+      uid: currentUser.uid,
+      wins:
+        winner && winner.title.length > 0 && guessedWinner === winner?.title
+          ? user && user[0].wins + 1
+          : user && user[0].wins,
+
+      loses:
+        winner && winner.title.length > 0 && guessedWinner !== winner?.title
+          ? user && user[0].loses + 1
+          : user && user[0].loses,
+    };
+    updateDoc(doc(db, "users", `${userData.uid}`), userData);
+
+    const horseRef = doc(db, "horses", `${winner.id}`);
+
+    const horseData = (await getDoc(horseRef)).data();
+
+    updateDoc(horseRef, {
+      wins: horseData.wins + 1,
+    });
   };
 
   const playAgain = () => {
     setRenderGame(true);
-    setWinner("");
-    setGuessedValue("");
     setActiveId("");
   };
 
@@ -129,8 +192,8 @@ const Game = () => {
                     type="number"
                     min="1"
                     max="100"
-                    value={guessedValue}
-                    onChange={(e) => setGuessedValue(e.target.value)}
+                    // value={guessedValue}
+                    // onChange={(e) => setGuessedValue(e.target.value)}
                   />
                   <Button onClick={startRace}>START RACE</Button>
                 </>
