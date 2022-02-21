@@ -11,6 +11,8 @@ import {
 } from "firebase/auth";
 import { RotateLoader } from "react-spinners";
 import styled from "@emotion/styled";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const LoadingWrapper = styled.div({
   width: "100vw",
@@ -31,7 +33,18 @@ const AuthContextProverder = (props) => {
   const [loading, setLoading] = useState(true);
 
   const signup = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(auth, email, password).then(
+      (user) => {
+        const docData = {
+          email: user.user.email,
+          uid: user.user.uid,
+          coins: 500,
+          wins: 0,
+          loses: 0,
+        };
+        setDoc(doc(db, "users", `${docData.uid}`), docData);
+      }
+    );
   };
   const login = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);

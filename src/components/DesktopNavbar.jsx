@@ -88,7 +88,7 @@ const DesktopNavbar = () => {
 
   const queryRef = query(
     collection(db, "users"),
-    where("user", "==", currentUser && currentUser.uid)
+    where("uid", "==", currentUser && currentUser.uid)
   );
 
   const { data } = useFirestoreQueryData(["users"], queryRef);
