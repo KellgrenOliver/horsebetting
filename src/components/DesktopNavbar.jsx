@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faCoins } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "../contexts/AuthContext";
-import { collection, query, where } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import { db } from "../firebase";
 
@@ -85,13 +85,24 @@ const CoinsWrapper = styled.div({
 
 const DesktopNavbar = () => {
   const { currentUser } = useAuthContext();
+  const [user, setUser] = useState();
 
-  const queryRef = query(
+  const userRef = query(
     collection(db, "users"),
     where("uid", "==", currentUser && currentUser.uid)
   );
 
-  const { data } = useFirestoreQueryData(["users"], queryRef);
+  let { data: userData } = useFirestoreQueryData(["users"], userRef);
+
+  useEffect(() => {
+    onSnapshot(userRef, (snapshot) => {
+      userData = [];
+      snapshot.docs.forEach((doc) => {
+        userData.push({ ...doc.data(), id: doc.id });
+      });
+      setUser(userData);
+    });
+  }, []);
 
   return (
     <Container>
@@ -99,19 +110,21 @@ const DesktopNavbar = () => {
         <Icon icon={faHome} />
       </ImgWrapper>
       <NavLinks />
-      <ProfileWrapper>
-        <ProfileBox to="/myprofile">
-          <ProfileName>
-            {currentUser?.displayName
-              ? currentUser?.displayName.toUpperCase().charAt(0)
-              : currentUser?.email.toUpperCase().charAt(0)}
-          </ProfileName>
-        </ProfileBox>
-        <CoinsWrapper>
-          <CoinsIcon icon={faCoins} />
-          <h3>{data && data[0]?.coins}</h3>
-        </CoinsWrapper>
-      </ProfileWrapper>
+      {user && (
+        <ProfileWrapper>
+          <ProfileBox to="/myprofile">
+            <ProfileName>
+              {currentUser?.displayName
+                ? currentUser?.displayName.toUpperCase().charAt(0)
+                : currentUser?.email.toUpperCase().charAt(0)}
+            </ProfileName>
+          </ProfileBox>
+          <CoinsWrapper>
+            <CoinsIcon icon={faCoins} />
+            <h3>{user[0]?.coins}</h3>
+          </CoinsWrapper>
+        </ProfileWrapper>
+      )}
     </Container>
   );
 };

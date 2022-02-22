@@ -77,6 +77,12 @@ const H3 = styled.h3({
     fontSize: "2rem",
   },
 });
+const SubmitForm = styled.form({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flexDirection: "column",
+});
 
 const Game = () => {
   const [winner, setWinner] = useState();
@@ -85,8 +91,10 @@ const Game = () => {
   const [activeId, setActiveId] = useState();
   const [horses, setHorses] = useState();
   const [user, setUser] = useState();
-  //   const [guessedValue, setGuessedValue] = useState("");
+  const [guessedValue, setGuessedValue] = useState(0);
   const { currentUser } = useAuthContext();
+
+  console.log(typeof guessedValue);
 
   const userRef = query(
     collection(db, "users"),
@@ -119,18 +127,14 @@ const Game = () => {
     });
   }, []);
 
-  //   const horseRef = query(
-  //       collection(db, "horses"),
-  //       where("title", "==", winner?.title)
-  //     );
-
-  // const { data: horse } = useFirestoreQueryData(["horses"], horseRef);
-
   const startRace = async () => {
     const winner = horses[Math.floor(Math.random() * horses.length)];
     setWinner(winner);
     setRenderGame(false);
     if (!user) return null;
+
+    console.log(typeof "2", guessedValue);
+    // console.log(typeof user[0].coins);
 
     const userData = {
       uid: currentUser.uid,
@@ -143,6 +147,10 @@ const Game = () => {
         winner && winner.title.length > 0 && guessedWinner !== winner?.title
           ? user && user[0].loses + 1
           : user && user[0].loses,
+      coins:
+        winner && winner.title.length > 0 && guessedWinner === winner?.title
+          ? user && user[0].coins + parseInt(guessedValue)
+          : user && user[0].coins - guessedValue,
     };
     updateDoc(doc(db, "users", `${userData.uid}`), userData);
 
@@ -158,6 +166,7 @@ const Game = () => {
   const playAgain = () => {
     setRenderGame(true);
     setActiveId("");
+    setGuessedValue();
   };
 
   return (
@@ -187,15 +196,18 @@ const Game = () => {
               </CompetitorContainer>
               {activeId && (
                 <>
-                  <label>Enter coins</label>
-                  <input
-                    type="number"
-                    min="1"
-                    max="100"
-                    // value={guessedValue}
-                    // onChange={(e) => setGuessedValue(e.target.value)}
-                  />
-                  <Button onClick={startRace}>START RACE</Button>
+                  <SubmitForm onSubmit={startRace}>
+                    <label>Enter coins</label>
+                    <input
+                      type="number"
+                      min="1"
+                      max={user[0].coins}
+                      value={guessedValue}
+                      onChange={(e) => setGuessedValue(e.target.value)}
+                      required={true}
+                    />
+                    <Button type="submit">START RACE</Button>
+                  </SubmitForm>
                 </>
               )}
             </>
