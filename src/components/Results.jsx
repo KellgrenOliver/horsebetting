@@ -1,6 +1,17 @@
-import React from "react";
-import styled from "@emotion/styled";
+// import React, { useEffect, useState } from "react";
+// import styled from "@emotion/styled";
+// import Header from "../components/Header";
+// import { useAuthContext } from "../contexts/AuthContext";
+// import { collection, onSnapshot, query, where } from "firebase/firestore";
+// import { db } from "../firebase";
+// import { useFirestoreQueryData } from "@react-query-firebase/firestore";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
+import styled from "@emotion/styled";
+import { useAuthContext } from "../contexts/AuthContext";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { useFirestoreQueryData } from "@react-query-firebase/firestore";
+import { db } from "../firebase";
 
 const ResultWrapper = styled.div({
   display: "flex",
@@ -28,18 +39,42 @@ const Loses = styled(Span)({
 });
 
 const Result = () => {
+  const { currentUser } = useAuthContext();
+  const [user, setUser] = useState();
+
+  const userRef = query(
+    collection(db, "users"),
+    where("uid", "==", currentUser && currentUser.uid)
+  );
+
+  let { data: userData } = useFirestoreQueryData(["users"], userRef);
+
+  useEffect(() => {
+    onSnapshot(userRef, (snapshot) => {
+      userData = [];
+      snapshot.docs.forEach((doc) => {
+        userData.push({ ...doc.data(), id: doc.id });
+      });
+      setUser(userData);
+    });
+  }, []);
+
   return (
     <>
       <Header title={"RESULTS"} />
       <ResultWrapper>
-        <WinsLoses>
-          <Wins>VINSTER</Wins>
-          <Span>17</Span>
-        </WinsLoses>
-        <WinsLoses>
-          <Loses>FÖRLUSTER</Loses>
-          <Span>82</Span>
-        </WinsLoses>
+        {user && (
+          <>
+            <WinsLoses>
+              <Wins>VINSTER</Wins>
+              <Span>{user[0].wins}</Span>
+            </WinsLoses>
+            <WinsLoses>
+              <Loses>FÖRLUSTER</Loses>
+              <Span>{user[0].loses}</Span>
+            </WinsLoses>
+          </>
+        )}
       </ResultWrapper>
     </>
   );

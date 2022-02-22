@@ -94,8 +94,6 @@ const Game = () => {
   const [guessedValue, setGuessedValue] = useState(0);
   const { currentUser } = useAuthContext();
 
-  console.log(typeof guessedValue);
-
   const userRef = query(
     collection(db, "users"),
     where("uid", "==", currentUser && currentUser.uid)
@@ -132,9 +130,6 @@ const Game = () => {
     setWinner(winner);
     setRenderGame(false);
     if (!user) return null;
-
-    console.log(typeof "2", guessedValue);
-    // console.log(typeof user[0].coins);
 
     const userData = {
       uid: currentUser.uid,
