@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import Header from "../components/Header";
 import { useAuthContext } from "../contexts/AuthContext";
 import {
   doc,
@@ -13,6 +12,8 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMedal } from "@fortawesome/free-solid-svg-icons";
 
 const CompetitorContainer = styled.div({
   display: "flex",
@@ -53,8 +54,12 @@ const Competitor = styled.div(({ image }) => {
   };
 });
 const Winner = styled(Competitor)({
-  width: "300px",
-  height: "300px",
+  width: "150px",
+  height: "150px",
+  "@media screen and (min-width: 1024px)": {
+    width: "75px",
+    height: "75px",
+  },
 });
 const Button = styled.button({
   backgroundImage: "linear-gradient(to right, #00b4db, #0083b0)",
@@ -68,6 +73,14 @@ const Button = styled.button({
   cursor: "pointer",
   "&:hover": {
     backgroundColor: "#187580",
+  },
+});
+const WinnerTitle = styled.h1({
+  fontWeight: 200,
+  fontSize: "2rem",
+  marginTop: "0.5rem",
+  "@media screen and (min-width: 600px)": {
+    fontSize: "2.5rem",
   },
 });
 const H3 = styled.h3({
@@ -94,6 +107,26 @@ const StyledInput = styled.input({
   textAlign: "center",
   "&:focus": {
     outline: "none",
+  },
+});
+const WinnerContainer = styled.div({
+  backgroundColor: "#212121",
+  paddingBottom: "1.5rem",
+  paddingTop: "1rem",
+  width: "80vw",
+  borderRadius: "5px",
+  "@media screen and (min-width: 600px)": {
+    width: "60vw",
+  },
+  "@media screen and (min-width: 1024px)": {
+    width: "40vw",
+  },
+});
+const Icon = styled(FontAwesomeIcon)({
+  fontSize: "2rem",
+  color: "white",
+  "@media screen and (min-width: 600px)": {
+    fontSize: "2rem",
   },
 });
 
@@ -208,7 +241,7 @@ const Game = () => {
                     <label>Enter coins</label>
                     <StyledInput
                       type="number"
-                      min={user[0].coins > 0 ? 1 : 0}
+                      min={1}
                       max={user[0].coins}
                       value={guessedValue}
                       onChange={(e) => setGuessedValue(e.target.value)}
@@ -224,10 +257,13 @@ const Game = () => {
       )}
       {!renderGame && (
         <>
-          <CompetitorContainer>
-            <Winner image={winner.image} />
-          </CompetitorContainer>
-          <Header title={winner && `${winner.title} WON`.toLocaleUpperCase()} />
+          <WinnerContainer>
+            <CompetitorContainer>
+              <Winner image={winner.image} />
+            </CompetitorContainer>
+            <WinnerTitle>{winner && winner.title}</WinnerTitle>
+            <Icon icon={faMedal} />
+          </WinnerContainer>
           {winner && (
             <H3>
               {guessedWinner === winner.title

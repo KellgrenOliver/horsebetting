@@ -17,7 +17,7 @@ const GamePage = () => {
   });
   return (
     <div>
-      <Header title={"CHOOSE A HORSE"} />
+      <Header title={"GAME"} />
       <FadedGame style={fade}>
         <Game />
       </FadedGame>

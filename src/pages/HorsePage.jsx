@@ -17,7 +17,7 @@ const HorsePage = () => {
   });
   return (
     <div>
-      <Header title={"CURRENT HORSES"} />
+      <Header title={"HORSES"} />
       <FadedHorses style={fade}>
         <Horses />
       </FadedHorses>

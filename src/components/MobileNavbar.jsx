@@ -10,19 +10,19 @@ import {
   faCoins,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "../contexts/AuthContext";
-import { useSpring, animated } from "react-spring";
 
 const HamburgerContent = styled.div({
   top: "0",
   position: "fixed",
-  //   width: "70vw",
   height: "100vh",
+  width: "100vw",
   background: "linear-gradient(to right, #00b4db, #0083b0)",
   display: "flex",
   justifyContent: "flex-start",
   alignItems: "center",
   textAlign: "left",
   flexDirection: "column",
+  zIndex: 999,
 });
 const ImgWrapper = styled(Link)({
   cursor: "pointer",
@@ -35,6 +35,7 @@ const TopWrapper = styled.div({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
+  zIndex: 998,
 });
 const CloseIconWrapper = styled.div({
   display: "flex",
@@ -93,16 +94,9 @@ const CoinsWrapper = styled.div({
   alignItems: "center",
 });
 
-const AnimatedMenu = animated(HamburgerContent);
-
 const DesktopNavbar = () => {
   const { currentUser } = useAuthContext();
   const [isOpenMenu, isSetOpenMenu] = useState(false);
-
-  const expand = useSpring({
-    config: { friction: 20, clamp: !isSetOpenMenu },
-    width: isSetOpenMenu ? `70%` : "0%",
-  });
 
   return (
     <>
@@ -110,8 +104,7 @@ const DesktopNavbar = () => {
         <OpenIcon icon={faBars} onClick={() => isSetOpenMenu(true)} />
       </TopWrapper>
       {isOpenMenu && (
-        <AnimatedMenu style={expand}>
-          {/* <HamburgerContent> */}
+        <HamburgerContent>
           <CloseIconWrapper>
             <CloseIcon icon={faTimes} onClick={() => isSetOpenMenu(false)} />
           </CloseIconWrapper>
@@ -136,8 +129,7 @@ const DesktopNavbar = () => {
               </CoinsWrapper>
             </ProfileWrapper>
           )}
-          {/* </HamburgerContent> */}
-        </AnimatedMenu>
+        </HamburgerContent>
       )}
     </>
   );

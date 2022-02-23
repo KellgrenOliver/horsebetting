@@ -21,7 +21,7 @@ const customStyles = {
 };
 const LinkWrapper = styled.div({
   padding: "1rem 0 1rem 0 ",
-  width: "70vw",
+  width: "100%",
   cursor: "pointer",
   textDecoration: "none",
   color: "white",
