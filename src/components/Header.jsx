@@ -16,7 +16,7 @@ const H1 = styled.h1({
   },
 });
 
-const Faded = animated(HeaderWrapper);
+const Faded = animated(H1);
 const Header = (props) => {
   const fade = useSpring({
     to: { opacity: 1 },
@@ -28,9 +28,7 @@ const Header = (props) => {
   return (
     <>
       <Faded style={fade}>
-        <HeaderWrapper>
-          <H1>{props.title}</H1>
-        </HeaderWrapper>
+        <H1>{props.title}</H1>
       </Faded>
     </>
   );
