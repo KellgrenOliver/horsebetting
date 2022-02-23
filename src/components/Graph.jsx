@@ -10,7 +10,9 @@ import {
 import { Bar } from "react-chartjs-2";
 import styled from "@emotion/styled";
 import Header from "../components/Header";
-import useGetHorses from "../hooks/useGetHorses";
+import { collection, query } from "firebase/firestore";
+import { db } from "../firebase";
+import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 ChartJS.defaults.color = "white";
@@ -23,7 +25,9 @@ const Container = styled.div({
   },
 });
 const Graph = () => {
-  const { horses } = useGetHorses();
+  const queryRef = query(collection(db, "horses"));
+
+  const { data: horses } = useFirestoreQueryData(["horses"], queryRef);
 
   const horseNames = horses && horses.map((horse) => horse.title);
   const horseAge = horses && horses.map((horse) => horse.wins);

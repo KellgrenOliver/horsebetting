@@ -6,7 +6,11 @@ const TextWrapper = styled.div({
   textAlign: "left",
   "@media screen and (min-width: 600px)": {
     width: "70%",
-    textAlign: "justify",
+    // textAlign: "left",
+  },
+  "@media screen and (min-width: 1024px)": {
+    width: "60%",
+    // textAlign: "left",
   },
 });
 
