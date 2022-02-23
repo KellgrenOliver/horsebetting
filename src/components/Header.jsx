@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { useSpring, animated, config } from "react-spring";
 
-const HeaderWrapper = styled.div({});
 const H1 = styled.h1({
   fontWeight: 200,
   fontSize: "3rem",
