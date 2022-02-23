@@ -48,7 +48,7 @@ const OpenIcon = styled(FontAwesomeIcon)({
 });
 const CloseIcon = styled(FontAwesomeIcon)({
   fontSize: "2rem",
-  margin: "1.5rem 1rem 1rem 1rem ",
+  margin: "0.5rem 1rem 1rem 1rem ",
   color: "white",
 });
 const HomeIcon = styled(CloseIcon)({
@@ -68,11 +68,11 @@ const ProfileWrapper = styled.div({
   justifyContent: "space-around",
   alignItems: "center",
   marginTop: "auto",
-  marginBottom: "1rem",
+  marginBottom: "0.5rem",
 });
 const ProfileBox = styled(Link)({
-  width: "70px",
-  height: "70px",
+  width: "50px",
+  height: "50px",
   borderRadius: "50%",
   backgroundColor: "#3b3b3b",
   color: "white",

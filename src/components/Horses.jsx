@@ -80,9 +80,9 @@ const Horses = () => {
       <Header title={"CURRENT HORSES"} />
       <HorseWrapper>
         {horses &&
-          horses.map((horse) => {
+          horses.map((horse, i) => {
             return (
-              <CompetitorWrapper key={horse.id}>
+              <CompetitorWrapper key={i}>
                 <Horse image={horse.image || ""} />
                 <InfoWrapper>
                   <H3>Name: {horse.title}</H3>

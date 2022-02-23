@@ -104,13 +104,15 @@ const DesktopNavbar = () => {
     });
   }, []);
 
+  if (!user) return null;
+
   return (
     <Container>
       <ImgWrapper to="/">
         <Icon icon={faHome} />
       </ImgWrapper>
       <NavLinks />
-      {user && (
+      {currentUser && (
         <ProfileWrapper>
           <ProfileBox to="/myprofile">
             <ProfileName>
@@ -121,7 +123,7 @@ const DesktopNavbar = () => {
           </ProfileBox>
           <CoinsWrapper>
             <CoinsIcon icon={faCoins} />
-            <h3>{user[0]?.coins}</h3>
+            <h3>{user && user[0].coins}</h3>
           </CoinsWrapper>
         </ProfileWrapper>
       )}

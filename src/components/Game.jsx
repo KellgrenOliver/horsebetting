@@ -83,6 +83,19 @@ const SubmitForm = styled.form({
   alignItems: "center",
   flexDirection: "column",
 });
+const StyledInput = styled.input({
+  backgroundColor: "#dedede",
+  width: "150px",
+  height: "35px",
+  marginTop: "0.2rem",
+  marginBottom: "1rem",
+  borderRadius: "5px",
+  border: "none",
+  textAlign: "center",
+  "&:focus": {
+    outline: "none",
+  },
+});
 
 const Game = () => {
   const [winner, setWinner] = useState();
@@ -193,9 +206,9 @@ const Game = () => {
                 <>
                   <SubmitForm onSubmit={startRace}>
                     <label>Enter coins</label>
-                    <input
+                    <StyledInput
                       type="number"
-                      min="1"
+                      min={user[0].coins > 0 ? 1 : 0}
                       max={user[0].coins}
                       value={guessedValue}
                       onChange={(e) => setGuessedValue(e.target.value)}

@@ -2,8 +2,12 @@ import React from "react";
 import styled from "@emotion/styled";
 
 const TextWrapper = styled.div({
-  width: "70%",
-  textAlign: "justify",
+  width: "90%",
+  textAlign: "left",
+  "@media screen and (min-width: 600px)": {
+    width: "70%",
+    textAlign: "justify",
+  },
 });
 
 const Paragraph = styled.h2({
