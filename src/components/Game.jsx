@@ -183,7 +183,6 @@ const Game = () => {
         <>
           {horses && (
             <>
-              <Header title={"CHOOSE A HORSE"} />
               <CompetitorContainer>
                 {horses &&
                   horses.map((horse) => {
@@ -202,6 +201,7 @@ const Game = () => {
                     );
                   })}
               </CompetitorContainer>
+
               {activeId && (
                 <>
                   <SubmitForm onSubmit={startRace}>

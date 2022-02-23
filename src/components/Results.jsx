@@ -1,12 +1,4 @@
-// import React, { useEffect, useState } from "react";
-// import styled from "@emotion/styled";
-// import Header from "../components/Header";
-// import { useAuthContext } from "../contexts/AuthContext";
-// import { collection, onSnapshot, query, where } from "firebase/firestore";
-// import { db } from "../firebase";
-// import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
 import styled from "@emotion/styled";
 import { useAuthContext } from "../contexts/AuthContext";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
@@ -61,7 +53,6 @@ const Result = () => {
 
   return (
     <>
-      <Header title={"RESULTS"} />
       <ResultWrapper>
         {user && (
           <>

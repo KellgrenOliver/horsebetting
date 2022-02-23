@@ -9,7 +9,6 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import styled from "@emotion/styled";
-import Header from "../components/Header";
 import { collection, query } from "firebase/firestore";
 import { db } from "../firebase";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
@@ -44,7 +43,7 @@ const Graph = () => {
     ],
   };
   const options = {
-    animation: false,
+    animation: true,
     scaleFontColor: "#FFFFFF",
     responsive: true,
     plugins: {
@@ -74,7 +73,6 @@ const Graph = () => {
   };
   return (
     <Container>
-      <Header title={"STATISTIC"} />
       <Bar height={80} options={options} data={data} />
     </Container>
   );

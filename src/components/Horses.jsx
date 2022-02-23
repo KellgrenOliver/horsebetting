@@ -77,7 +77,6 @@ const Horses = () => {
 
   return (
     <>
-      <Header title={"CURRENT HORSES"} />
       <HorseWrapper>
         {horses &&
           horses.map((horse, i) => {
