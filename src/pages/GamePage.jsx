@@ -1,12 +1,9 @@
 import React from "react";
-import styled from "@emotion/styled";
 import Header from "../components/Header";
 import Game from "../components/Game";
 import { useSpring, animated, config } from "react-spring";
 
-const FadeWrapper = styled.div({});
-
-const FadedGame = animated(FadeWrapper);
+const FadedGame = animated.div;
 
 const GamePage = () => {
   const fade = useSpring({
