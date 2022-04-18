@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { useAuthContext } from "../contexts/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import ColorPicker from "./ColorPicker";
 
 const InputWrapper = styled.div({
   display: "flex",
@@ -42,11 +45,44 @@ const Button = styled.button({
     backgroundColor: "#187580",
   },
 });
+const Photo = styled.div({
+  width: "200px",
+  height: "200px",
+  backgroundColor: "#4f4f4f",
+  borderRadius: "50%",
+  margin: "auto",
+  marginBottom: "1rem",
+  padding: "1rem",
+});
+const PhotoLabel = styled.label({
+  cursor: "pointer",
+});
+const FileInput = styled.input({
+  display: "none",
+});
+const Icon = styled(FontAwesomeIcon)({
+  fontSize: "2rem",
+  color: "white",
+  "@media screen and (min-width: 600px)": {
+    fontSize: "2rem",
+  },
+});
+
+const IconWrapper = styled.div({
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "flex-end",
+  width: "100%",
+  height: "100%",
+  marginRight: "1rem",
+});
+
 const UpdateProfileForm = () => {
   const displayNameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
+  const [color, setColor] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
@@ -83,42 +119,48 @@ const UpdateProfileForm = () => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        {error && <h1>{error}</h1>}
-        {message && <h1 variant="success">{message}</h1>}
-        <InputWrapper>
-          <label>DISPLAYNAME</label>
-          <Input
-            type="text"
-            ref={displayNameRef}
-            defaultValue={currentUser && currentUser.displayName}
-          />
-          <label>EMAIL</label>
-          <Input
-            type="email"
-            ref={emailRef}
-            defaultValue={currentUser && currentUser.email}
-            required={true}
-          />
-          <label>NEW PASSWORD</label>
-          <Input
-            type="password"
-            ref={passwordRef}
-            autoComplete="new-password"
-          />
-          <label>CONFIRM NEW PASSWORD</label>
-          <Input
-            type="password"
-            ref={passwordConfirmRef}
-            autoComplete="new-password"
-          />
-        </InputWrapper>
-        <Button disabled={loading} type="submit">
-          CONFIRM
-        </Button>
-      </form>
-    </>
+    <form onSubmit={handleSubmit}>
+      <PhotoLabel>
+        <Photo>
+          <IconWrapper>
+            <Icon icon={faPlus} />
+          </IconWrapper>
+        </Photo>
+        <FileInput type="file" />
+      </PhotoLabel>
+      {error && <h1>{error}</h1>}
+      {message && <h1 variant="success">{message}</h1>}
+      <InputWrapper>
+        <label>DISPLAYNAME</label>
+        <Input
+          type="text"
+          ref={displayNameRef}
+          defaultValue={currentUser && currentUser.displayName}
+        />
+        <label>EMAIL</label>
+        <Input
+          type="email"
+          ref={emailRef}
+          defaultValue={currentUser && currentUser.email}
+          required={true}
+        />
+        <label>THEME COLOR 1</label>
+        <ColorPicker getValue={(value) => setColor(value)} />
+        <label>THEME COLOR 2</label>
+        <ColorPicker getValue={(value) => setColor(value)} />
+        <label>NEW PASSWORD</label>
+        <Input type="password" ref={passwordRef} autoComplete="new-password" />
+        <label>CONFIRM NEW PASSWORD</label>
+        <Input
+          type="password"
+          ref={passwordConfirmRef}
+          autoComplete="new-password"
+        />
+      </InputWrapper>
+      <Button disabled={loading} type="submit">
+        CONFIRM
+      </Button>
+    </form>
   );
 };
 

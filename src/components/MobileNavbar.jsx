@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import NavLinks from "./NavLinks";
@@ -10,6 +10,9 @@ import {
   faCoins,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "../contexts/AuthContext";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { useFirestoreQueryData } from "@react-query-firebase/firestore";
+import { db } from "../firebase";
 
 const HamburgerContent = styled.div({
   top: "0",
@@ -90,13 +93,34 @@ const ProfileName = styled.h3({
 });
 const CoinsWrapper = styled.div({
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "space-between",
   alignItems: "center",
 });
 
 const DesktopNavbar = () => {
   const { currentUser } = useAuthContext();
   const [isOpenMenu, isSetOpenMenu] = useState(false);
+
+  const [user, setUser] = useState();
+
+  const userRef = query(
+    collection(db, "users"),
+    where("uid", "==", currentUser && currentUser.uid)
+  );
+
+  let { data: userData } = useFirestoreQueryData(["users"], userRef);
+
+  useEffect(() => {
+    onSnapshot(userRef, (snapshot) => {
+      userData = [];
+      snapshot.docs.forEach((doc) => {
+        userData.push({ ...doc.data(), id: doc.id });
+      });
+      setUser(userData);
+    });
+  }, []);
+
+  if (!user) return null;
 
   return (
     <>
@@ -125,7 +149,7 @@ const DesktopNavbar = () => {
               </ProfileBox>
               <CoinsWrapper>
                 <CoinsIcon icon={faCoins} />
-                <h3>100</h3>
+                <h3>{user && user[0].coins}</h3>
               </CoinsWrapper>
             </ProfileWrapper>
           )}
