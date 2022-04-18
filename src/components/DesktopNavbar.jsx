@@ -9,23 +9,27 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import { db } from "../firebase";
 
-const Container = styled.div({
-  top: "0",
-  position: "fixed",
-  width: "15vw",
-  height: "100vh",
-  background: "linear-gradient(to right, #00b4db, #0083b0)",
-  display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "center",
-  textAlign: "left",
-  flexDirection: "column",
-  "@media screen and (min-width: 600px)": {
-    width: "20vw",
-  },
-  "@media screen and (min-width: 1024px)": {
+const Container = styled.div(({ user }) => {
+  return {
+    top: "0",
+    position: "fixed",
     width: "15vw",
-  },
+    height: "100vh",
+    background: `linear-gradient(to right, ${
+      user[0].theme1 ? user[0].theme1 : "#00b4db"
+    }, ${user[0].theme2 ? user[0].theme2 : "#0083b0"})`,
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    textAlign: "left",
+    flexDirection: "column",
+    "@media screen and (min-width: 600px)": {
+      width: "20vw",
+    },
+    "@media screen and (min-width: 1024px)": {
+      width: "15vw",
+    },
+  };
 });
 
 const ImgWrapper = styled(Link)({
@@ -107,7 +111,7 @@ const DesktopNavbar = () => {
   if (!user) return null;
 
   return (
-    <Container>
+    <Container user={user}>
       <ImgWrapper to="/">
         <Icon icon={faHome} />
       </ImgWrapper>

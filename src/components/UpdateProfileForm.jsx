@@ -1,9 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { useAuthContext } from "../contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ColorPicker from "./ColorPicker";
+import {
+  doc,
+  updateDoc,
+  collection,
+  query,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
+import { db } from "../firebase";
+import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 
 const InputWrapper = styled.div({
   display: "flex",
@@ -82,12 +92,31 @@ const UpdateProfileForm = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const [color, setColor] = useState("");
+  const [color1, setColor1] = useState("");
+  const [color2, setColor2] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
+  const [user, setUser] = useState();
   const { currentUser, setDisplayName, setEmail, setPassword } =
     useAuthContext();
+
+  const userRef = query(
+    collection(db, "users"),
+    where("uid", "==", currentUser && currentUser.uid)
+  );
+
+  let { data: userData } = useFirestoreQueryData(["users"], userRef);
+
+  useEffect(() => {
+    onSnapshot(userRef, (snapshot) => {
+      userData = [];
+      snapshot.docs.forEach((doc) => {
+        userData.push({ ...doc.data(), id: doc.id });
+      });
+      setUser(userData);
+    });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -98,6 +127,12 @@ const UpdateProfileForm = () => {
 
     try {
       setLoading(true);
+
+      const userData = {
+        theme1: color1,
+        theme2: color2,
+      };
+      await updateDoc(doc(db, "users", `${currentUser.uid}`), userData);
 
       if (displayNameRef.current.value !== currentUser.displayName) {
         await setDisplayName(displayNameRef.current.value);
@@ -110,6 +145,10 @@ const UpdateProfileForm = () => {
       if (passwordRef.current.value) {
         await setPassword(passwordRef.current.value);
       }
+
+      console.log("color1", color1);
+      console.log("color2", color2);
+
       setMessage("Profile successfully updated");
       setLoading(false);
     } catch (e) {
@@ -145,9 +184,9 @@ const UpdateProfileForm = () => {
           required={true}
         />
         <label>THEME COLOR 1</label>
-        <ColorPicker getValue={(value) => setColor(value)} />
+        <ColorPicker getValue={(value) => setColor1(value)} />
         <label>THEME COLOR 2</label>
-        <ColorPicker getValue={(value) => setColor(value)} />
+        <ColorPicker getValue={(value) => setColor2(value)} />
         <label>NEW PASSWORD</label>
         <Input type="password" ref={passwordRef} autoComplete="new-password" />
         <label>CONFIRM NEW PASSWORD</label>
