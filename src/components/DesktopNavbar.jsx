@@ -32,16 +32,22 @@ const Container = styled.div(({ user }) => {
   };
 });
 
-const ImgWrapper = styled(Link)({
-  width: "100%",
-  cursor: "pointer",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  "&:hover": {
-    backgroundImage: "linear-gradient(to right, #029ebf, #016d91)",
-  },
+const ImgWrapper = styled(Link)(({ user }) => {
+  return {
+    width: "100%",
+    cursor: "pointer",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    "&:hover": {
+      backgroundImage: "linear-gradient(to right, #029ebf, #016d91)",
+      background: `linear-gradient(to right, ${
+        user[0].theme1 ? user[0].theme1 : "#00b4db"
+      }, ${user[0].theme2 ? user[0].theme2 : "#0083b0"})`,
+    },
+  };
 });
+
 const Icon = styled(FontAwesomeIcon)({
   "@media screen and (min-width: 600px)": {
     fontSize: "3rem",
@@ -112,7 +118,7 @@ const DesktopNavbar = () => {
 
   return (
     <Container user={user}>
-      <ImgWrapper to="/">
+      <ImgWrapper to="/" user={user}>
         <Icon icon={faHome} />
       </ImgWrapper>
       <NavLinks />

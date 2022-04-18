@@ -2,28 +2,30 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useSpring, animated, config } from "react-spring";
 
-const TextWrapper = styled.div({
-  width: "90%",
+const Paragraph = styled.h2({
+  fontWeight: 200,
   textAlign: "left",
+  margin: "0.5rem auto",
   "@media screen and (min-width: 600px)": {
     width: "70%",
-    // textAlign: "left",
   },
   "@media screen and (min-width: 1024px)": {
     width: "60%",
-    // textAlign: "left",
   },
 });
-const FadeWrapper = styled.div({});
-
-const FadedFirstText = animated(FadeWrapper);
-const FadedSecondText = animated(FadeWrapper);
-const FadedThirdText = animated(FadeWrapper);
-
-const Paragraph = styled.h2({
-  fontWeight: 200,
-  margin: "0.5rem",
+const FirstImg = styled.div({
+  height: "30vh",
+  width: "100%",
+  backgroundPosition: "center",
+  backgroundImage: "url(https://wallpapercave.com/wp/ci7q9Zy.jpg)",
+  backgroundAttachment: "fixed",
 });
+const SecondImg = styled(FirstImg)({
+  backgroundImage: "url(https://wallpapercave.com/wp/wp4080679.jpg)",
+});
+const FadeFirstImg = animated(FirstImg);
+const FadeSecondImg = animated(SecondImg);
+const Text = animated.div;
 
 const HomePageText = () => {
   const fade1 = useSpring({
@@ -44,9 +46,21 @@ const HomePageText = () => {
     delay: 800,
     config: config.molasses,
   });
+  const fade4 = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    delay: 1000,
+    config: config.molasses,
+  });
+  const fade5 = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    delay: 1200,
+    config: config.molasses,
+  });
   return (
-    <TextWrapper>
-      <FadedFirstText style={fade1}>
+    <>
+      <Text style={fade1}>
         <Paragraph>
           Betting on horse racing or horse betting commonly occurs at many horse
           races. It started in the UK in the early 1600s during the reign of
@@ -57,9 +71,11 @@ const HomePageText = () => {
           nationally renowned Toronto-Dominion Bank (TD Bank) Carolina Cup and
           Colonial Cup Steeplechase in Camden, South Carolina.
         </Paragraph>
-      </FadedFirstText>
+      </Text>
       <br />
-      <FadedSecondText style={fade2}>
+      <FadeFirstImg style={fade2} />
+      <br />
+      <Text style={fade3}>
         <Paragraph>
           Where gambling is allowed, most tracks offer parimutuel betting where
           gamblers' money is pooled and shared proportionally among the winners
@@ -68,9 +84,11 @@ const HomePageText = () => {
           revenue, with over $100 billion being wagered annually in 53
           countries.
         </Paragraph>
-      </FadedSecondText>
+      </Text>
       <br />
-      <FadedThirdText style={fade3}>
+      <FadeSecondImg style={fade4} />
+      <br />
+      <Text style={fade5}>
         <Paragraph>
           In some countries notably the UK, Ireland, and Australia an
           alternative and more popular facility is provided by bookmakers who
@@ -78,8 +96,8 @@ const HomePageText = () => {
           in' odds on a horse at a particular time (known as 'taking the price'
           in the UK).
         </Paragraph>
-      </FadedThirdText>
-    </TextWrapper>
+      </Text>
+    </>
   );
 };
 
