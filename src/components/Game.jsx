@@ -257,22 +257,20 @@ const Game = () => {
               </CompetitorContainer>
 
               {activeId && (
-                <>
-                  <SubmitForm onSubmit={startRace}>
-                    <label>Enter coins</label>
-                    <StyledInput
-                      type="number"
-                      min={1}
-                      max={user[0].coins}
-                      value={guessedValue || ""}
-                      onChange={(e) => setGuessedValue(e.target.value)}
-                      required={true}
-                    />
-                    <Button user={user} type="submit">
-                      START RACE
-                    </Button>
-                  </SubmitForm>
-                </>
+                <SubmitForm onSubmit={startRace}>
+                  <label>Enter coins</label>
+                  <StyledInput
+                    type="number"
+                    min={1}
+                    max={user[0].coins}
+                    value={guessedValue || ""}
+                    onChange={(e) => setGuessedValue(e.target.value)}
+                    required={true}
+                  />
+                  <Button user={user} type="submit">
+                    START RACE
+                  </Button>
+                </SubmitForm>
               )}
             </>
           )}
