@@ -62,7 +62,7 @@ const Winner = styled(Competitor)({
     height: "75px",
   },
 });
-const Button = styled.div(({ user }) => {
+const Button = styled.button(({ user }) => {
   return {
     display: "flex",
     justifyContent: "center",
@@ -76,8 +76,9 @@ const Button = styled.div(({ user }) => {
     color: "white",
     textAlign: "center",
     border: "none",
-    margin: "1rem 0rem 3rem 0",
+    // margin: "1rem 0rem 3rem 0",
     cursor: "pointer",
+    margin: "auto",
     "&:hover": {
       backgroundColor: "#187580",
     },
