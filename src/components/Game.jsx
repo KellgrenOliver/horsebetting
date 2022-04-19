@@ -14,6 +14,7 @@ import { db } from "../firebase";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMedal } from "@fortawesome/free-solid-svg-icons";
+import Confetti from "react-confetti";
 
 const CompetitorContainer = styled.div({
   display: "flex",
@@ -129,6 +130,11 @@ const Icon = styled(FontAwesomeIcon)({
     fontSize: "2rem",
   },
 });
+const StyledConfetti = styled(Confetti)({
+  position: "absolute",
+  width: "100vw",
+  height: "100vh",
+});
 
 const Game = () => {
   const [winner, setWinner] = useState();
@@ -148,13 +154,16 @@ const Game = () => {
   let { data: userData } = useFirestoreQueryData(["users"], userRef);
 
   useEffect(() => {
-    onSnapshot(userRef, (snapshot) => {
+    const unSubscribe = onSnapshot(userRef, (snapshot) => {
       userData = [];
       snapshot.docs.forEach((doc) => {
         userData.push({ ...doc.data(), id: doc.id });
       });
       setUser(userData);
     });
+    return () => {
+      unSubscribe();
+    };
   }, []);
 
   const horsesRef = query(collection(db, "horses"));
@@ -162,13 +171,16 @@ const Game = () => {
   let { data: horsesData } = useFirestoreQueryData(["horses"], horsesRef);
 
   useEffect(() => {
-    onSnapshot(horsesRef, (snapshot) => {
+    const unSubscribe = onSnapshot(horsesRef, (snapshot) => {
       horsesData = [];
       snapshot.docs.forEach((doc) => {
         horsesData.push({ ...doc.data(), id: doc.id });
       });
       setHorses(horsesData);
     });
+    return () => {
+      unSubscribe();
+    };
   }, []);
 
   const startRace = async () => {
@@ -243,7 +255,7 @@ const Game = () => {
                       type="number"
                       min={1}
                       max={user[0].coins}
-                      value={guessedValue}
+                      value={guessedValue || ""}
                       onChange={(e) => setGuessedValue(e.target.value)}
                       required={true}
                     />
@@ -265,11 +277,14 @@ const Game = () => {
             <Icon icon={faMedal} />
           </WinnerContainer>
           {winner && (
-            <H3>
-              {guessedWinner === winner.title
-                ? "Congratz, you won!"
-                : "Nice try, you lost!"}
-            </H3>
+            <>
+              {guessedWinner === winner.title && <StyledConfetti />}
+              <H3>
+                {guessedWinner === winner.title
+                  ? "Congratz, you won!"
+                  : "Nice try, you lost!"}
+              </H3>
+            </>
           )}
           {winner && <Button onClick={playAgain}>PLAY AGAIN</Button>}
         </>
