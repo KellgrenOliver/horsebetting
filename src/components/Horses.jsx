@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-import Header from "../components/Header";
 import { collection, query } from "firebase/firestore";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import { db } from "../firebase";

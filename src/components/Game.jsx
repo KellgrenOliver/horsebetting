@@ -30,7 +30,7 @@ const CompetitorWrapper = styled.div({
   alignItems: "center",
   flexDirection: "column",
 });
-const Competitor = styled.div(({ image }) => {
+const Competitor = styled.div(({ image, user }) => {
   return {
     backgroundImage: `url(${image})`,
     backgroundPosition: "center",
@@ -44,7 +44,7 @@ const Competitor = styled.div(({ image }) => {
     margin: "2rem 2rem 0 2rem",
     cursor: "pointer",
     "&.Active": {
-      borderColor: "#399dcc",
+      borderColor: `${user?.[0]?.theme1 ? user[0].theme1 : "#00b4db"}`,
       boxShadow: "rgba(255, 255, 255, 0.65) 0px 0px 5px",
     },
     "@media screen and (max-width: 600px)": {
@@ -62,19 +62,26 @@ const Winner = styled(Competitor)({
     height: "75px",
   },
 });
-const Button = styled.button({
-  backgroundImage: "linear-gradient(to right, #00b4db, #0083b0)",
-  width: "150px",
-  height: "50px",
-  borderRadius: "5px",
-  color: "white",
-  textAlign: "center",
-  border: "none",
-  margin: "1rem 0rem 3rem 0",
-  cursor: "pointer",
-  "&:hover": {
-    backgroundColor: "#187580",
-  },
+const Button = styled.div(({ user }) => {
+  return {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    background: `linear-gradient(to right, ${
+      user?.[0]?.theme1 ? user[0].theme1 : "#00b4db"
+    }, ${user?.[0]?.theme2 ? user[0].theme2 : "#0083b0"})`,
+    width: "150px",
+    height: "50px",
+    borderRadius: "5px",
+    color: "white",
+    textAlign: "center",
+    border: "none",
+    margin: "1rem 0rem 3rem 0",
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#187580",
+    },
+  };
 });
 const WinnerTitle = styled.h1({
   fontWeight: 200,
@@ -184,6 +191,7 @@ const Game = () => {
   }, []);
 
   const startRace = async () => {
+    console.log("körs detta");
     const winner = horses[Math.floor(Math.random() * horses.length)];
     setWinner(winner);
     setRenderGame(false);
@@ -234,6 +242,7 @@ const Game = () => {
                     return (
                       <CompetitorWrapper key={horse.id}>
                         <Competitor
+                          user={user}
                           image={horse.image}
                           onClick={() => {
                             setActiveId(horse.id);
@@ -259,7 +268,9 @@ const Game = () => {
                       onChange={(e) => setGuessedValue(e.target.value)}
                       required={true}
                     />
-                    <Button type="submit">START RACE</Button>
+                    <Button user={user} type="submit">
+                      START RACE
+                    </Button>
                   </SubmitForm>
                 </>
               )}
@@ -286,7 +297,11 @@ const Game = () => {
               </H3>
             </>
           )}
-          {winner && <Button onClick={playAgain}>PLAY AGAIN</Button>}
+          {winner && (
+            <Button user={user} onClick={playAgain}>
+              PLAY AGAIN
+            </Button>
+          )}
         </>
       )}
     </>

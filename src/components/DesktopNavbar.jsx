@@ -16,8 +16,8 @@ const Container = styled.div(({ user }) => {
     width: "15vw",
     height: "100vh",
     background: `linear-gradient(to right, ${
-      user[0].theme1 ? user[0].theme1 : "#00b4db"
-    }, ${user[0].theme2 ? user[0].theme2 : "#0083b0"})`,
+      user?.[0]?.theme1 ? user[0].theme1 : "#00b4db"
+    }, ${user?.[0]?.theme2 ? user[0].theme2 : "#0083b0"})`,
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
@@ -32,20 +32,12 @@ const Container = styled.div(({ user }) => {
   };
 });
 
-const ImgWrapper = styled(Link)(({ user }) => {
-  return {
-    width: "100%",
-    cursor: "pointer",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    "&:hover": {
-      backgroundImage: "linear-gradient(to right, #029ebf, #016d91)",
-      background: `linear-gradient(to right, ${
-        user[0].theme1 ? user[0].theme1 : "#00b4db"
-      }, ${user[0].theme2 ? user[0].theme2 : "#0083b0"})`,
-    },
-  };
+const ImgWrapper = styled(Link)({
+  width: "100%",
+  cursor: "pointer",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 });
 
 const Icon = styled(FontAwesomeIcon)({
@@ -133,7 +125,7 @@ const DesktopNavbar = () => {
           </ProfileBox>
           <CoinsWrapper>
             <CoinsIcon icon={faCoins} />
-            <h3>{user && user[0].coins}</h3>
+            <h3>{user && user?.[0]?.coins}</h3>
           </CoinsWrapper>
         </ProfileWrapper>
       )}

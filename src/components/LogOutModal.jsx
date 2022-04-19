@@ -31,9 +31,6 @@ const LinkWrapper = styled.div({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  "&:hover": {
-    backgroundImage: "linear-gradient(to right, #029ebf, #016d91)",
-  },
   "@media screen and (min-width: 600px)": {
     width: "20vw",
   },
@@ -117,6 +114,7 @@ const LogOutModal = () => {
   function closeModal() {
     setIsOpen(false);
   }
+
   return (
     <>
       <LinkWrapper onClick={openModal}>

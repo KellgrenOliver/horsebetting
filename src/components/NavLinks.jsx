@@ -24,9 +24,6 @@ const LinkWrapper = styled(Link)({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  "&:hover": {
-    backgroundImage: "linear-gradient(to right, #029ebf, #016d91)",
-  },
   "&:nth-of-type(1)": {
     borderTop: "3px solid white",
   },

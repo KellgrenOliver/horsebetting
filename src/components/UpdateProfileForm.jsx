@@ -41,20 +41,25 @@ const Input = styled.input({
     width: "25vw",
   },
 });
-const Button = styled.button({
-  background: "linear-gradient(to right, #00b4db, #0083b0)",
-  width: "100px",
-  height: "35px",
-  borderRadius: "5px",
-  color: "white",
-  textAlign: "center",
-  border: "none",
-  marginBottom: "1rem",
-  cursor: "pointer",
-  "&:hover": {
-    backgroundColor: "#187580",
-  },
+const Button = styled.button(({ user }) => {
+  return {
+    background: `linear-gradient(to right, ${
+      user?.[0]?.theme1 ? user[0].theme1 : "#00b4db"
+    }, ${user?.[0]?.theme2 ? user[0].theme2 : "#0083b0"})`,
+    width: "100px",
+    height: "35px",
+    borderRadius: "5px",
+    color: "white",
+    textAlign: "center",
+    border: "none",
+    marginBottom: "1rem",
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#187580",
+    },
+  };
 });
+
 const Photo = styled.div({
   width: "200px",
   height: "200px",
@@ -210,7 +215,7 @@ const UpdateProfileForm = () => {
           autoComplete="new-password"
         />
       </InputWrapper>
-      <Button disabled={loading} type="submit">
+      <Button user={user} disabled={loading} type="submit">
         CONFIRM
       </Button>
     </form>
