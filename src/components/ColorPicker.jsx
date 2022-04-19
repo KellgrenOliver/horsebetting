@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import reactCSS from "reactcss";
 import { TwitterPicker } from "react-color";
-import randomColor from "randomcolor";
 
-const ColorPicker = ({ getValue }) => {
-  const color123 = randomColor({
-    luminosity: "random",
-    format: "rgb",
-  });
-
-  const [r, g, b] = color123.match(/\d+/g);
+const getColors = (value) => {
+  return value.match(/\d+/g);
+};
+const ColorPicker = ({ getValue, savedColor }) => {
+  const [r, g, b] = getColors(savedColor);
 
   const [state, setState] = useState({
     displayColorPicker: false,
@@ -20,9 +17,23 @@ const ColorPicker = ({ getValue }) => {
     },
   });
 
+  const rgb = useMemo(() => getColors(savedColor), [savedColor]);
+
   useEffect(() => {
     getValue(`rgb(${state.color.r}, ${state.color.g}, ${state.color.b})`);
-  }, [state]);
+  }, [state, getValue]);
+
+  useEffect(() => {
+    const [r, g, b] = rgb;
+    setState((prev) => ({
+      ...prev,
+      color: {
+        r,
+        g,
+        b,
+      },
+    }));
+  }, [rgb]);
 
   const handleClick = () => {
     const copyState = { ...state };
@@ -32,14 +43,14 @@ const ColorPicker = ({ getValue }) => {
     });
   };
 
-  const handleClose = () => {
-    const copyState = { ...state };
-    setState({ ...copyState, displayColorPicker: false });
-  };
-
   const handleChange = (color) => {
     const copyState = { ...state };
-    setState({ ...copyState, color: color.rgb });
+    console.log("color", color);
+    setState({
+      ...copyState,
+      color: color.rgb,
+      displayColorPicker: !copyState.displayColorPicker,
+    });
   };
 
   const styles = reactCSS({
@@ -84,12 +95,13 @@ const ColorPicker = ({ getValue }) => {
         <div style={styles.color} />
       </div>
       {state.displayColorPicker ? (
-        <>
-          <TwitterPicker color={state.color} onChange={handleChange} />
-          <div style={styles.popover}>
-            <div style={styles.cover} onClick={handleClose} />
-          </div>
-        </>
+        <TwitterPicker
+          color={state.color}
+          onChange={(e) => {
+            console.log("change", e);
+            handleChange(e);
+          }}
+        />
       ) : null}
     </>
   );

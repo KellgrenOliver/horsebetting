@@ -184,9 +184,23 @@ const UpdateProfileForm = () => {
           required={true}
         />
         <label>THEME COLOR 1</label>
-        <ColorPicker getValue={(value) => setColor1(value)} />
+        <ColorPicker
+          getValue={(value) => setColor1(value)}
+          savedColor={
+            user?.[0]?.theme1.length > 0
+              ? user?.[0]?.theme1
+              : "rgb(0, 180, 219)"
+          }
+        />
         <label>THEME COLOR 2</label>
-        <ColorPicker getValue={(value) => setColor2(value)} />
+        <ColorPicker
+          getValue={(value) => setColor2(value)}
+          savedColor={
+            user?.[0]?.theme2.length > 0
+              ? user?.[0]?.theme2
+              : "rgb(0, 131, 176)"
+          }
+        />
         <label>NEW PASSWORD</label>
         <Input type="password" ref={passwordRef} autoComplete="new-password" />
         <label>CONFIRM NEW PASSWORD</label>
