@@ -1,8 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { useAuthContext } from "../contexts/AuthContext";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ColorPicker from "./ColorPicker";
 import {
   doc,
@@ -44,8 +42,8 @@ const Input = styled.input({
 const Button = styled.button(({ user }) => {
   return {
     background: `linear-gradient(to right, ${
-      user?.[0]?.theme1 ? user[0].theme1 : "#00b4db"
-    }, ${user?.[0]?.theme2 ? user[0].theme2 : "#0083b0"})`,
+      user?.[0]?.theme1 ? user[0].theme1 : "rgb(247, 141, 167)"
+    }, ${user?.[0]?.theme2 ? user[0].theme2 : "rgb(153, 0, 239)"})`,
     width: "100px",
     height: "35px",
     borderRadius: "5px",
@@ -119,9 +117,6 @@ const UpdateProfileForm = () => {
         await setPassword(passwordRef.current.value);
       }
 
-      console.log("color1", color1);
-      console.log("color2", color2);
-
       setMessage("Profile successfully updated");
       setLoading(false);
     } catch (e) {
@@ -152,18 +147,18 @@ const UpdateProfileForm = () => {
         <ColorPicker
           getValue={(value) => setColor1(value)}
           savedColor={
-            user?.[0]?.theme1.length > 0
+            user?.[0]?.theme1?.length > 0
               ? user?.[0]?.theme1
-              : "rgb(0, 180, 219)"
+              : "rgb(247, 141, 167)"
           }
         />
         <label>THEME COLOR 2</label>
         <ColorPicker
           getValue={(value) => setColor2(value)}
           savedColor={
-            user?.[0]?.theme2.length > 0
+            user?.[0]?.theme2?.length > 0
               ? user?.[0]?.theme2
-              : "rgb(0, 131, 176)"
+              : "rgb(153, 0, 239)"
           }
         />
         <label>NEW PASSWORD</label>

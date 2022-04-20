@@ -2,11 +2,8 @@ import React from "react";
 import Header from "../components/Header";
 import Results from "../components/Results";
 import { useSpring, animated, config } from "react-spring";
-import styled from "@emotion/styled";
 
-const FadeWrapper = styled.div({});
-
-const FadedResults = animated(FadeWrapper);
+const FadeWrapper = animated.div;
 
 const ResultsPage = () => {
   const fade = useSpring({
@@ -18,9 +15,9 @@ const ResultsPage = () => {
   return (
     <div>
       <Header title={"RESULTS"} />
-      <FadedResults style={fade}>
+      <FadeWrapper style={fade}>
         <Results />
-      </FadedResults>
+      </FadeWrapper>
     </div>
   );
 };

@@ -1,12 +1,9 @@
 import React from "react";
 import Horses from "../components/Horses";
 import { useSpring, animated, config } from "react-spring";
-import styled from "@emotion/styled";
 import Header from "../components/Header";
 
-const FadeWrapper = styled.div({});
-
-const FadedHorses = animated(FadeWrapper);
+const FadeWrapper = animated.div;
 
 const HorsePage = () => {
   const fade = useSpring({
@@ -18,9 +15,9 @@ const HorsePage = () => {
   return (
     <div>
       <Header title={"HORSES"} />
-      <FadedHorses style={fade}>
+      <FadeWrapper style={fade}>
         <Horses />
-      </FadedHorses>
+      </FadeWrapper>
     </div>
   );
 };

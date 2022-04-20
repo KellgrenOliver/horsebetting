@@ -1,12 +1,9 @@
 import React from "react";
-import styled from "@emotion/styled";
 import Header from "../components/Header";
 import UpdateProfileForm from "../components/UpdateProfileForm";
 import { useSpring, animated, config } from "react-spring";
 
-const FadeWrapper = styled.div({});
-
-const FadedProfile = animated(FadeWrapper);
+const FadeWrapper = animated.div;
 
 const MyProfilePage = () => {
   const fade = useSpring({
@@ -18,9 +15,9 @@ const MyProfilePage = () => {
   return (
     <div>
       <Header title={"MY PROFILE"} />
-      <FadedProfile style={fade}>
+      <FadeWrapper style={fade}>
         <UpdateProfileForm />
-      </FadedProfile>
+      </FadeWrapper>
     </div>
   );
 };

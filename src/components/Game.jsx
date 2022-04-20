@@ -44,7 +44,9 @@ const Competitor = styled.div(({ image, user }) => {
     margin: "2rem 2rem 0 2rem",
     cursor: "pointer",
     "&.Active": {
-      borderColor: `${user?.[0]?.theme1 ? user[0].theme1 : "#00b4db"}`,
+      borderColor: `${
+        user?.[0]?.theme1 ? user[0].theme1 : "rgb(247, 141, 167)"
+      }`,
       boxShadow: "rgba(255, 255, 255, 0.65) 0px 0px 5px",
     },
     "@media screen and (max-width: 600px)": {
@@ -68,20 +70,16 @@ const Button = styled.button(({ user }) => {
     justifyContent: "center",
     alignItems: "center",
     background: `linear-gradient(to right, ${
-      user?.[0]?.theme1 ? user[0].theme1 : "#00b4db"
-    }, ${user?.[0]?.theme2 ? user[0].theme2 : "#0083b0"})`,
+      user?.[0]?.theme1 ? user[0].theme1 : "rgb(247, 141, 167)"
+    }, ${user?.[0]?.theme2 ? user[0].theme2 : "rgb(153, 0, 239)"})`,
     width: "150px",
     height: "50px",
     borderRadius: "5px",
     color: "white",
     textAlign: "center",
     border: "none",
-    // margin: "1rem 0rem 3rem 0",
     cursor: "pointer",
     margin: "auto",
-    "&:hover": {
-      backgroundColor: "#187580",
-    },
   };
 });
 const WinnerTitle = styled.h1({

@@ -2,11 +2,8 @@ import React from "react";
 import Graph from "../components/Graph";
 import Header from "../components/Header";
 import { useSpring, animated, config } from "react-spring";
-import styled from "@emotion/styled";
 
-const FadeWrapper = styled.div({});
-
-const FadedStatistic = animated(FadeWrapper);
+const FadeWrapper = animated.div;
 
 const StatisticPage = () => {
   const fade = useSpring({
@@ -18,9 +15,9 @@ const StatisticPage = () => {
   return (
     <div>
       <Header title={"STATISTIC"} />
-      <FadedStatistic style={fade}>
+      <FadeWrapper style={fade}>
         <Graph />
-      </FadedStatistic>
+      </FadeWrapper>
     </div>
   );
 };

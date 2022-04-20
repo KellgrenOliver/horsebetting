@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import NavLinks from "./NavLinks";
+import DesktopNavLinks from "./DesktopNavLinks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faCoins } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "../contexts/AuthContext";
@@ -16,8 +16,8 @@ const Container = styled.div(({ user }) => {
     width: "15vw",
     height: "100vh",
     background: `linear-gradient(to right, ${
-      user?.[0]?.theme1 ? user[0].theme1 : "#00b4db"
-    }, ${user?.[0]?.theme2 ? user[0].theme2 : "#0083b0"})`,
+      user?.[0]?.theme1 ? user[0].theme1 : "rgb(247, 141, 167)"
+    }, ${user?.[0]?.theme2 ? user[0].theme2 : "rgb(153, 0, 239)"})`,
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
@@ -113,7 +113,7 @@ const DesktopNavbar = () => {
       <ImgWrapper to="/" user={user}>
         <Icon icon={faHome} />
       </ImgWrapper>
-      <NavLinks />
+      <DesktopNavLinks />
       {currentUser && (
         <ProfileWrapper>
           <ProfileBox to="/myprofile">
@@ -125,7 +125,11 @@ const DesktopNavbar = () => {
           </ProfileBox>
           <CoinsWrapper>
             <CoinsIcon icon={faCoins} />
-            <h3>{user && user?.[0]?.coins}</h3>
+            {user && user?.[0].coins < 1000 ? (
+              <h3>{user && user?.[0]?.coins}</h3>
+            ) : (
+              <h3>{`${user && user?.[0]?.coins / 1000}K`}</h3>
+            )}
           </CoinsWrapper>
         </ProfileWrapper>
       )}

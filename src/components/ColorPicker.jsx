@@ -68,7 +68,6 @@ const ColorPicker = ({ getValue, savedColor }) => {
         justifyContent: "center",
         alignItems: "center",
         width: "25vw",
-        border: "1px solid gray",
         height: "40px",
         background: "#fff",
         borderRadius: "4px",
@@ -95,13 +94,7 @@ const ColorPicker = ({ getValue, savedColor }) => {
         <div style={styles.color} />
       </div>
       {state.displayColorPicker ? (
-        <TwitterPicker
-          color={state.color}
-          onChange={(e) => {
-            console.log("change", e);
-            handleChange(e);
-          }}
-        />
+        <TwitterPicker color={state.color} onChange={(e) => handleChange(e)} />
       ) : null}
     </>
   );

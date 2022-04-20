@@ -23,7 +23,7 @@ const Box = styled.div(({ user }) => {
     padding: "1rem",
     borderRadius: "5px",
     border: "1px solid white",
-    color: `${user?.[0]?.theme1 ? user[0].theme1 : "#00b4db"}`,
+    color: `${user?.[0]?.theme1 ? user[0].theme1 : "rgb(247, 141, 167)"}`,
     "@media screen and (min-width: 600px)": {
       width: "40vw",
       padding: "2rem",

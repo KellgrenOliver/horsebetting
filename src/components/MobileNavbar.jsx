@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import NavLinks from "./NavLinks";
+import MobileNavLinks from "./MobileNavLinks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -14,19 +14,24 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import { db } from "../firebase";
 
-const HamburgerContent = styled.div({
-  top: "0",
-  position: "fixed",
-  height: "100vh",
-  width: "100vw",
-  background: "linear-gradient(to right, #00b4db, #0083b0)",
-  display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "center",
-  textAlign: "left",
-  flexDirection: "column",
-  zIndex: 999,
+const HamburgerContent = styled.div(({ user }) => {
+  return {
+    top: "0",
+    position: "fixed",
+    height: "100vh",
+    width: "100vw",
+    background: `linear-gradient(to right, ${
+      user?.[0]?.theme1 ? user[0].theme1 : "rgb(247, 141, 167)"
+    }, ${user?.[0]?.theme2 ? user[0].theme2 : "rgb(153, 0, 239)"})`,
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    textAlign: "left",
+    flexDirection: "column",
+    zIndex: 999,
+  };
 });
+
 const ImgWrapper = styled(Link)({
   cursor: "pointer",
   display: "flex",
@@ -99,7 +104,7 @@ const CoinsWrapper = styled.div({
 
 const DesktopNavbar = () => {
   const { currentUser } = useAuthContext();
-  const [isOpenMenu, isSetOpenMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const [user, setUser] = useState();
 
@@ -125,18 +130,18 @@ const DesktopNavbar = () => {
   return (
     <>
       <TopWrapper>
-        <OpenIcon icon={faBars} onClick={() => isSetOpenMenu(true)} />
+        <OpenIcon icon={faBars} onClick={() => setShowMenu(!showMenu)} />
       </TopWrapper>
-      {isOpenMenu && (
-        <HamburgerContent>
+      {showMenu && (
+        <HamburgerContent user={user}>
           <CloseIconWrapper>
-            <CloseIcon icon={faTimes} onClick={() => isSetOpenMenu(false)} />
+            <CloseIcon icon={faTimes} onClick={() => setShowMenu(!showMenu)} />
           </CloseIconWrapper>
-          <ImgWrapper to="/" onClick={() => isSetOpenMenu(false)}>
+          <ImgWrapper to="/" onClick={() => setShowMenu(!showMenu)}>
             <HomeIcon icon={faHome} />
           </ImgWrapper>
-          <NavLinkWrapper onClick={() => isSetOpenMenu(false)}>
-            <NavLinks />
+          <NavLinkWrapper>
+            <MobileNavLinks showMenu={showMenu} setShowMenu={setShowMenu} />
           </NavLinkWrapper>
           {currentUser && (
             <ProfileWrapper>
@@ -149,7 +154,11 @@ const DesktopNavbar = () => {
               </ProfileBox>
               <CoinsWrapper>
                 <CoinsIcon icon={faCoins} />
-                <h3>{user && user[0].coins}</h3>
+                {user && user?.[0].coins < 1000 ? (
+                  <h3>{user && user?.[0]?.coins}</h3>
+                ) : (
+                  <h3>{`${user && user?.[0]?.coins / 1000}K`}</h3>
+                )}
               </CoinsWrapper>
             </ProfileWrapper>
           )}
