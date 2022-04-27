@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import LogInPage from "./LogInPage";
+import LogInComp from "../components/LogInComp";
 import Header from "../components/Header";
 import TypeWriter from "../components/HomePageTypeWriter";
 import InfoText from "../components/HomePageText";
@@ -17,7 +17,7 @@ const HomePage = () => {
           <InfoText />
         </>
       ) : (
-        <LogInPage />
+        <LogInComp />
       )}
     </>
   );

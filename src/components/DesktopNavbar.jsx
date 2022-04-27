@@ -9,16 +9,20 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import { db } from "../firebase";
 
-const Container = styled.div(({ user }) => {
+const Container = styled.div(({ user, currentUser }) => {
   return {
     top: "0",
     position: "fixed",
     width: "15vw",
     height: "100vh",
     background: `linear-gradient(to right, ${
-      user?.[0]?.primaryColor ? user[0].primaryColor : "rgb(247, 141, 167)"
+      currentUser && user?.[0]?.primaryColor
+        ? user[0].primaryColor
+        : "rgb(247, 141, 167)"
     }, ${
-      user?.[0]?.secondaryColor ? user[0].secondaryColor : "rgb(153, 0, 239)"
+      currentUser && user?.[0]?.secondaryColor
+        ? user[0].secondaryColor
+        : "rgb(153, 0, 239)"
     })`,
     display: "flex",
     justifyContent: "flex-start",
@@ -111,7 +115,7 @@ const DesktopNavbar = () => {
   if (!user) return null;
 
   return (
-    <Container user={user}>
+    <Container user={user} currentUser={currentUser}>
       <ImgWrapper to="/" user={user}>
         <Icon icon={faHome} />
       </ImgWrapper>
@@ -127,7 +131,7 @@ const DesktopNavbar = () => {
           </ProfileBox>
           <CoinsWrapper>
             <CoinsIcon icon={faCoins} />
-            {user && user?.[0].coins < 1000 ? (
+            {user && user?.[0]?.coins < 1000 ? (
               <h3>{user && user?.[0]?.coins}</h3>
             ) : (
               <h3>{`${user && user?.[0]?.coins / 1000}K`}</h3>

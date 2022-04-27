@@ -4,8 +4,8 @@ import HomePage from "./pages/HomePage";
 import HorsePage from "./pages/HorsePage";
 import StatisticPage from "./pages/StatisticPage";
 import ResultsPage from "./pages/ResultsPage";
-import LogInPage from "./pages/LogInPage";
-import SignUpPage from "./pages/SignUpPage";
+import LogInComp from "./components/LogInComp";
+import SignUpComp from "./components/SignUpComp";
 import GamePage from "./pages/GamePage";
 import MyProfilePage from "./pages/MyProfilePage";
 import LogOutPage from "./pages/LogOutPage";
@@ -39,8 +39,8 @@ const IsMobile = styled.div({
   },
 });
 const IsDesktop = styled.div({
-  "@media screen and (max-width: 600px)": {
-    display: "none",
+  "@media screen and (min-width: 1024px)": {
+    display: "block",
   },
 });
 const queryClient = new QueryClient({
@@ -80,10 +80,10 @@ const App = () => {
                   <ResultsPage />
                 </Route>
                 <Route exact path="/login">
-                  <LogInPage />
+                  <LogInComp />
                 </Route>
                 <Route exact path="/signup">
-                  <SignUpPage />
+                  <SignUpComp />
                 </Route>
                 <Route exact path="/game">
                   <GamePage />
