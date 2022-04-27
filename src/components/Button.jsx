@@ -8,8 +8,10 @@ import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 const StyledButton = styled.button(({ user }) => {
   return {
     background: `linear-gradient(to right, ${
-      user?.[0]?.theme1 ? user[0].theme1 : "rgb(247, 141, 167)"
-    }, ${user?.[0]?.theme2 ? user[0].theme2 : "rgb(153, 0, 239)"})`,
+      user?.[0]?.primaryColor ? user[0].primaryColor : "rgb(247, 141, 167)"
+    }, ${
+      user?.[0]?.secondaryColor ? user[0].secondaryColor : "rgb(153, 0, 239)"
+    })`,
     width: "150px",
     height: "40px",
     borderRadius: "5px",

@@ -51,8 +51,8 @@ const UpdateProfileForm = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const [color1, setColor1] = useState("");
-  const [color2, setColor2] = useState("");
+  const [primaryColor, setPrimaryColor] = useState("");
+  const [secondaryColor, setSecondaryColor] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
@@ -88,8 +88,8 @@ const UpdateProfileForm = () => {
       setLoading(true);
 
       const userData = {
-        theme1: color1,
-        theme2: color2,
+        primaryColor,
+        secondaryColor,
       };
       await updateDoc(doc(db, "users", `${currentUser.uid}`), userData);
 
@@ -143,19 +143,19 @@ const UpdateProfileForm = () => {
         />
         <Label>PRIMARY COLOR</Label>
         <ColorPicker
-          getValue={(value) => setColor1(value)}
+          getValue={(value) => setPrimaryColor(value)}
           savedColor={
-            user?.[0]?.theme1?.length > 0
-              ? user?.[0]?.theme1
+            user?.[0]?.primaryColor?.length > 0
+              ? user?.[0]?.primaryColor
               : "rgb(247, 141, 167)"
           }
         />
         <Label>SECONDARY COLOR</Label>
         <ColorPicker
-          getValue={(value) => setColor2(value)}
+          getValue={(value) => setSecondaryColor(value)}
           savedColor={
-            user?.[0]?.theme2?.length > 0
-              ? user?.[0]?.theme2
+            user?.[0]?.secondaryColor?.length > 0
+              ? user?.[0]?.secondaryColor
               : "rgb(153, 0, 239)"
           }
         />

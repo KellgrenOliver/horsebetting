@@ -2,6 +2,9 @@ import React, { useState, useRef } from "react";
 import styled from "@emotion/styled";
 import { Link, useHistory } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
+import { useSpring, animated, config } from "react-spring";
+import Header from "./Header";
+import Button from "./Button";
 
 const Container = styled.div({
   marginTop: "10vh",
@@ -35,30 +38,6 @@ const Input = styled.input({
     width: "25vw",
   },
 });
-const Button = styled.button({
-  background: "linear-gradient(to right, #00b4db, #0083b0)",
-  width: "100px",
-  height: "35px",
-  borderRadius: "5px",
-  color: "white",
-  textAlign: "center",
-  border: "none",
-  marginBottom: "1rem",
-  cursor: "pointer",
-  "&:hover": {
-    backgroundColor: "#187580",
-  },
-});
-const H1 = styled.h1({
-  fontSize: "2rem",
-  fontWeight: 200,
-  "@media screen and (min-width: 600px)": {
-    fontSize: "4rem",
-  },
-  "@media screen and (min-width: 1024px)": {
-    fontSize: "5rem",
-  },
-});
 const SignUpLink = styled(Link)({
   cursor: "pointer",
   textDecoration: "none",
@@ -68,6 +47,8 @@ const SignUpLink = styled(Link)({
     fontSize: "0.9rem",
   },
 });
+
+const FadedLogIn = animated.div;
 
 const LogInComp = () => {
   const emailRef = useRef();
@@ -87,25 +68,32 @@ const LogInComp = () => {
     }
   };
 
+  const fade = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    delay: 200,
+    config: config.molasses,
+  });
+
   return (
-    <Container>
-      <H1>LOG IN</H1>
-      {error && <h2>{error}</h2>}
-      <form onSubmit={handleSubmit}>
-        <Wrapper>
-          <label>Email</label>
-          <Input type="email" ref={emailRef} required={true} />
-          <label>Password</label>
-          <div>
+    <FadedLogIn style={fade}>
+      <Container>
+        <Header title={"LOG IN"} />
+        {error && <h2>{error}</h2>}
+        <form onSubmit={handleSubmit}>
+          <Wrapper>
+            <label>Email</label>
+            <Input type="email" ref={emailRef} required={true} />
+            <label>Password</label>
             <Input type="password" ref={passwordRef} required={true} />
-          </div>
-          <Button type="submit">LOG IN</Button>
-        </Wrapper>
-      </form>
-      <SignUpLink to="/signup">
-        Don't have an account? Create your account here
-      </SignUpLink>
-    </Container>
+            <Button title={"LOG IN"} type="submit" />
+          </Wrapper>
+        </form>
+        <SignUpLink to="/signup">
+          Don't have an account? Create your account here
+        </SignUpLink>
+      </Container>
+    </FadedLogIn>
   );
 };
 

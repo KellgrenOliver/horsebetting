@@ -13,49 +13,26 @@ const Paragraph = styled.h2({
     width: "60%",
   },
 });
-const FirstImg = styled.div({
-  height: "30vh",
-  width: "100%",
-  backgroundPosition: "center",
-  backgroundImage: "url(https://wallpapercave.com/wp/ci7q9Zy.jpg)",
-  backgroundAttachment: "fixed",
-});
-const SecondImg = styled(FirstImg)({
-  backgroundImage: "url(https://wallpapercave.com/wp/wp4080679.jpg)",
-});
-const FadeFirstImg = animated(FirstImg);
-const FadeSecondImg = animated(SecondImg);
+
 const Text = animated.div;
 
 const HomePageText = () => {
   const fade1 = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
-    delay: 400,
+    delay: 600,
     config: config.molasses,
   });
   const fade2 = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
-    delay: 600,
+    delay: 800,
     config: config.molasses,
   });
   const fade3 = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
-    delay: 800,
-    config: config.molasses,
-  });
-  const fade4 = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
     delay: 1000,
-    config: config.molasses,
-  });
-  const fade5 = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    delay: 1200,
     config: config.molasses,
   });
   return (
@@ -73,9 +50,7 @@ const HomePageText = () => {
         </Paragraph>
       </Text>
       <br />
-      <FadeFirstImg style={fade2} />
-      <br />
-      <Text style={fade3}>
+      <Text style={fade2}>
         <Paragraph>
           Where gambling is allowed, most tracks offer parimutuel betting where
           gamblers' money is pooled and shared proportionally among the winners
@@ -86,9 +61,7 @@ const HomePageText = () => {
         </Paragraph>
       </Text>
       <br />
-      <FadeSecondImg style={fade4} />
-      <br />
-      <Text style={fade5}>
+      <Text style={fade3}>
         <Paragraph>
           In some countries notably the UK, Ireland, and Australia an
           alternative and more popular facility is provided by bookmakers who

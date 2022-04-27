@@ -2,7 +2,6 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useSpring, animated, config } from "react-spring";
 
-const HeaderWrapper = styled.div({});
 const H1 = styled.h1({
   fontWeight: 200,
   fontSize: "3rem",
@@ -16,7 +15,8 @@ const H1 = styled.h1({
   },
 });
 
-const Faded = animated(HeaderWrapper);
+const FadedHeader = animated.div;
+
 const Header = (props) => {
   const fade = useSpring({
     from: { opacity: 0 },
@@ -26,13 +26,9 @@ const Header = (props) => {
   });
 
   return (
-    <>
-      <Faded style={fade}>
-        <HeaderWrapper>
-          <H1>{props.title}</H1>
-        </HeaderWrapper>
-      </Faded>
-    </>
+    <FadedHeader style={fade}>
+      <H1>{props.title}</H1>
+    </FadedHeader>
   );
 };
 

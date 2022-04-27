@@ -38,7 +38,12 @@ const Graph = () => {
       {
         color: "white",
         data: horseAge,
-        backgroundColor: ["rgb(255, 99, 132)", "rgb(255, 159, 64)"],
+        backgroundColor: [
+          "rgb(123, 220, 181",
+          "rgb(6, 147, 227)",
+          "rgb(252, 185, 0)",
+          "rgb(247, 141, 167)",
+        ],
       },
     ],
   };

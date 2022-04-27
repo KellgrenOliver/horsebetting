@@ -2,12 +2,21 @@ import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { Link, useHistory } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
+import { useSpring, animated, config } from "react-spring";
+import Header from "./Header";
+import Button from "./Button";
 
 const Container = styled.div({
   marginTop: "10vh",
   "@media screen and (min-width: 600px)": {
     marginTop: "25vh",
   },
+});
+const Wrapper = styled.div({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flexDirection: "column",
 });
 const Input = styled.input({
   backgroundColor: "#dedede",
@@ -29,30 +38,6 @@ const Input = styled.input({
     width: "25vw",
   },
 });
-const Button = styled.button({
-  background: "linear-gradient(to right, #00b4db, #0083b0)",
-  width: "100px",
-  height: "35px",
-  borderRadius: "5px",
-  color: "white",
-  textAlign: "center",
-  border: "none",
-  marginBottom: "1rem",
-  cursor: "pointer",
-  "&:hover": {
-    backgroundColor: "#187580",
-  },
-});
-const H1 = styled.h1({
-  fontSize: "2rem",
-  fontWeight: 200,
-  "@media screen and (min-width: 600px)": {
-    fontSize: "4rem",
-  },
-  "@media screen and (min-width: 1024px)": {
-    fontSize: "5rem",
-  },
-});
 const LogInLink = styled(Link)({
   cursor: "pointer",
   textDecoration: "none",
@@ -62,6 +47,8 @@ const LogInLink = styled(Link)({
     fontSize: "0.9rem",
   },
 });
+
+const FadedSignUp = animated.div;
 
 const SignUpComp = () => {
   const emailRef = useRef();
@@ -87,35 +74,32 @@ const SignUpComp = () => {
     }
   };
 
+  const fade = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    delay: 200,
+    config: config.molasses,
+  });
+
   return (
-    <Container>
-      <H1>CREATE ACCOUNT</H1>
-      {error && <h2>{error}</h2>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label type="email">Email</label>
-        </div>
-        <div>
-          <Input type="email" ref={emailRef} required={true} />
-        </div>
-        <div>
-          <label>Password</label>
-        </div>
-        <div>
-          <Input type="password" ref={passwordRef} required={true} />
-        </div>
-        <div>
-          <label>Confirm password</label>
-        </div>
-        <div>
-          <Input type="password" ref={passwordConfirmRef} required={true} />
-        </div>
-        <div>
-          <Button type="submit">CREATE</Button>
-        </div>
-      </form>
-      <LogInLink to="/login">Already have an account? Log in here</LogInLink>
-    </Container>
+    <FadedSignUp style={fade}>
+      <Container>
+        <Header title={"CREATE ACCOUNT"} />
+        {error && <h2>{error}</h2>}
+        <form onSubmit={handleSubmit}>
+          <Wrapper>
+            <label type="email">Email</label>
+            <Input type="email" ref={emailRef} required={true} />
+            <label>Password</label>
+            <Input type="password" ref={passwordRef} required={true} />
+            <label>Confirm password</label>
+            <Input type="password" ref={passwordConfirmRef} required={true} />
+            <Button title={"CREATE"} type="submit" />
+          </Wrapper>
+        </form>
+        <LogInLink to="/login">Already have an account? Log in here</LogInLink>
+      </Container>
+    </FadedSignUp>
   );
 };
 

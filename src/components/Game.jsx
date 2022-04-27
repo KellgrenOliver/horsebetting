@@ -42,18 +42,19 @@ const Competitor = styled.div(({ image, user }) => {
     padding: "3rem",
     border: "5px solid",
     borderRadius: "5px",
-    margin: "2rem 2rem 0 2rem",
+    margin: "2rem 2rem 0.5rem 2rem",
     cursor: "pointer",
     "&.Active": {
       borderColor: `${
-        user?.[0]?.theme1 ? user[0].theme1 : "rgb(247, 141, 167)"
+        user?.[0]?.primaryColor ? user[0].primaryColor : "rgb(247, 141, 167)"
       }`,
       boxShadow: "rgba(255, 255, 255, 0.65) 0px 0px 5px",
     },
     "@media screen and (max-width: 600px)": {
+      padding: "2rem",
       width: "30px",
       height: "30px",
-      margin: "1rem 1rem 0 1rem",
+      margin: "1rem 1rem 0.5rem 1rem",
     },
   };
 });
@@ -193,13 +194,13 @@ const Game = () => {
           ? user && user[0].wins + 1
           : user && user[0].wins,
 
-      loses:
+      losses:
         winner && winner.title.length > 0 && guessedWinner !== winner?.title
-          ? user && user[0].loses + 1
-          : user && user[0].loses,
+          ? user && user[0].losses + 1
+          : user && user[0].losses,
       coins:
         winner && winner.title.length > 0 && guessedWinner === winner?.title
-          ? user && user[0].coins + parseInt(guessedValue)
+          ? user && user[0].coins + parseInt(guessedValue) * horses.length
           : user && user[0].coins - guessedValue,
     };
     updateDoc(doc(db, "users", `${userData.uid}`), userData);
@@ -239,7 +240,7 @@ const Game = () => {
                           }}
                           className={activeId === horse.id && "Active"}
                         />
-                        <H3>{horse.title}</H3>
+                        <H3 style={{ marginTop: "auto" }}>{horse.title}</H3>
                       </CompetitorWrapper>
                     );
                   })}

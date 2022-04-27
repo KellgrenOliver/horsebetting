@@ -29,12 +29,6 @@ const WinsLoses = styled.span({
 const Span = styled.span({
   margin: "1rem",
 });
-const Wins = styled(Span)({
-  color: "#67b57c",
-});
-const Loses = styled(Span)({
-  color: "#b8404a",
-});
 
 const Result = () => {
   const { currentUser } = useAuthContext();
@@ -64,11 +58,11 @@ const Result = () => {
           <>
             <WinsLoses>
               <Span>{user[0].wins}</Span>
-              <Wins>WINS</Wins>
+              <Span style={{ color: "#67b57c" }}>WINS</Span>
             </WinsLoses>
             <WinsLoses>
-              <Span>{user[0].loses}</Span>
-              <Loses>LOSES</Loses>
+              <Span>{user[0].losses}</Span>
+              <Span style={{ color: "#b8404a" }}>LOSSES</Span>
             </WinsLoses>
           </>
         )}

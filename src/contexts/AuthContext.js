@@ -38,9 +38,11 @@ const AuthContextProverder = (props) => {
         const docData = {
           email: user.user.email,
           uid: user.user.uid,
-          coins: 500,
+          coins: 5000,
           wins: 0,
-          loses: 0,
+          losses: 0,
+          primaryColor: "",
+          secondaryColor: "",
         };
         setDoc(doc(db, "users", `${docData.uid}`), docData);
       }
