@@ -12,6 +12,8 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
+import Button from "./Button";
+import toast, { Toaster } from "react-hot-toast";
 
 const InputWrapper = styled.div({
   display: "flex",
@@ -39,23 +41,9 @@ const Input = styled.input({
     width: "25vw",
   },
 });
-const Button = styled.button(({ user }) => {
-  return {
-    background: `linear-gradient(to right, ${
-      user?.[0]?.theme1 ? user[0].theme1 : "rgb(247, 141, 167)"
-    }, ${user?.[0]?.theme2 ? user[0].theme2 : "rgb(153, 0, 239)"})`,
-    width: "100px",
-    height: "35px",
-    borderRadius: "5px",
-    color: "white",
-    textAlign: "center",
-    border: "none",
-    marginBottom: "1rem",
-    cursor: "pointer",
-    "&:hover": {
-      backgroundColor: "#187580",
-    },
-  };
+
+const Label = styled.label({
+  fontSize: "0.8rem",
 });
 
 const UpdateProfileForm = () => {
@@ -125,25 +113,35 @@ const UpdateProfileForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (message) {
+      setError("");
+    }
+    if (error) {
+      setMessage("");
+    }
+  }, [message, error]);
+
+  const successNotify = () => toast.success(message);
+  const errorNotify = () => toast.error(error);
+
   return (
     <form onSubmit={handleSubmit}>
-      {error && <h1>{error}</h1>}
-      {message && <h1 variant="success">{message}</h1>}
       <InputWrapper>
-        <label>DISPLAYNAME</label>
+        <Label>DISPLAYNAME</Label>
         <Input
           type="text"
           ref={displayNameRef}
           defaultValue={currentUser && currentUser.displayName}
         />
-        <label>EMAIL</label>
+        <Label>EMAIL</Label>
         <Input
           type="email"
           ref={emailRef}
           defaultValue={currentUser && currentUser.email}
           required={true}
         />
-        <label>THEME COLOR 1</label>
+        <Label>PRIMARY COLOR</Label>
         <ColorPicker
           getValue={(value) => setColor1(value)}
           savedColor={
@@ -152,7 +150,7 @@ const UpdateProfileForm = () => {
               : "rgb(247, 141, 167)"
           }
         />
-        <label>THEME COLOR 2</label>
+        <Label>SECONDARY COLOR</Label>
         <ColorPicker
           getValue={(value) => setColor2(value)}
           savedColor={
@@ -161,18 +159,25 @@ const UpdateProfileForm = () => {
               : "rgb(153, 0, 239)"
           }
         />
-        <label>NEW PASSWORD</label>
+        <Label>NEW PASSWORD</Label>
         <Input type="password" ref={passwordRef} autoComplete="new-password" />
-        <label>CONFIRM NEW PASSWORD</label>
+        <Label>CONFIRM NEW PASSWORD</Label>
         <Input
           type="password"
           ref={passwordConfirmRef}
           autoComplete="new-password"
         />
       </InputWrapper>
-      <Button user={user} disabled={loading} type="submit">
-        CONFIRM
-      </Button>
+      <Button
+        title={"CONFIRM"}
+        disabled={loading}
+        type="submit"
+        onClick={() => {
+          message && successNotify();
+          error && errorNotify();
+        }}
+      />
+      <Toaster position="top-right" />
     </form>
   );
 };

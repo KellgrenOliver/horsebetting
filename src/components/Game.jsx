@@ -15,6 +15,7 @@ import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMedal } from "@fortawesome/free-solid-svg-icons";
 import Confetti from "react-confetti";
+import Button from "./Button";
 
 const CompetitorContainer = styled.div({
   display: "flex",
@@ -63,24 +64,6 @@ const Winner = styled(Competitor)({
     width: "75px",
     height: "75px",
   },
-});
-const Button = styled.button(({ user }) => {
-  return {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: `linear-gradient(to right, ${
-      user?.[0]?.theme1 ? user[0].theme1 : "rgb(247, 141, 167)"
-    }, ${user?.[0]?.theme2 ? user[0].theme2 : "rgb(153, 0, 239)"})`,
-    width: "150px",
-    height: "50px",
-    borderRadius: "5px",
-    color: "white",
-    textAlign: "center",
-    border: "none",
-    cursor: "pointer",
-    margin: "auto",
-  };
 });
 const WinnerTitle = styled.h1({
   fontWeight: 200,
@@ -140,6 +123,14 @@ const StyledConfetti = styled(Confetti)({
   position: "absolute",
   width: "100vw",
   height: "100vh",
+  "@media screen and (min-width: 600px)": {
+    marginLeft: "20vw",
+    width: "80vw",
+  },
+  "@media screen and (min-width: 1024px)": {
+    marginLeft: "15vw",
+    width: "85vw",
+  },
 });
 
 const Game = () => {
@@ -190,7 +181,6 @@ const Game = () => {
   }, []);
 
   const startRace = async () => {
-    console.log("körs detta");
     const winner = horses[Math.floor(Math.random() * horses.length)];
     setWinner(winner);
     setRenderGame(false);
@@ -266,9 +256,7 @@ const Game = () => {
                     onChange={(e) => setGuessedValue(e.target.value)}
                     required={true}
                   />
-                  <Button user={user} type="submit">
-                    START RACE
-                  </Button>
+                  <Button title={"START RACE"} type="submit" />
                 </SubmitForm>
               )}
             </>
@@ -295,9 +283,7 @@ const Game = () => {
             </>
           )}
           {winner && (
-            <Button user={user} onClick={playAgain}>
-              PLAY AGAIN
-            </Button>
+            <Button title={"PLAY AGAIN"} type="submit" onClick={playAgain} />
           )}
         </>
       )}

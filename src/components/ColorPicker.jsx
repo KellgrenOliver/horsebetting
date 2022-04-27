@@ -1,6 +1,40 @@
 import React, { useState, useEffect, useMemo } from "react";
-import reactCSS from "reactcss";
 import { TwitterPicker } from "react-color";
+import styled from "@emotion/styled";
+
+const Color = styled.div(({ state }) => {
+  return {
+    width: "80vw",
+    height: "15px",
+    borderRadius: "2px",
+    background: `rgb(${state.color.r}, ${state.color.g}, ${state.color.b})`,
+    "@media screen and (min-width: 600px)": {
+      width: "38vw",
+    },
+    "@media screen and (min-width: 1024px)": {
+      width: "23vw",
+    },
+  };
+});
+
+const Swatch = styled.div({
+  display: "flex",
+  marginTop: "0.2rem",
+  marginBottom: "1rem",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "85vw",
+  height: "30px",
+  background: "#fff",
+  borderRadius: "4px",
+  cursor: "pointer",
+  "@media screen and (min-width: 600px)": {
+    width: "40vw",
+  },
+  "@media screen and (min-width: 1024px)": {
+    width: "25vw",
+  },
+});
 
 const getColors = (value) => {
   return value.match(/\d+/g);
@@ -45,7 +79,6 @@ const ColorPicker = ({ getValue, savedColor }) => {
 
   const handleChange = (color) => {
     const copyState = { ...state };
-    console.log("color", color);
     setState({
       ...copyState,
       color: color.rgb,
@@ -53,46 +86,11 @@ const ColorPicker = ({ getValue, savedColor }) => {
     });
   };
 
-  const styles = reactCSS({
-    default: {
-      color: {
-        width: "23vw",
-        height: "20px",
-        borderRadius: "2px",
-        background: `rgb(${state.color.r}, ${state.color.g}, ${state.color.b})`,
-      },
-      swatch: {
-        display: "flex",
-        marginTop: "0.2rem",
-        marginBottom: "1rem",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "25vw",
-        height: "40px",
-        background: "#fff",
-        borderRadius: "4px",
-        cursor: "pointer",
-      },
-      popover: {
-        position: "absolute",
-        zIndex: "2",
-        marginBottom: "1rem",
-      },
-      cover: {
-        marginBottom: "1rem",
-        position: "fixed",
-        top: "0px",
-        right: "0px",
-        bottom: "0px",
-        left: "0px",
-      },
-    },
-  });
   return (
     <>
-      <div style={styles.swatch} onClick={handleClick}>
-        <div style={styles.color} />
-      </div>
+      <Swatch onClick={handleClick}>
+        <Color state={state} />
+      </Swatch>
       {state.displayColorPicker ? (
         <TwitterPicker color={state.color} onChange={(e) => handleChange(e)} />
       ) : null}
