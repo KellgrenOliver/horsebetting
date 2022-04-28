@@ -45,7 +45,7 @@ const TopWrapper = styled.div({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  zIndex: 998,
+  zIndex: 999,
 });
 const CloseIconWrapper = styled.div({
   display: "flex",
@@ -159,7 +159,7 @@ const DesktopNavbar = () => {
                 {user && user?.[0].coins < 1000 ? (
                   <h3>{user && user?.[0]?.coins}</h3>
                 ) : (
-                  <h3>{`${user && user?.[0]?.coins / 1000}K`}</h3>
+                  <h3>{`${(user && user?.[0]?.coins / 1000).toFixed(1)}K`}</h3>
                 )}
               </CoinsWrapper>
             </ProfileWrapper>

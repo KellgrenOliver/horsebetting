@@ -15,6 +15,7 @@ import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMedal } from "@fortawesome/free-solid-svg-icons";
 import Confetti from "react-confetti";
+import toast, { Toaster } from "react-hot-toast";
 import Button from "./Button";
 
 const CompetitorContainer = styled.div({
@@ -220,6 +221,8 @@ const Game = () => {
     setGuessedValue();
   };
 
+  const notify = () => toast.error("You must have coins to be able to play");
+
   return (
     <>
       {renderGame && (
@@ -257,7 +260,16 @@ const Game = () => {
                     onChange={(e) => setGuessedValue(e.target.value)}
                     required={true}
                   />
-                  <Button title={"START RACE"} type="submit" />
+                  <Button
+                    title={"START RACE"}
+                    type="submit"
+                    onClick={() => {
+                      if (user?.[0]?.coins === 0) {
+                        notify();
+                      }
+                    }}
+                  />
+                  <Toaster position="top-right" />
                 </SubmitForm>
               )}
             </>

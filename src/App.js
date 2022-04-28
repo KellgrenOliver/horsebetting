@@ -25,10 +25,14 @@ const Main = styled.div({
   textAlign: "center",
   flexDirection: "column",
   "@media screen and (min-width: 600px)": {
+    marginLeft: "25vw",
+    width: "75vw",
+  },
+  "@media screen and (min-width: 1024px)": {
     marginLeft: "20vw",
     width: "80vw",
   },
-  "@media screen and (min-width: 1024px)": {
+  "@media screen and (min-width: 1224px)": {
     marginLeft: "15vw",
     width: "85vw",
   },
@@ -39,7 +43,8 @@ const IsMobile = styled.div({
   },
 });
 const IsDesktop = styled.div({
-  "@media screen and (min-width: 1024px)": {
+  display: "none",
+  "@media screen and (min-width: 600px)": {
     display: "block",
   },
 });

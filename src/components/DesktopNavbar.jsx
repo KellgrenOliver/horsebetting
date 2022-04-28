@@ -30,9 +30,12 @@ const Container = styled.div(({ user, currentUser }) => {
     textAlign: "left",
     flexDirection: "column",
     "@media screen and (min-width: 600px)": {
-      width: "20vw",
+      width: "25vw",
     },
     "@media screen and (min-width: 1024px)": {
+      width: "20vw",
+    },
+    "@media screen and (min-width: 1224px)": {
       width: "15vw",
     },
   };
@@ -68,17 +71,17 @@ const ProfileWrapper = styled.div({
   alignItems: "center",
   marginTop: "auto",
   marginBottom: "1rem",
+  flexDirection: "column",
 });
 const ProfileBox = styled(Link)({
-  width: "70px",
-  height: "70px",
+  width: "50px",
+  height: "50px",
   borderRadius: "50%",
   backgroundColor: "#3b3b3b",
   color: "white",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  marginRight: "1rem",
   cursor: "pointer",
   textDecoration: "none",
 });
@@ -134,7 +137,7 @@ const DesktopNavbar = () => {
             {user && user?.[0]?.coins < 1000 ? (
               <h3>{user && user?.[0]?.coins}</h3>
             ) : (
-              <h3>{`${user && user?.[0]?.coins / 1000}K`}</h3>
+              <h3>{`${(user && user?.[0]?.coins / 1000).toFixed(1)}K`}</h3>
             )}
           </CoinsWrapper>
         </ProfileWrapper>

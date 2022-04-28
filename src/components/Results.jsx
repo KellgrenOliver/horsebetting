@@ -15,7 +15,7 @@ const ResultWrapper = styled.div({
     width: "50vw",
   },
 });
-const WinsLoses = styled.span({
+const WinsLosses = styled.span({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -56,14 +56,14 @@ const Result = () => {
       <ResultWrapper>
         {user && (
           <>
-            <WinsLoses>
+            <WinsLosses>
               <Span>{user[0].wins}</Span>
               <Span style={{ color: "#67b57c" }}>WINS</Span>
-            </WinsLoses>
-            <WinsLoses>
+            </WinsLosses>
+            <WinsLosses>
               <Span>{user[0].losses}</Span>
               <Span style={{ color: "#b8404a" }}>LOSSES</Span>
-            </WinsLoses>
+            </WinsLosses>
           </>
         )}
       </ResultWrapper>

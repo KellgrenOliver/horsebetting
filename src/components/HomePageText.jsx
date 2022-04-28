@@ -6,6 +6,7 @@ const Paragraph = styled.h2({
   fontWeight: 200,
   textAlign: "left",
   margin: "0.5rem auto",
+  width: "90%",
   "@media screen and (min-width: 600px)": {
     width: "70%",
   },

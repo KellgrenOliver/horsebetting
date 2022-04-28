@@ -47,7 +47,10 @@ const CompetitorWrapper = styled.div({
   width: "80vw",
   backgroundColor: "#212121",
   "@media screen and (min-width: 600px)": {
-    width: "30vw",
+    width: "50vw",
+  },
+  "@media screen and (min-width: 768px)": {
+    width: "25vw",
   },
   "@media screen and (min-width: 1024px)": {
     flexDirection: "row",
