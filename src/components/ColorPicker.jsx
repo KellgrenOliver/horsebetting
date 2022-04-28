@@ -25,7 +25,7 @@ const Swatch = styled.div({
   alignItems: "center",
   width: "85vw",
   height: "30px",
-  background: "#fff",
+  background: "#dedede",
   borderRadius: "4px",
   cursor: "pointer",
   "@media screen and (min-width: 600px)": {

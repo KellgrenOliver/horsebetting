@@ -24,7 +24,7 @@ const InputWrapper = styled.div({
 const Input = styled.input({
   backgroundColor: "#dedede",
   width: "85vw",
-  height: "35px",
+  height: "30px",
   marginTop: "0.2rem",
   marginBottom: "1rem",
   borderRadius: "5px",

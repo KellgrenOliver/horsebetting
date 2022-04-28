@@ -91,7 +91,7 @@ const SubmitForm = styled.form({
 const StyledInput = styled.input({
   backgroundColor: "#dedede",
   width: "150px",
-  height: "35px",
+  height: "30px",
   marginTop: "0.2rem",
   marginBottom: "1rem",
   borderRadius: "5px",
