@@ -126,12 +126,16 @@ const StyledConfetti = styled(Confetti)({
   width: "100vw",
   height: "100vh",
   "@media screen and (min-width: 600px)": {
-    marginLeft: "20vw",
-    width: "80vw",
+    marginLeft: "25vw",
+    width: "75vw",
   },
   "@media screen and (min-width: 1024px)": {
-    marginLeft: "15vw",
-    width: "85vw",
+    marginLeft: "20vw",
+    width: "80vw",
+    "@media screen and (min-width: 1224px)": {
+      marginLeft: "15vw",
+      width: "85vw",
+    },
   },
 });
 

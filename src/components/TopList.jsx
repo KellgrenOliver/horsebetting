@@ -8,6 +8,14 @@ const Container = styled.div({
   justifyContent: "space-between",
   alignItems: "center",
   width: "100%",
+  flexDirection: "column",
+  gap: "2rem",
+  marginBottom: "4rem",
+  "@media screen and (min-width: 1024px)": {
+    flexDirection: "row",
+    gap: 0,
+    marginBottom: 0,
+  },
 });
 
 const TopList = () => {
