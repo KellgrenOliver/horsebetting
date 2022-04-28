@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
+import { useAuthContext } from "../contexts/AuthContext";
 
 const Container = styled.div({
   display: "flex",
@@ -16,7 +17,13 @@ const Wrapper = styled.div({
   padding: "2rem",
 });
 
+const User = styled.p({
+  textAlign: "left",
+  margin: "0.5rem",
+});
+
 const MostWins = () => {
+  const { currentUser } = useAuthContext();
   const [users, setUsers] = useState();
 
   const userRef = query(collection(db, "users"));
@@ -36,20 +43,22 @@ const MostWins = () => {
     };
   }, []);
 
-  console.log(users);
-
   if (!users) return null;
 
   users.sort((a, b) => b.wins - a.wins);
 
+  const top3Arr = users.slice(0, 3);
+
   return (
     <Container>
-      <span>Most Wins</span>
+      <span style={{ marginBottom: "0.5rem" }}>Most Wins</span>
       <Wrapper>
-        {users?.map((user, i) => (
-          <div key={i}>
-            {i + 1}. {user?.email} {user?.wins}
-          </div>
+        {top3Arr?.map((user, i) => (
+          <User key={i}>
+            {i + 1}.{" "}
+            {user?.email === currentUser?.email ? <b>You</b> : user?.email} (
+            {user?.wins})
+          </User>
         ))}
       </Wrapper>
     </Container>

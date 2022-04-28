@@ -68,13 +68,16 @@ const UpdateProfileForm = () => {
   let { data: userData } = useFirestoreQueryData(["users"], userRef);
 
   useEffect(() => {
-    onSnapshot(userRef, (snapshot) => {
+    const unSubscribe = onSnapshot(userRef, (snapshot) => {
       userData = [];
       snapshot.docs.forEach((doc) => {
         userData.push({ ...doc.data(), id: doc.id });
       });
       setUser(userData);
     });
+    return () => {
+      unSubscribe();
+    };
   }, []);
 
   const handleSubmit = async (e) => {

@@ -81,7 +81,7 @@ const App = () => {
                 <Route exact path="/statistic">
                   <StatisticPage />
                 </Route>
-                <Route exact path="/result">
+                <Route exact path="/results">
                   <ResultsPage />
                 </Route>
                 <Route exact path="/login">

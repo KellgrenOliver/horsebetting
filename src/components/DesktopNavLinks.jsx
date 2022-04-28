@@ -76,9 +76,9 @@ const DesktopNavLinks = () => {
             <Icon icon={faChartArea} />
             <NavLink>STATISTIC</NavLink>
           </LinkWrapper>
-          <LinkWrapper to="/result">
+          <LinkWrapper to="/results">
             <Icon icon={faTrophy} />
-            <NavLink>RESULT</NavLink>
+            <NavLink>RESULTS</NavLink>
           </LinkWrapper>
           <LinkWrapper to="/myprofile">
             <Icon icon={faUserAlt} />

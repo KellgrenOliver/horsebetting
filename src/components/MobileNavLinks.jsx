@@ -96,11 +96,11 @@ const MobileNavLinks = ({ showMenu, setShowMenu }) => {
           <LinkWrapper
             onClick={() => {
               setShowMenu(!showMenu);
-              history.push("/result");
+              history.push("/results");
             }}
           >
             <Icon icon={faTrophy} />
-            <NavLink>RESULT</NavLink>
+            <NavLink>RESULTS</NavLink>
           </LinkWrapper>
           <LinkWrapper
             onClick={() => {
