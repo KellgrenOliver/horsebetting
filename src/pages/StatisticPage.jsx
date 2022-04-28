@@ -13,12 +13,12 @@ const StatisticPage = () => {
     config: config.molasses,
   });
   return (
-    <div>
+    <>
       <Header title={"STATISTIC"} />
       <FadeWrapper style={fade}>
         <Graph />
       </FadeWrapper>
-    </div>
+    </>
   );
 };
 

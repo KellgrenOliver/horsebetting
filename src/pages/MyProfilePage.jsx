@@ -13,12 +13,12 @@ const MyProfilePage = () => {
     config: config.molasses,
   });
   return (
-    <div>
+    <>
       <Header title={"MY PROFILE"} />
       <FadeWrapper style={fade}>
         <UpdateProfileForm />
       </FadeWrapper>
-    </div>
+    </>
   );
 };
 

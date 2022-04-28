@@ -22,11 +22,9 @@ const LogOutPage = () => {
   });
 
   return (
-    <div>
-      <LoadingWrapper>
-        <RotateLoader color={"#888"} size={50} />
-      </LoadingWrapper>
-    </div>
+    <LoadingWrapper>
+      <RotateLoader color={"#888"} size={50} />
+    </LoadingWrapper>
   );
 };
 

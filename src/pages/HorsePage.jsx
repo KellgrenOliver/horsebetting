@@ -13,12 +13,12 @@ const HorsePage = () => {
     config: config.molasses,
   });
   return (
-    <div>
+    <>
       <Header title={"HORSES"} />
       <FadeWrapper style={fade}>
         <Horses />
       </FadeWrapper>
-    </div>
+    </>
   );
 };
 

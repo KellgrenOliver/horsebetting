@@ -14,12 +14,12 @@ const GamePage = () => {
   });
 
   return (
-    <div>
+    <>
       <Header title={"GAME"} />
       <FadedGame style={fade}>
         <Game />
       </FadedGame>
-    </div>
+    </>
   );
 };
 
