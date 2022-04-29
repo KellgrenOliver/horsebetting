@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { useAuthContext } from "../contexts/AuthContext";
 import ColorPicker from "./ColorPicker";
@@ -45,9 +45,7 @@ const UpdateProfileForm = () => {
   const passwordConfirmRef = useRef();
   const [primaryColor, setPrimaryColor] = useState("");
   const [secondaryColor, setSecondaryColor] = useState("");
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(null);
   const { currentUser, setDisplayName, setEmail, setPassword, user } =
     useAuthContext();
 
@@ -55,7 +53,7 @@ const UpdateProfileForm = () => {
     e.preventDefault();
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("The passwords does not match");
+      return toast.error("The passwords does not match");
     }
 
     try {
@@ -79,25 +77,15 @@ const UpdateProfileForm = () => {
         await setPassword(passwordRef.current.value);
       }
 
-      setMessage("Profile successfully updated");
+      toast.success("Profile successfully updated");
       setLoading(false);
     } catch (e) {
-      setError("Error updating profile. Please try logging out and in again.");
+      toast.error(
+        "Error updating profile. Please try logging out and in again."
+      );
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (message) {
-      setError("");
-    }
-    if (error) {
-      setMessage("");
-    }
-  }, [message, error]);
-
-  const successNotify = () => toast.success(message);
-  const errorNotify = () => toast.error(error);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -142,15 +130,7 @@ const UpdateProfileForm = () => {
           autoComplete="new-password"
         />
       </InputWrapper>
-      <Button
-        title={"CONFIRM"}
-        disabled={loading}
-        type="submit"
-        onClick={() => {
-          message && successNotify();
-          error && errorNotify();
-        }}
-      />
+      <Button title={"CONFIRM"} disabled={loading} type="submit" />
       <Toaster position="top-right" />
     </form>
   );
