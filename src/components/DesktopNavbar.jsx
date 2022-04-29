@@ -94,8 +94,6 @@ const CoinsWrapper = styled.div({
 const DesktopNavbar = () => {
   const { currentUser, user } = useAuthContext();
 
-  if (!user) return null;
-
   return (
     <Container currentUser={currentUser} user={user}>
       <ImgWrapper to="/" user={user}>
@@ -113,11 +111,10 @@ const DesktopNavbar = () => {
           </ProfileBox>
           <CoinsWrapper>
             <CoinsIcon icon={faCoins} />
-            {user && user?.coins < 1000 ? (
-              <h3>{user && user?.coins}</h3>
+            {user?.coins < 1000 ? (
+              <h3>{user?.coins}</h3>
             ) : (
-              <h3>{`${(user && user?.coins / 1000).toFixed(1)}K`}</h3>
-              //   <h3>hej</h3>
+              <h3>{`${(user?.coins / 1000).toFixed(1)}K`}</h3>
             )}
           </CoinsWrapper>
         </ProfileWrapper>
