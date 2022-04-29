@@ -1,21 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { useAuthContext } from "../contexts/AuthContext";
-import {
-  doc,
-  updateDoc,
-  collection,
-  query,
-  onSnapshot,
-  getDoc,
-} from "firebase/firestore";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMedal } from "@fortawesome/free-solid-svg-icons";
 import Confetti from "react-confetti";
 import toast, { Toaster } from "react-hot-toast";
 import Button from "./Button";
+import { useHorseContext } from "../contexts/HorseContext";
 
 const CompetitorContainer = styled.div({
   display: "flex",
@@ -143,26 +136,9 @@ const Game = () => {
   const [guessedWinner, setGuessedWinner] = useState();
   const [renderGame, setRenderGame] = useState(true);
   const [activeId, setActiveId] = useState();
-  const [horses, setHorses] = useState();
+  const { horses } = useHorseContext();
   const [guessedValue, setGuessedValue] = useState(0);
   const { currentUser, user } = useAuthContext();
-
-  const horsesRef = query(collection(db, "horses"));
-
-  let { data: horsesData } = useFirestoreQueryData(["horses"], horsesRef);
-
-  useEffect(() => {
-    const unSubscribe = onSnapshot(horsesRef, (snapshot) => {
-      horsesData = [];
-      snapshot.docs.forEach((doc) => {
-        horsesData.push({ ...doc.data(), id: doc.id });
-      });
-      setHorses(horsesData);
-    });
-    return () => {
-      unSubscribe();
-    };
-  }, []);
 
   const startRace = async () => {
     const winner = horses[Math.floor(Math.random() * horses.length)];

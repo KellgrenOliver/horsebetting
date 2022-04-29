@@ -13,6 +13,7 @@ import DesktopNavbar from "./components/DesktopNavbar";
 import MobileNavbar from "./components/MobileNavbar";
 // import Footer from "./components/Footer";
 import AuthContextProvider from "./contexts/AuthContext";
+import HorseContextProvider from "./contexts/HorseContext";
 import styled from "@emotion/styled";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -64,44 +65,46 @@ const App = () => {
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
           <AuthContextProvider>
-            <IsMobile>
-              <MobileNavbar />
-            </IsMobile>
-            <IsDesktop>
-              <DesktopNavbar />
-            </IsDesktop>
-            <Main>
-              <Switch>
-                <Route exact path="/">
-                  <HomePage />
-                </Route>
-                <Route exact path="/horses">
-                  <HorsePage />
-                </Route>
-                <Route exact path="/statistic">
-                  <StatisticPage />
-                </Route>
-                <Route exact path="/results">
-                  <ResultsPage />
-                </Route>
-                <Route exact path="/login">
-                  <LogInComp />
-                </Route>
-                <Route exact path="/signup">
-                  <SignUpComp />
-                </Route>
-                <Route exact path="/game">
-                  <GamePage />
-                </Route>
-                <Route exact path="/myprofile">
-                  <MyProfilePage />
-                </Route>
-                <Route exact path="/logout">
-                  <LogOutPage />
-                </Route>
-              </Switch>
-              {/* <Footer /> */}
-            </Main>
+            <HorseContextProvider>
+              <IsMobile>
+                <MobileNavbar />
+              </IsMobile>
+              <IsDesktop>
+                <DesktopNavbar />
+              </IsDesktop>
+              <Main>
+                <Switch>
+                  <Route exact path="/">
+                    <HomePage />
+                  </Route>
+                  <Route exact path="/horses">
+                    <HorsePage />
+                  </Route>
+                  <Route exact path="/statistic">
+                    <StatisticPage />
+                  </Route>
+                  <Route exact path="/results">
+                    <ResultsPage />
+                  </Route>
+                  <Route exact path="/login">
+                    <LogInComp />
+                  </Route>
+                  <Route exact path="/signup">
+                    <SignUpComp />
+                  </Route>
+                  <Route exact path="/game">
+                    <GamePage />
+                  </Route>
+                  <Route exact path="/myprofile">
+                    <MyProfilePage />
+                  </Route>
+                  <Route exact path="/logout">
+                    <LogOutPage />
+                  </Route>
+                </Switch>
+                {/* <Footer /> */}
+              </Main>
+            </HorseContextProvider>
           </AuthContextProvider>
         </QueryClientProvider>
       </Router>

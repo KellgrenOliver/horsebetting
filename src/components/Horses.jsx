@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { collection, query } from "firebase/firestore";
-import { useFirestoreQueryData } from "@react-query-firebase/firestore";
-import { db } from "../firebase";
+import { useHorseContext } from "../contexts/HorseContext";
 
 const HorseWrapper = styled.div({
   display: "flex",
@@ -73,10 +71,9 @@ const H3 = styled.h3({
 });
 
 const Horses = () => {
-  const queryRef = query(collection(db, "horses"));
+  const { horses } = useHorseContext();
 
-  const { data: horses } = useFirestoreQueryData(["horses"], queryRef);
-
+  console.log(horses);
   return (
     <>
       <HorseWrapper>
