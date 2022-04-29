@@ -13,7 +13,7 @@ const Container = styled.div({
   marginBottom: "4rem",
   "@media screen and (min-width: 1024px)": {
     flexDirection: "row",
-    gap: 0,
+    justifyContent: "flex-start",
     marginBottom: 0,
   },
 });

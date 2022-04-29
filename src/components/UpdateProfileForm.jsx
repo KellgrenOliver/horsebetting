@@ -2,16 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { useAuthContext } from "../contexts/AuthContext";
 import ColorPicker from "./ColorPicker";
-import {
-  doc,
-  updateDoc,
-  collection,
-  query,
-  where,
-  onSnapshot,
-} from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import Button from "./Button";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -56,29 +48,8 @@ const UpdateProfileForm = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
-  const [user, setUser] = useState();
-  const { currentUser, setDisplayName, setEmail, setPassword } =
+  const { currentUser, setDisplayName, setEmail, setPassword, user } =
     useAuthContext();
-
-  const userRef = query(
-    collection(db, "users"),
-    where("uid", "==", currentUser && currentUser.uid)
-  );
-
-  let { data: userData } = useFirestoreQueryData(["users"], userRef);
-
-  useEffect(() => {
-    const unSubscribe = onSnapshot(userRef, (snapshot) => {
-      userData = [];
-      snapshot.docs.forEach((doc) => {
-        userData.push({ ...doc.data(), id: doc.id });
-      });
-      setUser(userData);
-    });
-    return () => {
-      unSubscribe();
-    };
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -148,8 +119,8 @@ const UpdateProfileForm = () => {
         <ColorPicker
           getValue={(value) => setPrimaryColor(value)}
           savedColor={
-            user?.[0]?.primaryColor?.length > 0
-              ? user?.[0]?.primaryColor
+            user?.primaryColor?.length > 0
+              ? user?.primaryColor
               : "rgb(247, 141, 167)"
           }
         />
@@ -157,8 +128,8 @@ const UpdateProfileForm = () => {
         <ColorPicker
           getValue={(value) => setSecondaryColor(value)}
           savedColor={
-            user?.[0]?.secondaryColor?.length > 0
-              ? user?.[0]?.secondaryColor
+            user?.secondaryColor?.length > 0
+              ? user?.secondaryColor
               : "rgb(153, 0, 239)"
           }
         />

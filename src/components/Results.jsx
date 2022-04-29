@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { useAuthContext } from "../contexts/AuthContext";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { useFirestoreQueryData } from "@react-query-firebase/firestore";
-import { db } from "../firebase";
 
 const ResultWrapper = styled.div({
   display: "flex",
@@ -31,28 +28,7 @@ const Span = styled.span({
 });
 
 const Result = () => {
-  const { currentUser } = useAuthContext();
-  const [user, setUser] = useState();
-
-  const userRef = query(
-    collection(db, "users"),
-    where("uid", "==", currentUser && currentUser.uid)
-  );
-
-  let { data: userData } = useFirestoreQueryData(["users"], userRef);
-
-  useEffect(() => {
-    const unSubscribe = onSnapshot(userRef, (snapshot) => {
-      userData = [];
-      snapshot.docs.forEach((doc) => {
-        userData.push({ ...doc.data(), id: doc.id });
-      });
-      setUser(userData);
-    });
-    return () => {
-      unSubscribe();
-    };
-  }, []);
+  const { user } = useAuthContext();
 
   return (
     <>
@@ -60,11 +36,11 @@ const Result = () => {
         {user && (
           <>
             <WinsLosses>
-              <Span>{user[0].wins}</Span>
+              <Span>{user?.wins}</Span>
               <Span style={{ color: "#67b57c" }}>WINS</Span>
             </WinsLosses>
             <WinsLosses>
-              <Span>{user[0].losses}</Span>
+              <Span>{user?.losses}</Span>
               <Span style={{ color: "#b8404a" }}>LOSSES</Span>
             </WinsLosses>
           </>

@@ -6,7 +6,6 @@ import {
   updateDoc,
   collection,
   query,
-  where,
   onSnapshot,
   getDoc,
 } from "firebase/firestore";
@@ -47,7 +46,7 @@ const Competitor = styled.div(({ image, user }) => {
     cursor: "pointer",
     "&.Active": {
       borderColor: `${
-        user?.[0]?.primaryColor ? user[0].primaryColor : "rgb(247, 141, 167)"
+        user?.primaryColor ? user?.primaryColor : "rgb(247, 141, 167)"
       }`,
       boxShadow: "rgba(255, 255, 255, 0.65) 0px 0px 5px",
     },
@@ -145,29 +144,8 @@ const Game = () => {
   const [renderGame, setRenderGame] = useState(true);
   const [activeId, setActiveId] = useState();
   const [horses, setHorses] = useState();
-  const [user, setUser] = useState();
   const [guessedValue, setGuessedValue] = useState(0);
-  const { currentUser } = useAuthContext();
-
-  const userRef = query(
-    collection(db, "users"),
-    where("uid", "==", currentUser && currentUser.uid)
-  );
-
-  let { data: userData } = useFirestoreQueryData(["users"], userRef);
-
-  useEffect(() => {
-    const unSubscribe = onSnapshot(userRef, (snapshot) => {
-      userData = [];
-      snapshot.docs.forEach((doc) => {
-        userData.push({ ...doc.data(), id: doc.id });
-      });
-      setUser(userData);
-    });
-    return () => {
-      unSubscribe();
-    };
-  }, []);
+  const { currentUser, user } = useAuthContext();
 
   const horsesRef = query(collection(db, "horses"));
 
@@ -196,17 +174,17 @@ const Game = () => {
       uid: currentUser.uid,
       wins:
         winner && winner.title.length > 0 && guessedWinner === winner?.title
-          ? user && user[0].wins + 1
-          : user && user[0].wins,
+          ? user && user.wins + 1
+          : user && user.wins,
 
       losses:
         winner && winner.title.length > 0 && guessedWinner !== winner?.title
-          ? user && user[0].losses + 1
-          : user && user[0].losses,
+          ? user && user.losses + 1
+          : user && user.losses,
       coins:
         winner && winner.title.length > 0 && guessedWinner === winner?.title
-          ? user && user[0].coins + parseInt(guessedValue) * horses.length
-          : user && user[0].coins - guessedValue,
+          ? user && user.coins + parseInt(guessedValue) * horses.length
+          : user && user.coins - guessedValue,
     };
     updateDoc(doc(db, "users", `${userData.uid}`), userData);
 
@@ -259,7 +237,7 @@ const Game = () => {
                   <StyledInput
                     type="number"
                     min={1}
-                    max={user[0].coins}
+                    max={user?.coins}
                     value={guessedValue || ""}
                     onChange={(e) => setGuessedValue(e.target.value)}
                     required={true}
@@ -268,7 +246,7 @@ const Game = () => {
                     title={"START RACE"}
                     type="submit"
                     onClick={() => {
-                      if (user?.[0]?.coins === 0) {
+                      if (user?.coins === 0) {
                         notify();
                       }
                     }}

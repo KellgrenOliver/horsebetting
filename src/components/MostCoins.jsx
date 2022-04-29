@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
-import { collection, query, onSnapshot } from "firebase/firestore";
-import { db } from "../firebase";
-import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import { useAuthContext } from "../contexts/AuthContext";
 
 const Container = styled.div({
@@ -15,6 +12,7 @@ const Container = styled.div({
 const Wrapper = styled.div({
   backgroundColor: "#212121",
   padding: "2rem",
+  borderRadius: "5px",
 });
 
 const User = styled.p({
@@ -23,25 +21,7 @@ const User = styled.p({
 });
 
 const MostCoins = () => {
-  const { currentUser } = useAuthContext();
-  const [users, setUsers] = useState();
-
-  const userRef = query(collection(db, "users"));
-
-  let { data: usersData } = useFirestoreQueryData(["users"], userRef);
-
-  useEffect(() => {
-    const unSubscribe = onSnapshot(userRef, (snapshot) => {
-      usersData = [];
-      snapshot.docs.forEach((doc) => {
-        usersData.push({ ...doc.data(), id: doc.id });
-      });
-      setUsers(usersData);
-    });
-    return () => {
-      unSubscribe();
-    };
-  }, []);
+  const { currentUser, users } = useAuthContext();
 
   if (!users) return null;
 

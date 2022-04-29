@@ -1,27 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import DesktopNavLinks from "./DesktopNavLinks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faCoins } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "../contexts/AuthContext";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { useFirestoreQueryData } from "@react-query-firebase/firestore";
-import { db } from "../firebase";
 
-const Container = styled.div(({ user, currentUser }) => {
+const Container = styled.div(({ currentUser, user }) => {
   return {
     top: "0",
     position: "fixed",
     width: "15vw",
     height: "100vh",
     background: `linear-gradient(to right, ${
-      currentUser && user?.[0]?.primaryColor
-        ? user[0].primaryColor
+      currentUser && user?.primaryColor
+        ? user?.primaryColor
         : "rgb(247, 141, 167)"
     }, ${
-      currentUser && user?.[0]?.secondaryColor
-        ? user[0].secondaryColor
+      currentUser && user?.secondaryColor
+        ? user?.secondaryColor
         : "rgb(153, 0, 239)"
     })`,
     display: "flex",
@@ -95,33 +92,12 @@ const CoinsWrapper = styled.div({
 });
 
 const DesktopNavbar = () => {
-  const { currentUser } = useAuthContext();
-  const [user, setUser] = useState();
-
-  const userRef = query(
-    collection(db, "users"),
-    where("uid", "==", currentUser && currentUser.uid)
-  );
-
-  let { data: userData } = useFirestoreQueryData(["users"], userRef);
-
-  useEffect(() => {
-    const unSubscribe = onSnapshot(userRef, (snapshot) => {
-      userData = [];
-      snapshot.docs.forEach((doc) => {
-        userData.push({ ...doc.data(), id: doc.id });
-      });
-      setUser(userData);
-    });
-    return () => {
-      unSubscribe();
-    };
-  }, []);
+  const { currentUser, user } = useAuthContext();
 
   if (!user) return null;
 
   return (
-    <Container user={user} currentUser={currentUser}>
+    <Container currentUser={currentUser} user={user}>
       <ImgWrapper to="/" user={user}>
         <Icon icon={faHome} />
       </ImgWrapper>
@@ -137,10 +113,11 @@ const DesktopNavbar = () => {
           </ProfileBox>
           <CoinsWrapper>
             <CoinsIcon icon={faCoins} />
-            {user && user?.[0]?.coins < 1000 ? (
-              <h3>{user && user?.[0]?.coins}</h3>
+            {user && user?.coins < 1000 ? (
+              <h3>{user && user?.coins}</h3>
             ) : (
-              <h3>{`${(user && user?.[0]?.coins / 1000).toFixed(1)}K`}</h3>
+              <h3>{`${(user && user?.coins / 1000).toFixed(1)}K`}</h3>
+              //   <h3>hej</h3>
             )}
           </CoinsWrapper>
         </ProfileWrapper>
