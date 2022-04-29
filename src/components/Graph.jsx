@@ -12,6 +12,7 @@ import styled from "@emotion/styled";
 import { collection, query } from "firebase/firestore";
 import { db } from "../firebase";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
+import { useHorseContext } from "../contexts/HorseContext";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 ChartJS.defaults.color = "white";
@@ -24,9 +25,7 @@ const Container = styled.div({
   },
 });
 const Graph = () => {
-  const queryRef = query(collection(db, "horses"));
-
-  const { data: horses } = useFirestoreQueryData(["horses"], queryRef);
+  const { horses } = useHorseContext();
 
   const horseNames = horses && horses.map((horse) => horse.title);
   const horseAge = horses && horses.map((horse) => horse.wins);
