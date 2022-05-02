@@ -21,7 +21,7 @@ const WinsLosses = styled.span({
   height: "15vh",
   fontSize: "2rem",
   borderRadius: "5px",
-  backgroundColor: "#212121",
+  backgroundColor: "#303030",
 });
 const Span = styled.span({
   margin: "1rem",

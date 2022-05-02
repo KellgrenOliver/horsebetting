@@ -9,7 +9,7 @@ import {
 
 const Container = styled.div({
   width: "100%",
-  backgroundColor: "#212121",
+  backgroundColor: "#303030",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",

@@ -9,9 +9,6 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import styled from "@emotion/styled";
-import { collection, query } from "firebase/firestore";
-import { db } from "../firebase";
-import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 import { useHorseContext } from "../contexts/HorseContext";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);

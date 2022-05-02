@@ -8,11 +8,13 @@ import LogInComp from "./components/LogInComp";
 import SignUpComp from "./components/SignUpComp";
 import GamePage from "./pages/GamePage";
 import MyProfilePage from "./pages/MyProfilePage";
+import ShopPage from "./pages/ShopPage";
 import LogOutPage from "./pages/LogOutPage";
 import DesktopNavbar from "./components/DesktopNavbar";
 import MobileNavbar from "./components/MobileNavbar";
 // import Footer from "./components/Footer";
 import AuthContextProvider from "./contexts/AuthContext";
+import ShopContextProvider from "./contexts/ShopContext";
 import HorseContextProvider from "./contexts/HorseContext";
 import styled from "@emotion/styled";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -66,44 +68,49 @@ const App = () => {
           <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
           <AuthContextProvider>
             <HorseContextProvider>
-              <IsMobile>
-                <MobileNavbar />
-              </IsMobile>
-              <IsDesktop>
-                <DesktopNavbar />
-              </IsDesktop>
-              <Main>
-                <Switch>
-                  <Route exact path="/">
-                    <HomePage />
-                  </Route>
-                  <Route exact path="/horses">
-                    <HorsePage />
-                  </Route>
-                  <Route exact path="/statistic">
-                    <StatisticPage />
-                  </Route>
-                  <Route exact path="/results">
-                    <ResultsPage />
-                  </Route>
-                  <Route exact path="/login">
-                    <LogInComp />
-                  </Route>
-                  <Route exact path="/signup">
-                    <SignUpComp />
-                  </Route>
-                  <Route exact path="/game">
-                    <GamePage />
-                  </Route>
-                  <Route exact path="/myprofile">
-                    <MyProfilePage />
-                  </Route>
-                  <Route exact path="/logout">
-                    <LogOutPage />
-                  </Route>
-                </Switch>
-                {/* <Footer /> */}
-              </Main>
+              <ShopContextProvider>
+                <IsMobile>
+                  <MobileNavbar />
+                </IsMobile>
+                <IsDesktop>
+                  <DesktopNavbar />
+                </IsDesktop>
+                <Main>
+                  <Switch>
+                    <Route exact path="/">
+                      <HomePage />
+                    </Route>
+                    <Route exact path="/horses">
+                      <HorsePage />
+                    </Route>
+                    <Route exact path="/statistic">
+                      <StatisticPage />
+                    </Route>
+                    <Route exact path="/results">
+                      <ResultsPage />
+                    </Route>
+                    <Route exact path="/login">
+                      <LogInComp />
+                    </Route>
+                    <Route exact path="/signup">
+                      <SignUpComp />
+                    </Route>
+                    <Route exact path="/game">
+                      <GamePage />
+                    </Route>
+                    <Route exact path="/myprofile">
+                      <MyProfilePage />
+                    </Route>
+                    <Route exact path="/shop">
+                      <ShopPage />
+                    </Route>
+                    <Route exact path="/logout">
+                      <LogOutPage />
+                    </Route>
+                  </Switch>
+                  {/* <Footer /> */}
+                </Main>
+              </ShopContextProvider>
             </HorseContextProvider>
           </AuthContextProvider>
         </QueryClientProvider>

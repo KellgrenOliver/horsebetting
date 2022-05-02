@@ -9,7 +9,7 @@ const useHorseContext = () => {
   return useContext(HorseContext);
 };
 
-const HorseContextProverder = (props) => {
+const HorseContextProvider = (props) => {
   const [horses, setHorses] = useState();
 
   const horsesRef = query(collection(db, "horses"));
@@ -31,7 +31,6 @@ const HorseContextProverder = (props) => {
 
   const values = {
     horses,
-    setHorses,
   };
 
   return (
@@ -41,4 +40,4 @@ const HorseContextProverder = (props) => {
   );
 };
 
-export { useHorseContext, HorseContextProverder as default };
+export { useHorseContext, HorseContextProvider as default };

@@ -94,7 +94,7 @@ const StyledInput = styled.input({
   },
 });
 const WinnerContainer = styled.div({
-  backgroundColor: "#212121",
+  backgroundColor: "#303030",
   paddingBottom: "1.5rem",
   paddingTop: "1rem",
   width: "80vw",

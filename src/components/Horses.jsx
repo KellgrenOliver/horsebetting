@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { useHorseContext } from "../contexts/HorseContext";
+import { useShopContext } from "../contexts/ShopContext";
 
 const HorseWrapper = styled.div({
   display: "flex",
@@ -43,7 +44,7 @@ const CompetitorWrapper = styled.div({
   flexDirection: "column",
   borderRadius: "5px",
   width: "80vw",
-  backgroundColor: "#212121",
+  backgroundColor: "#303030",
   "@media screen and (min-width: 600px)": {
     width: "50vw",
   },
@@ -72,8 +73,10 @@ const H3 = styled.h3({
 
 const Horses = () => {
   const { horses } = useHorseContext();
+  const { shopOptions } = useShopContext();
 
-  console.log(horses);
+  console.log(shopOptions);
+
   return (
     <>
       <HorseWrapper>

@@ -10,7 +10,7 @@ const Container = styled.div({
 });
 
 const Wrapper = styled.div({
-  backgroundColor: "#212121",
+  backgroundColor: "#303030",
   padding: "2rem",
   borderRadius: "5px",
 });

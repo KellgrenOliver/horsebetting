@@ -9,6 +9,7 @@ import {
   faUserAlt,
   faTrophy,
   faSignOutAlt,
+  faCartPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "../contexts/AuthContext";
 
@@ -83,6 +84,10 @@ const DesktopNavLinks = () => {
           <LinkWrapper to="/myprofile">
             <Icon icon={faUserAlt} />
             <NavLink>MY PROFILE</NavLink>
+          </LinkWrapper>
+          <LinkWrapper to="/shop">
+            <Icon icon={faCartPlus} />
+            <NavLink>SHOP</NavLink>
           </LinkWrapper>
           <LinkWrapper to="/logout">
             <Icon icon={faSignOutAlt} />
