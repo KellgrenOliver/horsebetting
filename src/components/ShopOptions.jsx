@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { useShopContext } from "../contexts/ShopContext";
+import { useAuthContext } from "../contexts/AuthContext";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const Container = styled.div({
   display: "flex",
@@ -73,6 +76,20 @@ const ShopOptions = () => {
   const [stepTwo, setStepTwo] = useState(false);
   const [stepThree, setStepThree] = useState(false);
   const [chosenOption, setChosenOption] = useState();
+  const { user } = useAuthContext();
+
+  console.log(user?.uid);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setStepTwo(false);
+    setStepThree(true);
+
+    const userData = {
+      coins: user?.coins + chosenOption?.coins,
+    };
+    updateDoc(doc(db, "users", `${user?.uid}`), userData);
+  };
 
   return (
     <>
@@ -98,30 +115,33 @@ const ShopOptions = () => {
       {stepTwo && (
         <>
           <h1>2. Payment</h1>
-          <InputWrapper>
-            <Label>Förnamn</Label>
-            <Input type="text" placeholder="Förnamn" />
-            <Label>Efternamn</Label>
-            <Input type="text" placeholder="Efternamn" />
-            <Label>Stad</Label>
-            <Input type="text" placeholder="Stad" />
-            <Label>Adress</Label>
-            <Input type="text" placeholder="Adress" />
-            <Label>Kortnummer</Label>
-            <Input type="text" placeholder="Kortnummer" />
-            <Label>MM/YY</Label>
-            <Input type="text" placeholder="MM/YY" />
-            <Label>PNC</Label>
-            <Input type="text" placeholder="PNC" />
-          </InputWrapper>
-          <button
-            onClick={() => {
-              setStepTwo(false);
-              setStepThree(true);
-            }}
-          >
-            PAY
-          </button>
+          <form onSubmit={handleSubmit}>
+            <InputWrapper>
+              <Label>Förnamn</Label>
+              <Input type="text" placeholder="Förnamn" />
+              <Label>Efternamn</Label>
+              <Input type="text" placeholder="Efternamn" />
+              <Label>Stad</Label>
+              <Input type="text" placeholder="Stad" />
+              <Label>Adress</Label>
+              <Input type="text" placeholder="Adress" />
+              <Label>Kortnummer</Label>
+              <Input type="text" placeholder="Kortnummer" />
+              <Label>MM/YY</Label>
+              <Input type="text" placeholder="MM/YY" />
+              <Label>PNC</Label>
+              <Input type="text" placeholder="PNC" />
+            </InputWrapper>
+            <button
+              type="submit"
+              //   onClick={() => {
+              //     setStepTwo(false);
+              //     setStepThree(true);
+              //   }}
+            >
+              PAY
+            </button>
+          </form>
         </>
       )}
       {stepThree && (
