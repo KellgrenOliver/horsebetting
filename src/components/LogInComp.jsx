@@ -83,9 +83,9 @@ const LogInComp = () => {
         <form onSubmit={handleSubmit}>
           <Wrapper>
             <label>Email</label>
-            <Input type="email" ref={emailRef} required={true} />
+            <Input type="email" ref={emailRef} required />
             <label>Password</label>
-            <Input type="password" ref={passwordRef} required={true} />
+            <Input type="password" ref={passwordRef} required />
             <Button title={"LOG IN"} type="submit" />
           </Wrapper>
         </form>

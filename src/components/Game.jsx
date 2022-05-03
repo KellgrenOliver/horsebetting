@@ -216,7 +216,7 @@ const Game = () => {
                     max={user?.coins}
                     value={guessedValue || ""}
                     onChange={(e) => setGuessedValue(e.target.value)}
-                    required={true}
+                    required
                   />
                   <Button
                     title={"START RACE"}

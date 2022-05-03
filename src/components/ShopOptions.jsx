@@ -5,6 +5,7 @@ import { useAuthContext } from "../contexts/AuthContext";
 import { doc, updateDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { v4 as uuidv4 } from "uuid";
+import Button from "../components/Button";
 
 const Container = styled.div({
   display: "flex",
@@ -38,9 +39,19 @@ const Option = styled.div({
   },
 });
 
+const InputContainer = styled.div({
+  display: "flex",
+  flexDirection: "column",
+});
+
 const InputWrapper = styled.div({
   display: "flex",
   flexDirection: "column",
+});
+
+const SectionWrapper = styled.div({
+  display: "flex",
+  gap: "1rem",
 });
 
 const Input = styled.input({
@@ -135,23 +146,43 @@ const ShopOptions = () => {
         <>
           <h1>2. Payment</h1>
           <form onSubmit={handleSubmit}>
-            <InputWrapper>
-              <Label>Förnamn</Label>
-              <Input type="text" placeholder="Förnamn" />
-              <Label>Efternamn</Label>
-              <Input type="text" placeholder="Efternamn" />
-              <Label>Stad</Label>
-              <Input type="text" placeholder="Stad" />
-              <Label>Adress</Label>
-              <Input type="text" placeholder="Adress" />
-              <Label>Kortnummer</Label>
-              <Input type="text" placeholder="Kortnummer" />
-              <Label>MM/YY</Label>
-              <Input type="text" placeholder="MM/YY" />
-              <Label>PNC</Label>
-              <Input type="text" placeholder="PNC" />
-            </InputWrapper>
-            <button type="submit">PAY</button>
+            <InputContainer>
+              <SectionWrapper>
+                <InputWrapper>
+                  <Label>FIRST NAME</Label>
+                  <Input type="text" required />
+                </InputWrapper>
+                <InputWrapper>
+                  <Label>LAST NAME</Label>
+                  <Input type="text" required />
+                </InputWrapper>
+              </SectionWrapper>
+              <SectionWrapper>
+                <InputWrapper>
+                  <Label>CITY</Label>
+                  <Input type="text" required />
+                </InputWrapper>
+                <InputWrapper>
+                  <Label>ADDRESS</Label>
+                  <Input type="text" required />
+                </InputWrapper>
+              </SectionWrapper>
+              <SectionWrapper>
+                <InputWrapper>
+                  <Label>CARD NUMBER</Label>
+                  <Input type="text" required />
+                </InputWrapper>
+                <InputWrapper>
+                  <Label>MM/YY</Label>
+                  <Input style={{ width: "100px" }} type="text" required />
+                </InputWrapper>
+                <InputWrapper>
+                  <Label>PNC</Label>
+                  <Input style={{ width: "100px" }} type="text" required />
+                </InputWrapper>
+              </SectionWrapper>
+            </InputContainer>
+            <Button title={"PAY"} type="submit" />
           </form>
         </>
       )}
@@ -161,6 +192,16 @@ const ShopOptions = () => {
           <span>{`Du har köpt ${(chosenOption?.coins / 1000).toFixed(
             1
           )}K!`}</span>
+          <div>
+            <Button
+              title={"BACK TO SHOP"}
+              type="button"
+              onClick={() => {
+                setStepThree(false);
+                setStepOne(true);
+              }}
+            />
+          </div>
         </>
       )}
     </>

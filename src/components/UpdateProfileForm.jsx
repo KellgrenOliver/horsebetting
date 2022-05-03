@@ -101,7 +101,7 @@ const UpdateProfileForm = () => {
           type="email"
           ref={emailRef}
           defaultValue={currentUser && currentUser.email}
-          required={true}
+          required
         />
         <Label>PRIMARY COLOR</Label>
         <ColorPicker

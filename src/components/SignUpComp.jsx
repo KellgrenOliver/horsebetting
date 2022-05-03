@@ -89,11 +89,11 @@ const SignUpComp = () => {
         <form onSubmit={handleSubmit}>
           <Wrapper>
             <label type="email">Email</label>
-            <Input type="email" ref={emailRef} required={true} />
+            <Input type="email" ref={emailRef} required />
             <label>Password</label>
-            <Input type="password" ref={passwordRef} required={true} />
+            <Input type="password" ref={passwordRef} required />
             <label>Confirm password</label>
-            <Input type="password" ref={passwordConfirmRef} required={true} />
+            <Input type="password" ref={passwordConfirmRef} required />
             <Button title={"CREATE"} type="submit" />
           </Wrapper>
         </form>
