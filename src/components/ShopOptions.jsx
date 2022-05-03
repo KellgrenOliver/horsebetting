@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { useShopContext } from "../contexts/ShopContext";
 import { useAuthContext } from "../contexts/AuthContext";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import { v4 as uuidv4 } from "uuid";
 
 const Container = styled.div({
   display: "flex",
@@ -78,17 +79,35 @@ const ShopOptions = () => {
   const [chosenOption, setChosenOption] = useState();
   const { user } = useAuthContext();
 
-  console.log(user?.uid);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setStepTwo(false);
     setStepThree(true);
+
+    const uuid = uuidv4();
+
+    const timestamp = Date.now();
+    const formatedTime = new Intl.DateTimeFormat("eu", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }).format(timestamp);
 
     const userData = {
       coins: user?.coins + chosenOption?.coins,
     };
     updateDoc(doc(db, "users", `${user?.uid}`), userData);
+
+    const docData = {
+      userId: user?.uid,
+      coins: chosenOption?.coins,
+      orderNumber: uuid,
+      time: formatedTime,
+    };
+    setDoc(doc(db, "orders", `${uuid}`), docData);
   };
 
   return (
@@ -132,15 +151,7 @@ const ShopOptions = () => {
               <Label>PNC</Label>
               <Input type="text" placeholder="PNC" />
             </InputWrapper>
-            <button
-              type="submit"
-              //   onClick={() => {
-              //     setStepTwo(false);
-              //     setStepThree(true);
-              //   }}
-            >
-              PAY
-            </button>
+            <button type="submit">PAY</button>
           </form>
         </>
       )}

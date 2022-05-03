@@ -138,7 +138,7 @@ const Game = () => {
   const [activeId, setActiveId] = useState();
   const { horses } = useHorseContext();
   const [guessedValue, setGuessedValue] = useState(0);
-  const { currentUser, user } = useAuthContext();
+  const { user } = useAuthContext();
 
   const startRace = async () => {
     const winner = horses[Math.floor(Math.random() * horses.length)];
@@ -147,7 +147,7 @@ const Game = () => {
     if (!user) return null;
 
     const userData = {
-      uid: currentUser.uid,
+      uid: user?.uid,
       wins:
         winner && winner.title.length > 0 && guessedWinner === winner?.title
           ? user && user.wins + 1
