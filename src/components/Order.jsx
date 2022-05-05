@@ -7,19 +7,15 @@ const OrderWrapper = styled.div({
   alignItems: "center",
   backgroundColor: "#303030",
   flexDirection: "column",
-  marginBottom: "2rem",
-  padding: "1rem",
+  marginBottom: "1rem",
   borderRadius: "5px",
-  width: "80vw",
+  width: "85vw",
   cursor: "pointer",
   "&:hover": {
     backgroundColor: "#4d4d4d",
   },
   "@media screen and (min-width: 600px)": {
     width: "50vw",
-  },
-  "@media screen and (min-width: 1024px)": {
-    width: "70vw",
   },
 });
 
@@ -38,9 +34,6 @@ const BottomWrapper = styled.div({
 const Info = styled.div({
   fontSize: "1rem",
   margin: "1rem",
-  "@media screen and (min-width: 1024px)": {
-    fontSize: "1.5rem",
-  },
 });
 
 const Order = ({ order }) => {
@@ -50,7 +43,7 @@ const Order = ({ order }) => {
       <OrderWrapper onClick={() => setShowAll(!showAll)}>
         <TopWrapper>
           <Info style={{ fontWeight: 200, fontSize: "2rem" }}>
-            {order.money}$
+            {`${(order?.coins / 1000).toFixed(1)}K`}
           </Info>
           <Info>{order.time}</Info>
           <Info>
@@ -65,7 +58,7 @@ const Order = ({ order }) => {
           <BottomWrapper>
             <Info>{order.email}</Info>
             <Info>{order.orderNumber}</Info>
-            <Info>{`${(order?.coins / 1000).toFixed(1)}K`}</Info>
+            <Info> {order.money}$</Info>
           </BottomWrapper>
         )}
       </OrderWrapper>

@@ -18,8 +18,13 @@ const Container = styled.div({
 
 const StepHeader = styled.div({
   fontWeight: 200,
-  fontSize: "2rem",
+  fontSize: "1.5rem",
+  paddingLeft: "1rem",
+  paddingRight: "1rem",
   marginBottom: "0.5rem",
+  "@media screen and (min-width: 600px)": {
+    fontSize: "2rem",
+  },
 });
 
 const OptionWrapper = styled.div({
@@ -247,17 +252,17 @@ const ShopOptions = () => {
       )}
       {stepThree && (
         <>
-          <StepHeader>Thank you for your purchase!</StepHeader>
-          <div>
-            <Button
-              title={"BACK TO SHOP"}
-              type="button"
-              onClick={() => {
-                setStepThree(false);
-                setStepOne(true);
-              }}
-            />
-          </div>
+          <StepHeader style={{ marginBottom: "1rem" }}>
+            Thank you for your purchase!
+          </StepHeader>
+          <Button
+            title={"BACK TO SHOP"}
+            type="button"
+            onClick={() => {
+              setStepThree(false);
+              setStepOne(true);
+            }}
+          />
         </>
       )}
       <Toaster position="top-right" />
