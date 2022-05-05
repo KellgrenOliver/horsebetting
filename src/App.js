@@ -8,6 +8,7 @@ import LogInComp from "./components/LogInComp";
 import SignUpComp from "./components/SignUpComp";
 import GamePage from "./pages/GamePage";
 import MyProfilePage from "./pages/MyProfilePage";
+import OrderHistoryPage from "./pages/OrderHistoryPage";
 import ShopPage from "./pages/ShopPage";
 import LogOutPage from "./pages/LogOutPage";
 import DesktopNavbar from "./components/DesktopNavbar";
@@ -100,6 +101,9 @@ const App = () => {
                     </Route>
                     <Route exact path="/myprofile">
                       <MyProfilePage />
+                    </Route>
+                    <Route exact path="/myprofile/orderhistory">
+                      <OrderHistoryPage />
                     </Route>
                     <Route exact path="/shop">
                       <ShopPage />

@@ -154,10 +154,11 @@ const ShopOptions = () => {
       time: formatedTime,
       first_name,
       last_name,
+      email: user?.email,
       city,
       address,
     };
-    setDoc(doc(db, "orders", `${user?.email}`), docData);
+    setDoc(doc(db, "orders", `${orderNumber}`), docData);
   };
 
   return (

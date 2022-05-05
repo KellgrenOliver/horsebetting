@@ -11,6 +11,7 @@ const useShopContext = () => {
 
 const ShopContextProvider = (props) => {
   const [shopOptions, setShopOptions] = useState();
+  const [orders, setOrders] = useState();
 
   const shopOptionsRef = query(collection(db, "shop"));
 
@@ -29,8 +30,26 @@ const ShopContextProvider = (props) => {
     };
   }, []);
 
+  const ordersRef = query(collection(db, "orders"));
+
+  let { data: orderData } = useFirestoreQueryData(["orders"], ordersRef);
+
+  useEffect(() => {
+    const unSubscribe = onSnapshot(ordersRef, (snapshot) => {
+      orderData = [];
+      snapshot.docs.forEach((doc) => {
+        orderData.push({ ...doc.data(), id: doc.id });
+      });
+      setOrders(orderData);
+    });
+    return () => {
+      unSubscribe();
+    };
+  }, []);
+
   const values = {
     shopOptions,
+    orders,
   };
 
   return (
