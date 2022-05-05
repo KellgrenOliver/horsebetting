@@ -4,8 +4,8 @@ import { useShopContext } from "../contexts/ShopContext";
 import { useAuthContext } from "../contexts/AuthContext";
 import { doc, updateDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { v4 as uuidv4 } from "uuid";
 import Button from "../components/Button";
+import toast, { Toaster } from "react-hot-toast";
 
 const Container = styled.div({
   display: "flex",
@@ -14,6 +14,12 @@ const Container = styled.div({
   width: "70vw",
   gap: "2rem",
   flexWrap: "wrap",
+});
+
+const StepHeader = styled.div({
+  fontWeight: 200,
+  fontSize: "2rem",
+  marginBottom: "0.5rem",
 });
 
 const OptionWrapper = styled.div({
@@ -50,6 +56,13 @@ const InputWrapper = styled.div({
 });
 
 const SectionWrapper = styled.div({
+  "@media screen and (min-width: 1024px)": {
+    gap: "1rem",
+    display: "flex",
+  },
+});
+
+const MobileWrapper = styled.div({
   display: "flex",
   gap: "1rem",
 });
@@ -75,8 +88,24 @@ const Input = styled.input({
   },
 });
 
+const SmallInput = styled(Input)({
+  width: "calc(42vw - 0.5rem) !important",
+  "@media screen and (min-width: 600px)": {
+    width: "calc(20vw - 0.5rem) !important",
+  },
+  "@media screen and (min-width: 1024px)": {
+    width: "calc(12.5vw - 0.5rem) !important",
+  },
+});
+
 const Label = styled.label({
   fontSize: "0.8rem",
+});
+
+const WarningText = styled.div({
+  fontWeight: 200,
+  fontSize: "0.7rem",
+  marginBottom: "1rem",
 });
 
 const ShopOptions = () => {
@@ -88,14 +117,19 @@ const ShopOptions = () => {
   const [stepTwo, setStepTwo] = useState(false);
   const [stepThree, setStepThree] = useState(false);
   const [chosenOption, setChosenOption] = useState();
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [city, setCity] = useState("");
+  const [address, setAddress] = useState("");
   const { user } = useAuthContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStepTwo(false);
     setStepThree(true);
+    toast.success("Your purchase went through");
 
-    const uuid = uuidv4();
+    const orderNumber = Math.random().toString(36).slice(2);
 
     const timestamp = Date.now();
     const formatedTime = new Intl.DateTimeFormat("eu", {
@@ -115,17 +149,22 @@ const ShopOptions = () => {
     const docData = {
       userId: user?.uid,
       coins: chosenOption?.coins,
-      orderNumber: uuid,
+      money: chosenOption?.money,
+      orderNumber,
       time: formatedTime,
+      first_name,
+      last_name,
+      city,
+      address,
     };
-    setDoc(doc(db, "orders", `${uuid}`), docData);
+    setDoc(doc(db, "orders", `${user?.email}`), docData);
   };
 
   return (
     <>
       {stepOne && (
         <>
-          <h1>1. Select sum</h1>
+          <StepHeader>1. Select sum</StepHeader>
           <Container>
             {shopOptions?.map((option, i) => (
               <OptionWrapper key={i}>
@@ -144,54 +183,70 @@ const ShopOptions = () => {
       )}
       {stepTwo && (
         <>
-          <h1>2. Payment</h1>
+          <StepHeader>2. Payment</StepHeader>
           <form onSubmit={handleSubmit}>
             <InputContainer>
               <SectionWrapper>
                 <InputWrapper>
                   <Label>FIRST NAME</Label>
-                  <Input type="text" required />
+                  <Input
+                    type="text"
+                    required
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
                 </InputWrapper>
                 <InputWrapper>
                   <Label>LAST NAME</Label>
-                  <Input type="text" required />
+                  <Input
+                    type="text"
+                    required
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
                 </InputWrapper>
               </SectionWrapper>
               <SectionWrapper>
                 <InputWrapper>
                   <Label>CITY</Label>
-                  <Input type="text" required />
+                  <Input
+                    type="text"
+                    required
+                    onChange={(e) => setCity(e.target.value)}
+                  />
                 </InputWrapper>
                 <InputWrapper>
                   <Label>ADDRESS</Label>
-                  <Input type="text" required />
+                  <Input
+                    type="text"
+                    required
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
                 </InputWrapper>
               </SectionWrapper>
               <SectionWrapper>
                 <InputWrapper>
                   <Label>CARD NUMBER</Label>
-                  <Input type="text" required />
+                  <Input type="number" required />
                 </InputWrapper>
-                <InputWrapper>
-                  <Label>MM/YY</Label>
-                  <Input style={{ width: "100px" }} type="text" required />
-                </InputWrapper>
-                <InputWrapper>
-                  <Label>PNC</Label>
-                  <Input style={{ width: "100px" }} type="text" required />
-                </InputWrapper>
+                <MobileWrapper>
+                  <InputWrapper>
+                    <Label>MM/YY</Label>
+                    <SmallInput type="text" required />
+                  </InputWrapper>
+                  <InputWrapper>
+                    <Label>PNC</Label>
+                    <SmallInput type="number" required />
+                  </InputWrapper>
+                </MobileWrapper>
               </SectionWrapper>
             </InputContainer>
+            <WarningText>No money will be deducted from your card</WarningText>
             <Button title={"PAY"} type="submit" />
           </form>
         </>
       )}
       {stepThree && (
         <>
-          <h1>Thank you for your purchase!</h1>
-          <span>{`Du har köpt ${(chosenOption?.coins / 1000).toFixed(
-            1
-          )}K!`}</span>
+          <StepHeader>Thank you for your purchase!</StepHeader>
           <div>
             <Button
               title={"BACK TO SHOP"}
@@ -204,6 +259,7 @@ const ShopOptions = () => {
           </div>
         </>
       )}
+      <Toaster position="top-right" />
     </>
   );
 };

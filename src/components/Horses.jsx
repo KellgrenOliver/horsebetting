@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { useHorseContext } from "../contexts/HorseContext";
-import { useShopContext } from "../contexts/ShopContext";
 
 const HorseWrapper = styled.div({
   display: "flex",
@@ -73,9 +72,6 @@ const H3 = styled.h3({
 
 const Horses = () => {
   const { horses } = useHorseContext();
-  const { shopOptions } = useShopContext();
-
-  console.log(shopOptions);
 
   return (
     <>
