@@ -39,7 +39,7 @@ const MostCoins = () => {
             {user?.email === currentUser?.email ? <b>You</b> : user?.email}{" "}
             {user?.coins < 1000
               ? `(${user?.coins})`
-              : `(${(user?.coins / 1000).toFixed(1)}K)`}
+              : `(${(user?.coins / 1000).toFixed(0)}K)`}
           </User>
         ))}
       </Wrapper>

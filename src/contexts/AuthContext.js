@@ -13,7 +13,7 @@ import { RotateLoader } from "react-spinners";
 import styled from "@emotion/styled";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { collection, onSnapshot, query } from "firebase/firestore";
+import { collection, query } from "firebase/firestore";
 import { useFirestoreQueryData } from "@react-query-firebase/firestore";
 
 const LoadingWrapper = styled.div({
@@ -33,7 +33,6 @@ const useAuthContext = () => {
 const AuthContextProverder = (props) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState();
 
   const signup = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password).then(
@@ -81,20 +80,9 @@ const AuthContextProverder = (props) => {
 
   const userRef = query(collection(db, "users"));
 
-  let { data: usersData } = useFirestoreQueryData(["users"], userRef);
-
-  useEffect(() => {
-    const unSubscribe = onSnapshot(userRef, (snapshot) => {
-      usersData = [];
-      snapshot.docs.forEach((doc) => {
-        usersData.push({ ...doc.data(), id: doc.id });
-      });
-      setUsers(usersData);
-    });
-    return () => {
-      unSubscribe();
-    };
-  }, []);
+  let { data: users } = useFirestoreQueryData(["users"], userRef, {
+    subscribe: true,
+  });
 
   const user = users?.find((user) => user?.uid === currentUser?.uid);
 

@@ -114,7 +114,7 @@ const DesktopNavbar = () => {
             {user?.coins < 1000 ? (
               <h3>{user?.coins}</h3>
             ) : (
-              <h3>{`${(user?.coins / 1000).toFixed(1)}K`}</h3>
+              <h3>{`${(user?.coins / 1000).toFixed(0)}K`}</h3>
             )}
           </CoinsWrapper>
         </ProfileWrapper>

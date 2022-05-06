@@ -204,8 +204,8 @@ const ShopOptions = () => {
                     setStepTwo(true);
                   }}
                 >
-                  {`${(option?.coins / 1000).toFixed(1)}K`}
-                  <SmallText>Cost: {option?.money}$</SmallText>
+                  {`${(option?.coins / 1000).toFixed(0)}K`}
+                  <SmallText>Cost: ${option?.money}</SmallText>
                 </Option>
               </OptionWrapper>
             ))}

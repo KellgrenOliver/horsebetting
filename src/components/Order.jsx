@@ -50,7 +50,7 @@ const Order = ({ order }) => {
       <OrderWrapper onClick={() => setShowAll(!showAll)}>
         <TopWrapper>
           <Info style={{ fontWeight: 200, fontSize: "2rem" }}>
-            {`${(order?.coins / 1000).toFixed(1)}K`}
+            {`${(order?.coins / 1000).toFixed(0)}K`}
           </Info>
           <Info>{order.time}</Info>
           <Info>
@@ -70,7 +70,7 @@ const Order = ({ order }) => {
               <Info>Order number: {order.orderNumber}</Info>
             </InfoWrapper>
             <InfoWrapper>
-              <Info>Total cost: {order.money}$</Info>
+              <Info>Total cost: ${order.money}</Info>
             </InfoWrapper>
             <InfoWrapper>
               <Info>First name: {order.first_name}</Info>

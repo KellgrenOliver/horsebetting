@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext } from "react";
 import { db } from "../firebase";
-import { collection, onSnapshot, query } from "firebase/firestore";
-import { useFirestoreQueryData } from "@react-query-firebase/firestore";
+import { collection, query } from "firebase/firestore";
+import { useFirestoreQuery } from "@react-query-firebase/firestore";
 
 export const HorseContext = createContext();
 
@@ -10,27 +10,16 @@ const useHorseContext = () => {
 };
 
 const HorseContextProvider = (props) => {
-  const [horses, setHorses] = useState();
-
   const horsesRef = query(collection(db, "horses"));
 
-  let { data: horsesData } = useFirestoreQueryData(["horses"], horsesRef);
-
-  useEffect(() => {
-    const unSubscribe = onSnapshot(horsesRef, (snapshot) => {
-      horsesData = [];
-      snapshot.docs.forEach((doc) => {
-        horsesData.push({ ...doc.data(), id: doc.id });
-      });
-      setHorses(horsesData);
-    });
-    return () => {
-      unSubscribe();
-    };
-  }, []);
+  let { data: horsesSnapshot } = useFirestoreQuery(["horses"], horsesRef, {
+    subscribe: true,
+  });
 
   const values = {
-    horses,
+    horses: horsesSnapshot?.docs.map((horse) => {
+      return { ...horse.data(), id: horse.id };
+    }),
   };
 
   return (
