@@ -30,12 +30,12 @@ const Competitor = styled.div(({ image, user }) => {
     backgroundPosition: "center",
     backgroundSize: "cover",
     fontSize: "1.5rem",
-    width: "50px",
-    height: "50px",
-    padding: "3rem",
+    width: "30px",
+    height: "30px",
+    padding: "2rem",
     border: "5px solid",
     borderRadius: "5px",
-    margin: "2rem 2rem 0.5rem 2rem",
+    margin: "1rem 1rem 0.5rem 1rem",
     cursor: "pointer",
     "&.Active": {
       borderColor: `${
@@ -43,11 +43,11 @@ const Competitor = styled.div(({ image, user }) => {
       }`,
       boxShadow: "rgba(255, 255, 255, 0.65) 0px 0px 5px",
     },
-    "@media screen and (max-width: 600px)": {
-      padding: "2rem",
-      width: "30px",
-      height: "30px",
-      margin: "1rem 1rem 0.5rem 1rem",
+    "@media screen and (min-width: 600px)": {
+      padding: "3rem",
+      width: "50px",
+      height: "50px",
+      margin: "2rem 2rem 0.5rem 2rem",
     },
   };
 });

@@ -12,9 +12,16 @@ const Container = styled.div({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "70vw",
-  gap: "2rem",
+  width: "95vw",
+  gap: "1rem",
   flexWrap: "wrap",
+  padding: "1rem",
+  "@media screen and (min-width: 600px)": {
+    width: "80vw",
+  },
+  "@media screen and (min-width: 768px)": {
+    width: "70vw",
+  },
 });
 
 const StepHeader = styled.div({
@@ -37,17 +44,26 @@ const OptionWrapper = styled.div({
 });
 
 const Option = styled.div({
-  width: "250px",
-  height: "100px",
+  width: "150px",
+  height: "75px",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  flexDirection: "column",
   backgroundColor: "#303030",
   borderRadius: "5px",
   fontSize: "1.3rem",
   cursor: "pointer",
   "&:hover": {
     backgroundColor: "#4d4d4d",
+  },
+  "@media screen and (min-width: 600px)": {
+    width: "200px",
+    height: "100px",
+  },
+  "@media screen and (min-width: 1024px)": {
+    width: "250px",
+    height: "125px",
   },
 });
 
@@ -108,10 +124,12 @@ const Label = styled.label({
   fontSize: "0.8rem",
 });
 
-const WarningText = styled.div({
+const SmallText = styled.div({
   fontWeight: 200,
   fontSize: "0.7rem",
-  marginBottom: "1rem",
+  "@media screen and (min-width: 600px)": {
+    fontSize: "0.8rem",
+  },
 });
 
 const ShopOptions = () => {
@@ -185,8 +203,10 @@ const ShopOptions = () => {
                     setStepOne(false);
                     setStepTwo(true);
                   }}
-                >{`${(option?.coins / 1000).toFixed(1)}K`}</Option>
-                <span>{option?.money}$</span>
+                >
+                  {`${(option?.coins / 1000).toFixed(1)}K`}
+                  <SmallText>Cost: {option?.money}$</SmallText>
+                </Option>
               </OptionWrapper>
             ))}
           </Container>
@@ -254,7 +274,9 @@ const ShopOptions = () => {
                 </MobileWrapper>
               </SectionWrapper>
             </InputContainer>
-            <WarningText>No money will be deducted from your card</WarningText>
+            <SmallText style={{ marginBottom: "1rem" }}>
+              No money will be deducted from your card
+            </SmallText>
             <Button title={"PAY"} type="submit" />
           </form>
         </>
@@ -272,6 +294,7 @@ const ShopOptions = () => {
               setStepOne(true);
             }}
           />
+          {/* <span>Go to your order history</span> */}
         </>
       )}
       <Toaster position="top-right" />
