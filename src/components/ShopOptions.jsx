@@ -240,16 +240,16 @@ const ShopOptions = () => {
               <SectionWrapper>
                 <InputWrapper>
                   <Label>CARD NUMBER</Label>
-                  <Input {...getCardNumberProps()} />
+                  <Input {...getCardNumberProps()} required />
                 </InputWrapper>
                 <MobileWrapper>
                   <InputWrapper>
                     <Label>MM/YY</Label>
-                    <SmallInput {...getExpiryDateProps()} />
+                    <SmallInput {...getExpiryDateProps()} required />
                   </InputWrapper>
                   <InputWrapper>
                     <Label>PNC</Label>
-                    <SmallInput {...getCVCProps()} />
+                    <SmallInput {...getCVCProps()} required />
                   </InputWrapper>
                 </MobileWrapper>
               </SectionWrapper>
