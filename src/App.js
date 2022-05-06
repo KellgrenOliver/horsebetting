@@ -13,7 +13,6 @@ import ShopPage from "./pages/ShopPage";
 import LogOutPage from "./pages/LogOutPage";
 import DesktopNavbar from "./components/DesktopNavbar";
 import MobileNavbar from "./components/MobileNavbar";
-// import Footer from "./components/Footer";
 import AuthContextProvider from "./contexts/AuthContext";
 import ShopContextProvider from "./contexts/ShopContext";
 import HorseContextProvider from "./contexts/HorseContext";
@@ -112,7 +111,6 @@ const App = () => {
                       <LogOutPage />
                     </Route>
                   </Switch>
-                  {/* <Footer /> */}
                 </Main>
               </ShopContextProvider>
             </HorseContextProvider>
