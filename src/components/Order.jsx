@@ -29,6 +29,13 @@ const TopWrapper = styled.div({
 const BottomWrapper = styled.div({
   width: "100%",
   display: "flex",
+  flexWrap: "wrap",
+});
+
+const InfoWrapper = styled.div({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 });
 
 const Info = styled.div({
@@ -56,9 +63,21 @@ const Order = ({ order }) => {
         </TopWrapper>
         {showAll && (
           <BottomWrapper>
-            <Info>{order.email}</Info>
-            <Info>{order.orderNumber}</Info>
-            <Info> {order.money}$</Info>
+            <InfoWrapper>
+              <Info>Email: {order.email}</Info>
+            </InfoWrapper>
+            <InfoWrapper>
+              <Info>Order number: {order.orderNumber}</Info>
+            </InfoWrapper>
+            <InfoWrapper>
+              <Info>Total cost: {order.money}$</Info>
+            </InfoWrapper>
+            <InfoWrapper>
+              <Info>First name: {order.first_name}</Info>
+            </InfoWrapper>
+            <InfoWrapper>
+              <Info>Last name: {order.last_name}</Info>
+            </InfoWrapper>
           </BottomWrapper>
         )}
       </OrderWrapper>

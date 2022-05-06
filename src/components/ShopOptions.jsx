@@ -6,6 +6,7 @@ import { doc, updateDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import Button from "../components/Button";
 import toast, { Toaster } from "react-hot-toast";
+import { usePaymentInputs } from "react-payment-inputs";
 
 const Container = styled.div({
   display: "flex",
@@ -114,6 +115,9 @@ const WarningText = styled.div({
 });
 
 const ShopOptions = () => {
+  const { getCardNumberProps, getExpiryDateProps, getCVCProps } =
+    usePaymentInputs();
+
   const { shopOptions } = useShopContext();
 
   shopOptions?.sort((a, b) => a.coins - b.coins);
@@ -126,6 +130,7 @@ const ShopOptions = () => {
   const [last_name, setLastName] = useState("");
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
+
   const { user } = useAuthContext();
 
   const handleSubmit = async (e) => {
@@ -197,6 +202,7 @@ const ShopOptions = () => {
                   <Label>FIRST NAME</Label>
                   <Input
                     type="text"
+                    placeholder="First name"
                     required
                     onChange={(e) => setFirstName(e.target.value)}
                   />
@@ -205,6 +211,7 @@ const ShopOptions = () => {
                   <Label>LAST NAME</Label>
                   <Input
                     type="text"
+                    placeholder="Last name"
                     required
                     onChange={(e) => setLastName(e.target.value)}
                   />
@@ -215,6 +222,7 @@ const ShopOptions = () => {
                   <Label>CITY</Label>
                   <Input
                     type="text"
+                    placeholder="City"
                     required
                     onChange={(e) => setCity(e.target.value)}
                   />
@@ -223,6 +231,7 @@ const ShopOptions = () => {
                   <Label>ADDRESS</Label>
                   <Input
                     type="text"
+                    placeholder="Address"
                     required
                     onChange={(e) => setAddress(e.target.value)}
                   />
@@ -231,16 +240,16 @@ const ShopOptions = () => {
               <SectionWrapper>
                 <InputWrapper>
                   <Label>CARD NUMBER</Label>
-                  <Input type="number" required />
+                  <Input {...getCardNumberProps()} />
                 </InputWrapper>
                 <MobileWrapper>
                   <InputWrapper>
                     <Label>MM/YY</Label>
-                    <SmallInput type="text" required />
+                    <SmallInput {...getExpiryDateProps()} />
                   </InputWrapper>
                   <InputWrapper>
                     <Label>PNC</Label>
-                    <SmallInput type="number" required />
+                    <SmallInput {...getCVCProps()} />
                   </InputWrapper>
                 </MobileWrapper>
               </SectionWrapper>
