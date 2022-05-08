@@ -137,11 +137,11 @@ const MobileNavLinks = ({ showMenu, setShowMenu }) => {
           <LinkWrapper
             onClick={() => {
               setShowMenu(!showMenu);
-              history.push("/statistic");
+              history.push("/statistics");
             }}
           >
             <Icon icon={faChartArea} />
-            <NavLink>STATISTIC</NavLink>
+            <NavLink>STATISTICS</NavLink>
           </LinkWrapper>
         </>
       )}

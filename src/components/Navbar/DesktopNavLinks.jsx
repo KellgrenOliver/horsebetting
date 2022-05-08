@@ -95,7 +95,7 @@ const DesktopNavLinks = () => {
             <Icon icon={faHorse} />
             <NavLink>HORSES</NavLink>
           </LinkWrapper>
-          <LinkWrapper to="/statistic">
+          <LinkWrapper to="/statistics">
             <Icon icon={faChartArea} />
             <NavLink>STATISTICS</NavLink>
           </LinkWrapper>

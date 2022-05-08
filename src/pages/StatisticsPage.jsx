@@ -7,6 +7,7 @@ import Header from "../components/Headers/Header";
 import SmallHeader from "../components/Headers/SmallHeader";
 import { useSpring, animated, config } from "react-spring";
 import styled from "@emotion/styled";
+import { useAuthContext } from "../contexts/AuthContext";
 
 const FadeWrapper = animated.div;
 
@@ -32,6 +33,8 @@ const StatisticsPage = () => {
     delay: 400,
     config: config.molasses,
   });
+
+  const { user } = useAuthContext();
   return (
     <>
       <Header title={"STATISTICS"} />
@@ -49,10 +52,12 @@ const StatisticsPage = () => {
             <SmallHeader title={"Horse wins"} />
             <HorseGraph />
           </Wrapper>
-          <Wrapper>
-            <SmallHeader title={"My results"} />
-            <MyResultsGraph />
-          </Wrapper>
+          {user && (
+            <Wrapper>
+              <SmallHeader title={"My results"} />
+              <MyResultsGraph />
+            </Wrapper>
+          )}
         </Container>
       </FadeWrapper>
     </>
