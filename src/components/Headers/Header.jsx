@@ -4,14 +4,14 @@ import { useSpring, animated, config } from "react-spring";
 
 const H1 = styled.h1({
   fontWeight: 200,
-  fontSize: "3rem",
+  fontSize: "2.5rem",
   marginTop: "3rem",
   marginBottom: "1rem",
   "@media screen and (min-width: 600px)": {
-    fontSize: "4rem",
+    fontSize: "3rem",
   },
   "@media screen and (min-width: 1024px)": {
-    fontSize: "5rem",
+    fontSize: "4rem",
   },
 });
 
