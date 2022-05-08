@@ -7,7 +7,7 @@ import {
   faHorse,
   faChartArea,
   faUserAlt,
-  faTrophy,
+  faCartPlus,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "../contexts/AuthContext";
@@ -87,21 +87,23 @@ const MobileNavLinks = ({ showMenu, setShowMenu }) => {
           <LinkWrapper
             onClick={() => {
               setShowMenu(!showMenu);
-              history.push("/statistic");
+              history.push("/statistics");
             }}
           >
             <Icon icon={faChartArea} />
-            <NavLink>STATISTIC</NavLink>
+            <NavLink>STATISTICS</NavLink>
           </LinkWrapper>
+
           <LinkWrapper
             onClick={() => {
               setShowMenu(!showMenu);
-              history.push("/results");
+              history.push("/shop");
             }}
           >
-            <Icon icon={faTrophy} />
-            <NavLink>RESULTS</NavLink>
+            <Icon icon={faCartPlus} />
+            <NavLink>SHOP</NavLink>
           </LinkWrapper>
+
           <LinkWrapper
             onClick={() => {
               setShowMenu(!showMenu);

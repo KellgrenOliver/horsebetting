@@ -34,7 +34,7 @@ const StatisticsPage = () => {
   });
   return (
     <>
-      <Header title={"STATISTIC"} />
+      <Header title={"STATISTICS"} />
       <FadeWrapper style={fade}>
         <Container>
           <Wrapper>

@@ -146,7 +146,7 @@ const UpdateProfileForm = () => {
         <Toaster position="top-right" />
       </form>
       <Link style={{ textDecoration: "none" }} to="/myprofile/orderhistory">
-        <OrderText>VIEW ORDER HISTORY</OrderText>
+        <OrderText>ORDER HISTORY</OrderText>
       </Link>
     </>
   );
