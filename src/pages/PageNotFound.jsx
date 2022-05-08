@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import Header from "../components/Headers/Header";
 import SmallHeader from "../components/Headers/SmallHeader";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button";
 import { Link } from "react-router-dom";
 import { useSpring, animated, config } from "react-spring";
 

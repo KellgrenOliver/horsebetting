@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/Headers/Header";
-import UpdateProfileForm from "../components/UpdateProfileForm";
+import UpdateProfileForm from "../components/ProfileForm/UpdateProfileForm";
 import { useSpring, animated, config } from "react-spring";
 
 const FadeWrapper = animated.div;

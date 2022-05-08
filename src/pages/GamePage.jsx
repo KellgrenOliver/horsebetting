@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/Headers/Header";
-import Game from "../components/Game";
+import Game from "../components/Game/Game";
 import { useSpring, animated, config } from "react-spring";
 
 const FadedGame = animated.div;

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useAuthContext } from "../contexts/AuthContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const StyledButton = styled.button(({ user }) => {
   return {

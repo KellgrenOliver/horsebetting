@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "@emotion/styled";
 import { Link, useHistory } from "react-router-dom";
-import { useAuthContext } from "../contexts/AuthContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 import { useSpring, animated, config } from "react-spring";
-import Header from "./Headers/Header";
-import Button from "./Button";
+import Header from "../Headers/Header";
+import Button from "../Buttons/Button";
 
 const Container = styled.div({
   marginTop: "10vh",
@@ -38,7 +38,7 @@ const Input = styled.input({
     width: "25vw",
   },
 });
-const LogInLink = styled(Link)({
+const SignUpLink = styled(Link)({
   cursor: "pointer",
   textDecoration: "none",
   color: "white",
@@ -48,26 +48,20 @@ const LogInLink = styled(Link)({
   },
 });
 
-const FadedSignUp = animated.div;
+const FadedLogIn = animated.div;
 
-const SignUpComp = () => {
+const LogInComp = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
   const [error, setError] = useState(null);
-  const { signup } = useAuthContext();
+  const { login } = useAuthContext();
   const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("The passwords does not match");
-    }
     setError(null);
-
     try {
-      await signup(emailRef.current.value, passwordRef.current.value);
+      await login(emailRef.current.value, passwordRef.current.value);
       history.push("/");
     } catch (e) {
       setError(e.message);
@@ -82,25 +76,25 @@ const SignUpComp = () => {
   });
 
   return (
-    <FadedSignUp style={fade}>
+    <FadedLogIn style={fade}>
       <Container>
-        <Header title={"CREATE ACCOUNT"} />
+        <Header title={"LOG IN"} />
         {error && <h2>{error}</h2>}
         <form onSubmit={handleSubmit}>
           <Wrapper>
-            <label type="email">Email</label>
+            <label>Email</label>
             <Input type="email" ref={emailRef} required />
             <label>Password</label>
             <Input type="password" ref={passwordRef} required />
-            <label>Confirm password</label>
-            <Input type="password" ref={passwordConfirmRef} required />
-            <Button title={"CREATE"} type="submit" />
+            <Button title={"LOG IN"} type="submit" />
           </Wrapper>
         </form>
-        <LogInLink to="/login">Already have an account? Log in here</LogInLink>
+        <SignUpLink to="/signup">
+          Don't have an account? Create your account here
+        </SignUpLink>
       </Container>
-    </FadedSignUp>
+    </FadedLogIn>
   );
 };
 
-export default SignUpComp;
+export default LogInComp;

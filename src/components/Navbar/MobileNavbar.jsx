@@ -9,7 +9,7 @@ import {
   faHome,
   faCoins,
 } from "@fortawesome/free-solid-svg-icons";
-import { useAuthContext } from "../contexts/AuthContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const HamburgerContent = styled.div(({ user }) => {
   return {

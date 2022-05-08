@@ -1,11 +1,11 @@
 import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../contexts/AuthContext";
-import ColorPicker from "./ColorPicker";
+import { useAuthContext } from "../../contexts/AuthContext";
+import ColorPicker from "../ColorPicker/ColorPicker";
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../firebase";
-import Button from "./Button";
+import { db } from "../../firebase";
+import Button from "../Buttons/Button";
 import toast, { Toaster } from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoneyCheck } from "@fortawesome/free-solid-svg-icons";

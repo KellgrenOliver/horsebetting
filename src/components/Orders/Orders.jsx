@@ -1,8 +1,8 @@
 import React from "react";
 import Order from "./Order";
-import { useShopContext } from "../contexts/ShopContext";
-import { useAuthContext } from "../contexts/AuthContext";
-import SmallHeader from "./Headers/SmallHeader";
+import { useShopContext } from "../../contexts/ShopContext";
+import { useAuthContext } from "../../contexts/AuthContext";
+import SmallHeader from "../Headers/SmallHeader";
 
 const Orders = () => {
   const { orders } = useShopContext();

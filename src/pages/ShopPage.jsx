@@ -1,5 +1,5 @@
 import React from "react";
-import ShopOptions from "../components/ShopOptions";
+import Shop from "../components/Shop/Shop";
 import { useSpring, animated, config } from "react-spring";
 import Header from "../components/Headers/Header";
 
@@ -16,7 +16,7 @@ const ShopPage = () => {
     <>
       <Header title={"SHOP"} />
       <FadeWrapper style={fade}>
-        <ShopOptions />
+        <Shop />
       </FadeWrapper>
     </>
   );

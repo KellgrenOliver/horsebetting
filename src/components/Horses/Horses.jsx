@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useHorseContext } from "../contexts/HorseContext";
+import { useHorseContext } from "../../contexts/HorseContext";
 
 const HorseWrapper = styled.div({
   display: "flex",

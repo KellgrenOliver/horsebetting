@@ -1,18 +1,18 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGamepad,
   faHorse,
   faChartArea,
   faUserAlt,
-  faCartPlus,
   faSignOutAlt,
+  faCartPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import { useAuthContext } from "../contexts/AuthContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 
-const LinkWrapper = styled.div({
+const LinkWrapper = styled(Link)({
   margin: 0,
   padding: "1rem 0 1rem 0 ",
   width: "100%",
@@ -57,91 +57,47 @@ const Icon = styled(FontAwesomeIcon)({
   },
 });
 
-const MobileNavLinks = ({ showMenu, setShowMenu }) => {
+const DesktopNavLinks = () => {
   const { currentUser } = useAuthContext();
-
-  const history = useHistory();
 
   return (
     <>
       {currentUser ? (
         <>
-          <LinkWrapper
-            onClick={() => {
-              setShowMenu(!showMenu);
-              history.push("/game");
-            }}
-          >
+          <LinkWrapper to="/game">
             <Icon icon={faGamepad} />
             <NavLink>GAME</NavLink>
           </LinkWrapper>
-          <LinkWrapper
-            onClick={() => {
-              setShowMenu(!showMenu);
-              history.push("/horses");
-            }}
-          >
+          <LinkWrapper to="/horses">
             <Icon icon={faHorse} />
             <NavLink>HORSES</NavLink>
           </LinkWrapper>
-          <LinkWrapper
-            onClick={() => {
-              setShowMenu(!showMenu);
-              history.push("/statistics");
-            }}
-          >
+          <LinkWrapper to="/statistics">
             <Icon icon={faChartArea} />
             <NavLink>STATISTICS</NavLink>
           </LinkWrapper>
-
-          <LinkWrapper
-            onClick={() => {
-              setShowMenu(!showMenu);
-              history.push("/shop");
-            }}
-          >
-            <Icon icon={faCartPlus} />
-            <NavLink>SHOP</NavLink>
-          </LinkWrapper>
-
-          <LinkWrapper
-            onClick={() => {
-              setShowMenu(!showMenu);
-              history.push("/myprofile");
-            }}
-          >
+          <LinkWrapper to="/myprofile">
             <Icon icon={faUserAlt} />
             <NavLink>MY PROFILE</NavLink>
           </LinkWrapper>
-          <LinkWrapper
-            onClick={() => {
-              setShowMenu(!showMenu);
-              history.push("/logout");
-            }}
-          >
+          <LinkWrapper to="/shop">
+            <Icon icon={faCartPlus} />
+            <NavLink>SHOP</NavLink>
+          </LinkWrapper>
+          <LinkWrapper to="/logout">
             <Icon icon={faSignOutAlt} />
             <NavLink>LOG OUT</NavLink>
           </LinkWrapper>
         </>
       ) : (
         <>
-          <LinkWrapper
-            onClick={() => {
-              setShowMenu(!showMenu);
-              history.push("/horses");
-            }}
-          >
+          <LinkWrapper to="/horses">
             <Icon icon={faHorse} />
             <NavLink>HORSES</NavLink>
           </LinkWrapper>
-          <LinkWrapper
-            onClick={() => {
-              setShowMenu(!showMenu);
-              history.push("/statistic");
-            }}
-          >
+          <LinkWrapper to="/statistic">
             <Icon icon={faChartArea} />
-            <NavLink>STATISTIC</NavLink>
+            <NavLink>STATISTICS</NavLink>
           </LinkWrapper>
         </>
       )}
@@ -149,4 +105,4 @@ const MobileNavLinks = ({ showMenu, setShowMenu }) => {
   );
 };
 
-export default MobileNavLinks;
+export default DesktopNavLinks;

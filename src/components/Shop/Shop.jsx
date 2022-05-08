@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { useShopContext } from "../contexts/ShopContext";
-import { useAuthContext } from "../contexts/AuthContext";
+import { useShopContext } from "../../contexts/ShopContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 import { doc, updateDoc, setDoc } from "firebase/firestore";
-import { db } from "../firebase";
-import Button from "../components/Button";
+import { db } from "../../firebase";
+import Button from "../Buttons/Button";
 import toast, { Toaster } from "react-hot-toast";
 import { usePaymentInputs } from "react-payment-inputs";
-import SmallHeader from "./Headers/SmallHeader";
+import SmallHeader from "../Headers/SmallHeader";
 
 const Container = styled.div({
   display: "flex",
@@ -122,7 +122,7 @@ const SmallText = styled.div({
   },
 });
 
-const ShopOptions = () => {
+const Shop = () => {
   const { getCardNumberProps, getExpiryDateProps, getCVCProps } =
     usePaymentInputs();
 
@@ -288,4 +288,4 @@ const ShopOptions = () => {
   );
 };
 
-export default ShopOptions;
+export default Shop;

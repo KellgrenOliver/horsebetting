@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { useAuthContext } from "../contexts/AuthContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMedal } from "@fortawesome/free-solid-svg-icons";
 import Confetti from "react-confetti";
 import toast, { Toaster } from "react-hot-toast";
-import Button from "./Button";
-import { useHorseContext } from "../contexts/HorseContext";
+import Button from "../Buttons/Button";
+import { useHorseContext } from "../../contexts/HorseContext";
 
 const CompetitorContainer = styled.div({
   display: "flex",

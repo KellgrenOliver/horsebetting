@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import DesktopNavLinks from "./DesktopNavLinks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faCoins } from "@fortawesome/free-solid-svg-icons";
-import { useAuthContext } from "../contexts/AuthContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const Container = styled.div(({ currentUser, user }) => {
   return {

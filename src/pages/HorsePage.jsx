@@ -1,5 +1,5 @@
 import React from "react";
-import Horses from "../components/Horses";
+import Horses from "../components/Horses/Horses";
 import { useSpring, animated, config } from "react-spring";
 import Header from "../components/Headers/Header";
 

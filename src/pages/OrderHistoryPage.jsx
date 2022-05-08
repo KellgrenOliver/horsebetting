@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/Headers/Header";
-import Orders from "../components/Orders";
+import Orders from "../components/Orders/Orders";
 import { useSpring, animated, config } from "react-spring";
 
 const FadeWrapper = animated.div;
