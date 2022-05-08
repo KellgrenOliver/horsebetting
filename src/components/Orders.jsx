@@ -2,6 +2,7 @@ import React from "react";
 import Order from "./Order";
 import { useShopContext } from "../contexts/ShopContext";
 import { useAuthContext } from "../contexts/AuthContext";
+import SmallHeader from "./Headers/SmallHeader";
 
 const Orders = () => {
   const { orders } = useShopContext();
@@ -11,9 +12,15 @@ const Orders = () => {
 
   return (
     <>
-      {filteredOrders?.map((order) => (
-        <Order key={order.orderNumber} order={order} />
-      ))}
+      {filteredOrders.length > 0 ? (
+        <>
+          {filteredOrders?.map((order) => (
+            <Order key={order.orderNumber} order={order} />
+          ))}
+        </>
+      ) : (
+        <SmallHeader title={"You have not bought anything"} />
+      )}
     </>
   );
 };
