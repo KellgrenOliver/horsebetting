@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { Link, useHistory } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useSpring, animated, config } from "react-spring";
-import Header from "./Header";
+import Header from "./Headers/Header";
 import Button from "./Button";
 
 const Container = styled.div({

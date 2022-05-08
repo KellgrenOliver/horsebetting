@@ -9,23 +9,27 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import styled from "@emotion/styled";
-import { useHorseContext } from "../contexts/HorseContext";
-
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
-ChartJS.defaults.color = "white";
-ChartJS.defaults.scale.grid.color = "gray";
+import { useHorseContext } from "../../contexts/HorseContext";
 
 const Container = styled.div({
-  width: "100vw",
+  width: "90vw",
+  margin: "0rem 1rem 1rem 1rem",
   "@media screen and (min-width: 600px)": {
-    width: "70vw",
+    width: "30vw",
+  },
+  "@media screen and (min-width: 1024px)": {
+    width: "35vw",
   },
 });
-const Graph = () => {
+const HorseGraph = () => {
   const { horses } = useHorseContext();
 
+  ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
+  ChartJS.defaults.color = "white";
+  ChartJS.defaults.scale.grid.color = "gray";
+
   const horseNames = horses && horses.map((horse) => horse.title);
-  const horseAge = horses && horses.map((horse) => horse.wins);
+  const horseWins = horses && horses.map((horse) => horse.wins);
 
   const labels = horseNames;
   const data = {
@@ -33,7 +37,7 @@ const Graph = () => {
     datasets: [
       {
         color: "white",
-        data: horseAge,
+        data: horseWins,
         backgroundColor: [
           "rgb(123, 220, 181",
           "rgb(6, 147, 227)",
@@ -51,24 +55,8 @@ const Graph = () => {
       font: {
         color: "white",
       },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "( Horse )",
-          align: "start",
-        },
-        stacked: true,
-      },
-      y: {
-        title: {
-          display: true,
-          text: "( Wins )",
-          align: "start",
-        },
-
-        stacked: true,
+      legend: {
+        display: false,
       },
     },
   };
@@ -79,4 +67,4 @@ const Graph = () => {
   );
 };
 
-export default Graph;
+export default HorseGraph;

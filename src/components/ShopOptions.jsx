@@ -7,6 +7,7 @@ import { db } from "../firebase";
 import Button from "../components/Button";
 import toast, { Toaster } from "react-hot-toast";
 import { usePaymentInputs } from "react-payment-inputs";
+import SmallHeader from "./Headers/SmallHeader";
 
 const Container = styled.div({
   display: "flex",
@@ -21,17 +22,6 @@ const Container = styled.div({
   },
   "@media screen and (min-width: 768px)": {
     width: "70vw",
-  },
-});
-
-const StepHeader = styled.div({
-  fontWeight: 200,
-  fontSize: "1.5rem",
-  paddingLeft: "1rem",
-  paddingRight: "1rem",
-  marginBottom: "0.5rem",
-  "@media screen and (min-width: 600px)": {
-    fontSize: "2rem",
   },
 });
 
@@ -193,7 +183,7 @@ const ShopOptions = () => {
     <>
       {stepOne && (
         <>
-          <StepHeader>1. Select sum</StepHeader>
+          <SmallHeader title={"1. Select sum"} />
           <Container>
             {shopOptions?.map((option, i) => (
               <OptionWrapper key={i}>
@@ -214,7 +204,7 @@ const ShopOptions = () => {
       )}
       {stepTwo && (
         <>
-          <StepHeader>2. Payment</StepHeader>
+          <SmallHeader title={"2. Payment"} />
           <form onSubmit={handleSubmit}>
             <InputContainer>
               <SectionWrapper>
@@ -283,9 +273,9 @@ const ShopOptions = () => {
       )}
       {stepThree && (
         <>
-          <StepHeader style={{ marginBottom: "1rem" }}>
-            Thank you for your purchase!
-          </StepHeader>
+          <div style={{ marginBottom: "1rem" }}>
+            <SmallHeader title={" Thank you for your purchase!"} />
+          </div>
           <Button
             title={"BACK TO SHOP"}
             type="button"
@@ -294,7 +284,6 @@ const ShopOptions = () => {
               setStepOne(true);
             }}
           />
-          {/* <span>Go to your order history</span> */}
         </>
       )}
       <Toaster position="top-right" />

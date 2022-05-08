@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import LogInComp from "../components/LogInComp";
-import Header from "../components/Header";
+import Header from "../components/Headers/Header";
 import TypeWriter from "../components/HomePageTypeWriter";
 import InfoText from "../components/HomePageText";
 

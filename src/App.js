@@ -2,8 +2,7 @@ import React from "react";
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import HorsePage from "./pages/HorsePage";
-import StatisticPage from "./pages/StatisticPage";
-import ResultsPage from "./pages/ResultsPage";
+import StatisticsPage from "./pages/StatisticsPage";
 import LogInComp from "./components/LogInComp";
 import SignUpComp from "./components/SignUpComp";
 import GamePage from "./pages/GamePage";
@@ -83,11 +82,8 @@ const App = () => {
                     <Route exact path="/horses">
                       <HorsePage />
                     </Route>
-                    <Route exact path="/statistic">
-                      <StatisticPage />
-                    </Route>
-                    <Route exact path="/results">
-                      <ResultsPage />
+                    <Route exact path="/statistics">
+                      <StatisticsPage />
                     </Route>
                     <Route exact path="/login">
                       <LogInComp />

@@ -1,7 +1,7 @@
 import React from "react";
 import Horses from "../components/Horses";
 import { useSpring, animated, config } from "react-spring";
-import Header from "../components/Header";
+import Header from "../components/Headers/Header";
 
 const FadeWrapper = animated.div;
 

@@ -7,7 +7,6 @@ import {
   faHorse,
   faChartArea,
   faUserAlt,
-  faTrophy,
   faSignOutAlt,
   faCartPlus,
 } from "@fortawesome/free-solid-svg-icons";
@@ -73,13 +72,9 @@ const DesktopNavLinks = () => {
             <Icon icon={faHorse} />
             <NavLink>HORSES</NavLink>
           </LinkWrapper>
-          <LinkWrapper to="/statistic">
+          <LinkWrapper to="/statistics">
             <Icon icon={faChartArea} />
             <NavLink>STATISTIC</NavLink>
-          </LinkWrapper>
-          <LinkWrapper to="/results">
-            <Icon icon={faTrophy} />
-            <NavLink>RESULTS</NavLink>
           </LinkWrapper>
           <LinkWrapper to="/myprofile">
             <Icon icon={faUserAlt} />
