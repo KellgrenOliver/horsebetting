@@ -10,6 +10,7 @@ import MyProfilePage from "./pages/MyProfilePage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
 import ShopPage from "./pages/ShopPage";
 import LogOutPage from "./pages/LogOutPage";
+import PageNotFound from "./pages/PageNotFound";
 import DesktopNavbar from "./components/DesktopNavbar";
 import MobileNavbar from "./components/MobileNavbar";
 import AuthContextProvider from "./contexts/AuthContext";
@@ -105,6 +106,9 @@ const App = () => {
                     </Route>
                     <Route exact path="/logout">
                       <LogOutPage />
+                    </Route>
+                    <Route exact path="*">
+                      <PageNotFound />
                     </Route>
                   </Switch>
                 </Main>
