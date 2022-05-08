@@ -7,14 +7,9 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import Button from "./Button";
 import toast, { Toaster } from "react-hot-toast";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoneyCheck } from "@fortawesome/free-solid-svg-icons";
 
-const OrderText = styled.div({
-  fontWeight: 300,
-  fontSize: "1rem",
-  marginBottom: "1rem",
-  cursor: "pointer",
-  color: "white",
-});
 const InputWrapper = styled.div({
   display: "flex",
   justifyContent: "center",
@@ -43,6 +38,22 @@ const Input = styled.input({
 });
 const Label = styled.label({
   fontSize: "0.8rem",
+});
+const OrderHistoryWrapper = styled.div({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "0.5rem",
+  margin: "auto",
+});
+const OrderText = styled.div({
+  fontWeight: 300,
+  fontSize: "1rem",
+  cursor: "pointer",
+  color: "white",
+});
+const Icon = styled(FontAwesomeIcon)({
+  fontSize: "1rem",
 });
 
 const UpdateProfileForm = () => {
@@ -142,11 +153,15 @@ const UpdateProfileForm = () => {
             autoComplete="new-password"
           />
         </InputWrapper>
+
         <Button title={"CONFIRM"} disabled={loading} type="submit" />
         <Toaster position="top-right" />
       </form>
       <Link style={{ textDecoration: "none" }} to="/myprofile/orderhistory">
-        <OrderText>ORDER HISTORY</OrderText>
+        <OrderHistoryWrapper>
+          <Icon style={{ color: "white" }} icon={faMoneyCheck} />
+          <OrderText>ORDER HISTORY</OrderText>
+        </OrderHistoryWrapper>
       </Link>
     </>
   );

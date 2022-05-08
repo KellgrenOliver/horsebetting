@@ -1,18 +1,15 @@
 import React from "react";
+import styled from "@emotion/styled";
 import Header from "../components/Headers/Header";
+import SmallHeader from "../components/Headers/SmallHeader";
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
 import { useSpring, animated, config } from "react-spring";
-import styled from "@emotion/styled";
 
 const FadedGame = animated.div;
 
 const Container = styled.div({
   margin: "auto",
-  width: "70%",
-  "@media screen and (min-width: 768px)": {
-    width: "100%",
-  },
 });
 
 const PageNotFound = () => {
@@ -28,7 +25,7 @@ const PageNotFound = () => {
       <Header title={"404 NOT FOUND"} />
       <FadedGame style={fade}>
         <Container>
-          <span>THE PAGE YOU WERE LOOKING FOR DOES NOT EXIST</span>
+          <SmallHeader title={"THE PAGE YOU WERE LOOKING FOR DOES NOT EXIST"} />
           <div style={{ margin: "1rem" }}>
             <Link to="/">
               <Button title={"BACK TO HOME"} />

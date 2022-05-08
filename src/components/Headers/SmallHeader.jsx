@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 const Header = styled.div({
   fontWeight: 200,
-  fontSize: "1rem",
+  fontSize: "1.2rem",
   paddingLeft: "1rem",
   paddingRight: "1rem",
   marginBottom: "0.5rem",
