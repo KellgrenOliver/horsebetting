@@ -5,9 +5,10 @@ import { useSpring, animated, config } from "react-spring";
 const H1 = styled.h1({
   fontWeight: 200,
   fontSize: "2.5rem",
-  marginTop: "3rem",
+  marginTop: "4rem",
   marginBottom: "1rem",
   "@media screen and (min-width: 600px)": {
+    marginTop: "3rem",
     fontSize: "3rem",
   },
   "@media screen and (min-width: 1024px)": {

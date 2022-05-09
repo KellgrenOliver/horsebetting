@@ -3,18 +3,21 @@ import styled from "@emotion/styled";
 import { useSpring, animated, config } from "react-spring";
 
 const Container = styled.div({
-  marginBottom: "4rem",
+  marginBottom: "3rem",
 });
 
-const Paragraph = styled.h2({
+const Paragraph = styled.div({
   fontWeight: 200,
   textAlign: "left",
   margin: "0.5rem auto",
   width: "90%",
+  fontSize: "1rem",
   "@media screen and (min-width: 600px)": {
+    fontSize: "1.2rem",
     width: "70%",
   },
   "@media screen and (min-width: 1024px)": {
+    fontSize: "1.4rem",
     width: "60%",
   },
 });

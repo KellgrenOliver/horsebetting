@@ -25,16 +25,17 @@ const HamburgerContent = styled.div(({ user }) => {
     alignItems: "center",
     textAlign: "left",
     flexDirection: "column",
-    zIndex: 999,
+    zIndex: 150,
   };
 });
-
 const ImgWrapper = styled(Link)({
   cursor: "pointer",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
+  marginTop: "4rem",
+  marginBottom: "1rem",
 });
 const TopWrapper = styled.div({
   display: "flex",
@@ -42,26 +43,16 @@ const TopWrapper = styled.div({
   alignItems: "center",
   zIndex: 999,
 });
-const CloseIconWrapper = styled.div({
-  display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "center",
-  width: "100%",
-});
-const OpenIcon = styled(FontAwesomeIcon)({
+const Icon = styled(FontAwesomeIcon)({
   fontSize: "2rem",
-  //   margin: "2.5rem 1rem 0 1rem ",
   top: 15,
   left: 20,
   position: "fixed",
-});
-const CloseIcon = styled(FontAwesomeIcon)({
-  fontSize: "2rem",
-  margin: "1rem 0rem 1rem 1.2rem ",
   color: "white",
 });
-const HomeIcon = styled(CloseIcon)({
+const HomeIcon = styled(FontAwesomeIcon)({
   fontSize: "5rem",
+  color: "white",
 });
 const NavLinkWrapper = styled.div({
   width: "100%",
@@ -108,13 +99,11 @@ const DesktopNavbar = () => {
   return (
     <>
       <TopWrapper>
-        <OpenIcon icon={faBars} onClick={() => setShowMenu(!showMenu)} />
+        <Icon icon={faBars} onClick={() => setShowMenu(!showMenu)} />
       </TopWrapper>
       {showMenu && (
         <HamburgerContent user={user}>
-          <CloseIconWrapper>
-            <CloseIcon icon={faTimes} onClick={() => setShowMenu(!showMenu)} />
-          </CloseIconWrapper>
+          <Icon icon={faTimes} onClick={() => setShowMenu(!showMenu)} />
           <ImgWrapper to="/" onClick={() => setShowMenu(!showMenu)}>
             <HomeIcon icon={faHome} />
           </ImgWrapper>
