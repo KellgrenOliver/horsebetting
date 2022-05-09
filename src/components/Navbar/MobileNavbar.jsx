@@ -50,7 +50,7 @@ const CloseIconWrapper = styled.div({
 });
 const OpenIcon = styled(FontAwesomeIcon)({
   fontSize: "2rem",
-  margin: "1.5rem 1rem 0 1rem ",
+  margin: "2.5rem 1rem 0 1rem ",
   position: "fixed",
 });
 const CloseIcon = styled(FontAwesomeIcon)({
@@ -74,8 +74,8 @@ const ProfileWrapper = styled.div({
   display: "flex",
   justifyContent: "space-around",
   alignItems: "center",
-  marginTop: "auto",
-  marginBottom: "0.5rem",
+  marginBottom: "auto",
+  marginTop: "0.5rem",
 });
 const ProfileBox = styled(Link)({
   width: "50px",
