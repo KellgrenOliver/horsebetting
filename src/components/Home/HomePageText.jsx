@@ -2,6 +2,10 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useSpring, animated, config } from "react-spring";
 
+const Container = styled.div({
+  marginBottom: "4rem",
+});
+
 const Paragraph = styled.h2({
   fontWeight: 200,
   textAlign: "left",
@@ -37,7 +41,7 @@ const HomePageText = () => {
     config: config.molasses,
   });
   return (
-    <>
+    <Container>
       <Text style={fade1}>
         <Paragraph>
           Betting on horse racing or horse betting commonly occurs at many horse
@@ -71,7 +75,7 @@ const HomePageText = () => {
           in the UK).
         </Paragraph>
       </Text>
-    </>
+    </Container>
   );
 };
 

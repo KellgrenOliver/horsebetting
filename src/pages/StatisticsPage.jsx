@@ -17,6 +17,10 @@ const Container = styled.div({
   alignItems: "center",
   width: "100%",
   flexWrap: "wrap",
+  marginBottom: "3rem",
+  "@media screen and (min-width: 1024px)": {
+    marginBottom: "1rem",
+  },
 });
 
 const Wrapper = styled.div({

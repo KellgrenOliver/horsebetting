@@ -9,7 +9,13 @@ const HorseWrapper = styled.div({
   flexWrap: "wrap",
   flexDirection: "row",
   width: "100%",
-  marginBottom: "2rem",
+  marginBottom: "4rem",
+  "@media screen and (min-width: 600px)": {
+    marginBottom: "2rem",
+  },
+  "@media screen and (min-width: 1024px)": {
+    marginBottom: "1rem",
+  },
 });
 const Horse = styled.div(({ image }) => {
   return {
@@ -36,7 +42,7 @@ const Horse = styled.div(({ image }) => {
   };
 });
 const CompetitorWrapper = styled.div({
-  margin: "2rem",
+  margin: "0.5rem",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",

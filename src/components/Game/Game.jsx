@@ -140,7 +140,8 @@ const Game = () => {
   const [guessedValue, setGuessedValue] = useState(0);
   const { user } = useAuthContext();
 
-  const startRace = async () => {
+  const startRace = async (e) => {
+    e.preventDefault();
     const winner = horses[Math.floor(Math.random() * horses.length)];
     setWinner(winner);
     setRenderGame(false);
@@ -185,52 +186,47 @@ const Game = () => {
     <>
       {renderGame && (
         <>
-          {horses && (
-            <>
-              <CompetitorContainer>
-                {horses &&
-                  horses.map((horse) => {
-                    return (
-                      <CompetitorWrapper key={horse.id}>
-                        <Competitor
-                          user={user}
-                          image={horse.image}
-                          onClick={() => {
-                            setActiveId(horse.id);
-                            setGuessedWinner(horse.title);
-                          }}
-                          className={activeId === horse.id && "Active"}
-                        />
-                        <H3 style={{ marginTop: "auto" }}>{horse.title}</H3>
-                      </CompetitorWrapper>
-                    );
-                  })}
-              </CompetitorContainer>
-
-              {activeId && (
-                <SubmitForm onSubmit={startRace}>
-                  <label>Enter coins</label>
-                  <StyledInput
-                    type="number"
-                    min={1}
-                    max={user?.coins}
-                    value={guessedValue || ""}
-                    onChange={(e) => setGuessedValue(e.target.value)}
-                    required
-                  />
-                  <Button
-                    title={"START RACE"}
-                    type="submit"
+          <CompetitorContainer>
+            {horses?.map((horse) => {
+              return (
+                <CompetitorWrapper key={horse.id}>
+                  <Competitor
+                    user={user}
+                    image={horse.image}
                     onClick={() => {
-                      if (user?.coins === 0) {
-                        notify();
-                      }
+                      setActiveId(horse.id);
+                      setGuessedWinner(horse.title);
                     }}
+                    className={activeId === horse.id && "Active"}
                   />
-                  <Toaster position="top-right" />
-                </SubmitForm>
-              )}
-            </>
+                  <H3 style={{ marginTop: "auto" }}>{horse.title}</H3>
+                </CompetitorWrapper>
+              );
+            })}
+          </CompetitorContainer>
+
+          {activeId && (
+            <SubmitForm onSubmit={startRace}>
+              <label>Enter coins</label>
+              <StyledInput
+                type="number"
+                min={1}
+                max={user?.coins}
+                value={guessedValue || ""}
+                onChange={(e) => setGuessedValue(e.target.value)}
+                required
+              />
+              <Button
+                title={"START RACE"}
+                type="submit"
+                onClick={() => {
+                  if (user?.coins === 0) {
+                    notify();
+                  }
+                }}
+              />
+              <Toaster position="top-right" />
+            </SubmitForm>
           )}
         </>
       )}
@@ -253,9 +249,7 @@ const Game = () => {
               </H3>
             </>
           )}
-          {winner && (
-            <Button title={"PLAY AGAIN"} type="submit" onClick={playAgain} />
-          )}
+          {winner && <Button title={"PLAY AGAIN"} onClick={playAgain} />}
         </>
       )}
     </>
