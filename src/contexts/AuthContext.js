@@ -31,12 +31,15 @@ const useAuthContext = () => {
 };
 
 const AuthContextProverder = (props) => {
+  // States
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // SignUp function
   const signup = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password).then(
       (user) => {
+        // Sets user data
         const docData = {
           email: user.user.email,
           uid: user.user.uid,
@@ -46,31 +49,40 @@ const AuthContextProverder = (props) => {
           primaryColor: "",
           secondaryColor: "",
         };
+        // Adding user to database
         setDoc(doc(db, "users", `${docData.uid}`), docData);
       }
     );
   };
+
+  // LogiN function
   const login = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
+
+  // SignOut function
   const signout = () => {
     return signOut(auth);
   };
 
+  // Email function
   const setEmail = (newEmail) => {
     return updateEmail(currentUser, newEmail);
   };
 
+  // Password function
   const setPassword = (newPassword) => {
     return updatePassword(currentUser, newPassword);
   };
 
+  // Display name function
   const setDisplayName = (name) => {
     return updateProfile(currentUser, {
       displayName: name,
     });
   };
 
+  // UseEffect that sets the current user to the logged in user
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
@@ -80,10 +92,12 @@ const AuthContextProverder = (props) => {
 
   const userRef = query(collection(db, "users"));
 
+  // Gets all users from database
   let { data: users } = useFirestoreQueryData(["users"], userRef, {
     subscribe: true,
   });
 
+  // Matches currentUser with the correct user from the database
   const user = users?.find((user) => user?.uid === currentUser?.uid);
 
   const values = {

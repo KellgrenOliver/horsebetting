@@ -10,8 +10,10 @@ const useHorseContext = () => {
 };
 
 const HorseContextProvider = (props) => {
+  // Horse reference to database
   const horsesRef = query(collection(db, "horses"));
 
+  // Gets all horses from database
   let { data: horsesSnapshot } = useFirestoreQuery(["horses"], horsesRef, {
     subscribe: true,
   });

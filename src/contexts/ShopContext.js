@@ -10,14 +10,18 @@ const useShopContext = () => {
 };
 
 const ShopContextProvider = (props) => {
+  // Shop reference to database
   const shopOptionsRef = query(collection(db, "shop"));
 
+  // Gets all shop options from database
   let { data: shopOptions } = useFirestoreQueryData(["shop"], shopOptionsRef, {
     subscribe: true,
   });
 
+  // Orders reference to database
   const ordersRef = query(collection(db, "orders"));
 
+  // Gets all orders from database
   let { data: orders } = useFirestoreQueryData(["orders"], ordersRef, {
     subscribe: true,
   });
