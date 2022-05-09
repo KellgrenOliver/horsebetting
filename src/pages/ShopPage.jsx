@@ -2,6 +2,8 @@ import React from "react";
 import Shop from "../components/Shop/Shop";
 import { useSpring, animated, config } from "react-spring";
 import Header from "../components/Headers/Header";
+import { useAuthContext } from "../contexts/AuthContext";
+import PageNotFound from "./PageNotFound";
 
 const FadeWrapper = animated.div;
 
@@ -12,12 +14,21 @@ const ShopPage = () => {
     delay: 400,
     config: config.molasses,
   });
+
+  const { user } = useAuthContext();
+
   return (
     <>
-      <Header title={"SHOP"} />
-      <FadeWrapper style={fade}>
-        <Shop />
-      </FadeWrapper>
+      {user ? (
+        <>
+          <Header title={"SHOP"} />
+          <FadeWrapper style={fade}>
+            <Shop />
+          </FadeWrapper>
+        </>
+      ) : (
+        <PageNotFound />
+      )}
     </>
   );
 };

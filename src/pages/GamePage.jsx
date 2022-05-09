@@ -2,6 +2,8 @@ import React from "react";
 import Header from "../components/Headers/Header";
 import Game from "../components/Game/Game";
 import { useSpring, animated, config } from "react-spring";
+import { useAuthContext } from "../contexts/AuthContext";
+import PageNotFound from "./PageNotFound";
 
 const FadedGame = animated.div;
 
@@ -13,12 +15,20 @@ const GamePage = () => {
     config: config.molasses,
   });
 
+  const { user } = useAuthContext();
+
   return (
     <>
-      <Header title={"GAME"} />
-      <FadedGame style={fade}>
-        <Game />
-      </FadedGame>
+      {user ? (
+        <>
+          <Header title={"GAME"} />
+          <FadedGame style={fade}>
+            <Game />
+          </FadedGame>
+        </>
+      ) : (
+        <PageNotFound />
+      )}
     </>
   );
 };

@@ -2,6 +2,8 @@ import React from "react";
 import Header from "../components/Headers/Header";
 import UpdateProfileForm from "../components/ProfileForm/UpdateProfileForm";
 import { useSpring, animated, config } from "react-spring";
+import { useAuthContext } from "../contexts/AuthContext";
+import PageNotFound from "./PageNotFound";
 
 const FadeWrapper = animated.div;
 
@@ -12,12 +14,21 @@ const MyProfilePage = () => {
     delay: 400,
     config: config.molasses,
   });
+
+  const { user } = useAuthContext();
+
   return (
     <>
-      <Header title={"MY PROFILE"} />
-      <FadeWrapper style={fade}>
-        <UpdateProfileForm />
-      </FadeWrapper>
+      {user ? (
+        <>
+          <Header title={"MY PROFILE"} />
+          <FadeWrapper style={fade}>
+            <UpdateProfileForm />
+          </FadeWrapper>
+        </>
+      ) : (
+        <PageNotFound />
+      )}
     </>
   );
 };
