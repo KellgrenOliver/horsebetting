@@ -1,8 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import styled from "@emotion/styled";
 import { Link, useHistory } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useSpring, animated, config } from "react-spring";
+import toast, { Toaster } from "react-hot-toast";
 import Header from "../Headers/Header";
 import Button from "../Buttons/Button";
 
@@ -53,18 +54,16 @@ const FadedLogIn = animated.div;
 const LogInComp = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const [error, setError] = useState(null);
   const { login } = useAuthContext();
   const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
     try {
       await login(emailRef.current.value, passwordRef.current.value);
       history.push("/");
     } catch (e) {
-      setError(e.message);
+      toast.error(e.message);
     }
   };
 
@@ -79,7 +78,6 @@ const LogInComp = () => {
     <FadedLogIn style={fade}>
       <Container>
         <Header title={"LOG IN"} />
-        {error && <h2>{error}</h2>}
         <form onSubmit={handleSubmit}>
           <Wrapper>
             <label>Email</label>
@@ -93,6 +91,7 @@ const LogInComp = () => {
           Don't have an account? Create your account here
         </SignUpLink>
       </Container>
+      <Toaster position="top-right" />
     </FadedLogIn>
   );
 };

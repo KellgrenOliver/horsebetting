@@ -1,8 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import styled from "@emotion/styled";
 import { Link, useHistory } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useSpring, animated, config } from "react-spring";
+import toast, { Toaster } from "react-hot-toast";
 import Header from "../Headers/Header";
 import Button from "../Buttons/Button";
 
@@ -54,7 +55,6 @@ const SignUpComp = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const [error, setError] = useState(null);
   const { signup } = useAuthContext();
   const history = useHistory();
 
@@ -62,15 +62,14 @@ const SignUpComp = () => {
     e.preventDefault();
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("The passwords does not match");
+      return toast.error("The passwords does not match");
     }
-    setError(null);
 
     try {
       await signup(emailRef.current.value, passwordRef.current.value);
       history.push("/");
     } catch (e) {
-      setError(e.message);
+      toast.error(e.message);
     }
   };
 
@@ -85,7 +84,6 @@ const SignUpComp = () => {
     <FadedSignUp style={fade}>
       <Container>
         <Header title={"CREATE ACCOUNT"} />
-        {error && <h2>{error}</h2>}
         <form onSubmit={handleSubmit}>
           <Wrapper>
             <label type="email">Email</label>
@@ -99,6 +97,7 @@ const SignUpComp = () => {
         </form>
         <LogInLink to="/login">Already have an account? Log in here</LogInLink>
       </Container>
+      <Toaster position="top-right" />
     </FadedSignUp>
   );
 };
