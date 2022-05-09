@@ -6,6 +6,7 @@ import Header from "../components/Headers/Header";
 const FadeWrapper = animated.div;
 
 const HorsePage = () => {
+  // Animations from react-spring
   const fade = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },

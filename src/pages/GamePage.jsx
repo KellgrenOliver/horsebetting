@@ -8,6 +8,7 @@ import PageNotFound from "./PageNotFound";
 const FadedGame = animated.div;
 
 const GamePage = () => {
+  // Animations from react-spring
   const fade = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
@@ -15,18 +16,21 @@ const GamePage = () => {
     config: config.molasses,
   });
 
+  // Gets user from auth context
   const { user } = useAuthContext();
 
   return (
     <>
       {user ? (
         <>
+          {/* If there is an logged in user this will be rendered */}
           <Header title={"GAME"} />
           <FadedGame style={fade}>
             <Game />
           </FadedGame>
         </>
       ) : (
+        // If you try to get to this route without beeing logged in 404 will be rendered
         <PageNotFound />
       )}
     </>

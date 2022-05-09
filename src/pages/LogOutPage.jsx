@@ -14,8 +14,10 @@ const LoadingWrapper = styled.div({
 
 const LogOutPage = () => {
   const history = useHistory();
+  // Gets signout function from auth context
   const { signout } = useAuthContext();
 
+  // SignOut function will run directly when you enter this page using this useEffect
   useEffect(() => {
     signout();
     history.push("/");

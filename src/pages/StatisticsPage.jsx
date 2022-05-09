@@ -31,6 +31,7 @@ const Wrapper = styled.div({
 });
 
 const StatisticsPage = () => {
+  // Animations from react-spring
   const fade = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
@@ -38,7 +39,9 @@ const StatisticsPage = () => {
     config: config.molasses,
   });
 
+  // Gets user from auth context
   const { user } = useAuthContext();
+
   return (
     <>
       <Header title={"STATISTICS"} />
@@ -56,6 +59,7 @@ const StatisticsPage = () => {
             <SmallHeader title={"Horse wins"} />
             <HorseGraph />
           </Wrapper>
+          {/* This graph will only be rendered when a user is logged in */}
           {user && (
             <Wrapper>
               <SmallHeader title={"My results"} />

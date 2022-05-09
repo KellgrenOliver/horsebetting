@@ -73,19 +73,29 @@ const Order = ({ order }) => {
         {showAll && (
           <BottomWrapper>
             <InfoWrapper>
-              <Info>Order number: {order.orderNumber}</Info>
+              <Info>
+                <b>Order number:</b> {order.orderNumber}
+              </Info>
             </InfoWrapper>
             <InfoWrapper>
-              <Info>Email: {order.email}</Info>
+              <Info>
+                <b>Email:</b> {order.email}
+              </Info>
             </InfoWrapper>
             <InfoWrapper>
-              <Info>Total cost: ${order.money}</Info>
+              <Info>
+                <b>Total cost:</b> ${order.money}
+              </Info>
             </InfoWrapper>
             <InfoWrapper>
-              <Info>First name: {order.first_name}</Info>
+              <Info>
+                <b>First name:</b> {order.first_name}
+              </Info>
             </InfoWrapper>
             <InfoWrapper>
-              <Info>Last name: {order.last_name}</Info>
+              <Info>
+                <b>Last name:</b> {order.last_name}
+              </Info>
             </InfoWrapper>
           </BottomWrapper>
         )}

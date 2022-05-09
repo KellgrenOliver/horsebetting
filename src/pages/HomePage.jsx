@@ -6,17 +6,20 @@ import TypeWriter from "../components/Home/HomePageTypeWriter";
 import InfoText from "../components/Home/HomePageText";
 
 const HomePage = () => {
-  const { currentUser } = useContext(AuthContext);
+  // Gets user from auth context
+  const { user } = useContext(AuthContext);
 
   return (
     <>
-      {currentUser ? (
+      {user ? (
         <>
+          {/* If there is an logged in user this will be rendered */}
           <Header title={"HORSE BETTING"} />
           <TypeWriter />
           <InfoText />
         </>
       ) : (
+        // If there isnt any logged in user a login form will be rendered
         <LogInComp />
       )}
     </>

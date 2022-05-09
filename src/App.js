@@ -64,18 +64,23 @@ const App = () => {
   return (
     <div id="app">
       <Router>
+        {/* React query provider */}
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+          {/* Contexts */}
           <AuthContextProvider>
             <HorseContextProvider>
               <ShopContextProvider>
+                {/* Mobile navbar */}
                 <IsMobile>
                   <MobileNavbar />
                 </IsMobile>
+                {/* Desktop navbar */}
                 <IsDesktop>
                   <DesktopNavbar />
                 </IsDesktop>
                 <Main>
+                  {/* Routes */}
                   <Switch>
                     <Route exact path="/">
                       <HomePage />
