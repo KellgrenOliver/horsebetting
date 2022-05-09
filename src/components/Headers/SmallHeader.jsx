@@ -15,7 +15,9 @@ const Header = styled.div({
   },
 });
 
+// Reuseable small header component
 const SmallHeader = (props) => {
+  // Renders title prop
   return <Header>{props.title}</Header>;
 };
 

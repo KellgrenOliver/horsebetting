@@ -46,25 +46,30 @@ const Info = styled.div({
   fontSize: "1rem",
   margin: "1rem",
 });
-
+// Gets order from props
 const Order = ({ order }) => {
   const [showAll, setShowAll] = useState(false);
   return (
     <>
+      {/* When clicking on wrapper showAll will be true */}
       <OrderWrapper onClick={() => setShowAll(!showAll)}>
         <TopWrapper>
           <Info style={{ fontWeight: 200, fontSize: "2rem" }}>
+            {/* Rounds of coin value */}
             {`${(order?.coins / 1000).toFixed(0)}K`}
           </Info>
           <Info>{order.time}</Info>
           <Info>
             {showAll ? (
+              // Down arrow if showAll is true
               <div style={{ transform: "rotate(0.25turn)" }}>&gt;</div>
             ) : (
+              // Right arrow if showAll is false
               <div>&gt;</div>
             )}
           </Info>
         </TopWrapper>
+        {/* Renders if showAll is true */}
         {showAll && (
           <BottomWrapper>
             <InfoWrapper>

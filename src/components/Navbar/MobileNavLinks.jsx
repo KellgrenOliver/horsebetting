@@ -14,7 +14,7 @@ import { useAuthContext } from "../../contexts/AuthContext";
 
 const LinkWrapper = styled.div({
   margin: 0,
-  padding: "1rem 0 1rem 0 ",
+  padding: "1rem 0",
   width: "100%",
   cursor: "pointer",
   textDecoration: "none",
@@ -57,15 +57,20 @@ const Icon = styled(FontAwesomeIcon)({
   },
 });
 
+// Gets showMenu and setShowMenu from props
 const MobileNavLinks = ({ showMenu, setShowMenu }) => {
-  const { currentUser } = useAuthContext();
+  // Gets user from auth context
+  const { user } = useAuthContext();
 
   const history = useHistory();
 
   return (
     <>
-      {currentUser ? (
+      {/* If there is an user logged in these links will be rendered */}
+      {user ? (
         <>
+          {/* The wrapper is the link because then the whole element will be clickable.
+          Also closes the menu when clicking on a link */}
           <LinkWrapper
             onClick={() => {
               setShowMenu(!showMenu);
@@ -124,6 +129,7 @@ const MobileNavLinks = ({ showMenu, setShowMenu }) => {
           </LinkWrapper>
         </>
       ) : (
+        // If there isnt an user logged in this links will be rendered
         <>
           <LinkWrapper
             onClick={() => {

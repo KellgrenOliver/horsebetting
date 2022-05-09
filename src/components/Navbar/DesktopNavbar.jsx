@@ -6,21 +6,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faCoins } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "../../contexts/AuthContext";
 
-const Container = styled.div(({ currentUser, user }) => {
+// Gets user as a prop
+const Container = styled.div(({ user }) => {
   return {
     top: "0",
     position: "fixed",
     width: "15vw",
     height: "100vh",
+    // Changes background color depending on the users color settings
     background: `linear-gradient(to right, ${
-      currentUser && user?.primaryColor
-        ? user?.primaryColor
-        : "rgb(247, 141, 167)"
-    }, ${
-      currentUser && user?.secondaryColor
-        ? user?.secondaryColor
-        : "rgb(153, 0, 239)"
-    })`,
+      user?.primaryColor ? user?.primaryColor : "rgb(247, 141, 167)"
+    }, ${user?.secondaryColor ? user?.secondaryColor : "rgb(153, 0, 239)"})`,
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
@@ -92,17 +88,25 @@ const CoinsWrapper = styled.div({
 });
 
 const DesktopNavbar = () => {
+  // Gets currentUser and user from auth context
   const { currentUser, user } = useAuthContext();
 
   return (
-    <Container currentUser={currentUser} user={user}>
+    // Sends user as a prop to the styled component
+    <Container user={user}>
+      {/* HomePage link */}
       <ImgWrapper to="/" user={user}>
         <Icon icon={faHome} />
       </ImgWrapper>
+      {/* Renders all links */}
       <DesktopNavLinks />
+      {/* If there is an user logged in it will render a profile
+       box with first character in name and the coin value */}
       {currentUser && (
         <ProfileWrapper>
           <ProfileBox to="/myprofile">
+            {/* If the user has a display name it will be rendered 
+            otherwise it will render email */}
             <ProfileName>
               {currentUser?.displayName
                 ? currentUser?.displayName.toUpperCase().charAt(0)
@@ -114,6 +118,7 @@ const DesktopNavbar = () => {
             {user?.coins < 1000 ? (
               <h3>{user?.coins}</h3>
             ) : (
+              // Rounds of coin value
               <h3>{`${(user?.coins / 1000).toFixed(0)}K`}</h3>
             )}
           </CoinsWrapper>

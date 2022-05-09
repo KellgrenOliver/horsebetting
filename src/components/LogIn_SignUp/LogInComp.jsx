@@ -52,21 +52,27 @@ const SignUpLink = styled(Link)({
 const FadedLogIn = animated.div;
 
 const LogInComp = () => {
+  // Creates reference to email
   const emailRef = useRef();
+  // Creates reference to password
   const passwordRef = useRef();
+  // Gets login function from auth context
   const { login } = useAuthContext();
   const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Gives the login function email and passowrd
       await login(emailRef.current.value, passwordRef.current.value);
       history.push("/");
     } catch (e) {
+      // If there is an error it will be rendered with react toast
       toast.error(e.message);
     }
   };
 
+  // Animations from react-spring
   const fade = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
@@ -91,6 +97,7 @@ const LogInComp = () => {
           Don't have an account? Create your account here
         </SignUpLink>
       </Container>
+      {/* Renders toast in the top right corner */}
       <Toaster position="top-right" />
     </FadedLogIn>
   );

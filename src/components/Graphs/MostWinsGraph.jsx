@@ -22,15 +22,20 @@ const Container = styled.div({
   },
 });
 const MostWinsGraph = () => {
+  // Getting all users from auth context
   const { users } = useAuthContext();
 
   if (!users) return null;
 
+  // Sorting the array from highest to lowest wins
   users.sort((a, b) => b.wins - a.wins);
 
+  // Gets the three first in array
   const top3Arr = users.slice(0, 3);
 
+  // Maps out user names
   const userNames = top3Arr.map((user) => user?.email);
+  // Maps out wins from users
   const userWins = top3Arr.map((user) => user?.wins);
 
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);

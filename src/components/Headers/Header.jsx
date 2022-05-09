@@ -18,16 +18,20 @@ const H1 = styled.h1({
 
 const FadedHeader = animated.div;
 
+// Reuseable header component
 const Header = (props) => {
+  // Animation from react-spring
   const fade = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
+    // It will fade in after 200 milliseconds
     delay: 200,
     config: config.molasses,
   });
 
   return (
     <FadedHeader style={fade}>
+      {/* Renders title prop */}
       <H1>{props.title}</H1>
     </FadedHeader>
   );

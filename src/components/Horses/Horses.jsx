@@ -17,6 +17,7 @@ const HorseWrapper = styled.div({
     marginBottom: "1rem",
   },
 });
+// Gets the image as a prop
 const Horse = styled.div(({ image }) => {
   return {
     fontSize: "4rem",
@@ -77,15 +78,19 @@ const H3 = styled.h3({
 });
 
 const Horses = () => {
+  // Gets all horses from horse context
   const { horses } = useHorseContext();
 
   return (
     <>
       <HorseWrapper>
+        {/* Maps out all horses */}
         {horses &&
           horses.map((horse, i) => {
             return (
+              // Info about the horse
               <CompetitorWrapper key={i}>
+                {/* Sends image as a prop to the styled component */}
                 <Horse image={horse.image || ""} />
                 <InfoWrapper>
                   <H3>Name: {horse.title}</H3>

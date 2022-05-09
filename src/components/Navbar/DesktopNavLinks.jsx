@@ -58,12 +58,15 @@ const Icon = styled(FontAwesomeIcon)({
 });
 
 const DesktopNavLinks = () => {
-  const { currentUser } = useAuthContext();
+  // Gets user from auth context
+  const { user } = useAuthContext();
 
   return (
     <>
-      {currentUser ? (
+      {/* If there is an user logged in these links will be rendered */}
+      {user ? (
         <>
+          {/* The wrapper is the link because then the whole element will be clickable */}
           <LinkWrapper to="/game">
             <Icon icon={faGamepad} />
             <NavLink>GAME</NavLink>
@@ -90,6 +93,7 @@ const DesktopNavLinks = () => {
           </LinkWrapper>
         </>
       ) : (
+        // If there isnt an user logged in this links will be rendered
         <>
           <LinkWrapper to="/horses">
             <Icon icon={faHorse} />

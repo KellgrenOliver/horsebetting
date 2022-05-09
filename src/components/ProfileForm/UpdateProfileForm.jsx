@@ -57,40 +57,52 @@ const Icon = styled(FontAwesomeIcon)({
 });
 
 const UpdateProfileForm = () => {
+  // Creates reference to display name
   const displayNameRef = useRef();
+  // Creates reference to email
   const emailRef = useRef();
+  // Creates reference to password
   const passwordRef = useRef();
+  // Creates reference to confirmed password
   const passwordConfirmRef = useRef();
   const [primaryColor, setPrimaryColor] = useState("");
   const [secondaryColor, setSecondaryColor] = useState("");
   const [loading, setLoading] = useState(false);
+  // Gets user and functions from auth context
   const { currentUser, setDisplayName, setEmail, setPassword, user } =
     useAuthContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // If the password and the confirmed passworded dont match it will return error
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return toast.error("The passwords does not match");
     }
 
     try {
       setLoading(true);
-
+      // Sets primary and secondary color to user
       const userData = {
         primaryColor,
         secondaryColor,
       };
+      // Updates database
       await updateDoc(doc(db, "users", `${currentUser.uid}`), userData);
 
+      /* If the new display name isnt the same as the old one it will 
+         give the display name function the new display name */
       if (displayNameRef.current.value !== currentUser.displayName) {
         await setDisplayName(displayNameRef.current.value);
       }
 
+      /* If the new email isnt the same as the old one it will 
+         give the email function the new email */
       if (emailRef.current.value !== currentUser.email) {
         await setEmail(emailRef.current.value);
       }
 
+      // Updating the password
       if (passwordRef.current.value) {
         await setPassword(passwordRef.current.value);
       }
@@ -98,6 +110,7 @@ const UpdateProfileForm = () => {
       toast.success("Profile successfully updated");
       setLoading(false);
     } catch (e) {
+      // If there is an error it will be rendered with react toast
       toast.error(
         "Error updating profile. Please try logging out and in again."
       );
@@ -107,6 +120,7 @@ const UpdateProfileForm = () => {
 
   return (
     <>
+      {/* Form */}
       <form onSubmit={handleSubmit}>
         <InputWrapper>
           <Label>DISPLAYNAME</Label>
@@ -157,6 +171,7 @@ const UpdateProfileForm = () => {
         <Button title={"CONFIRM"} disabled={loading} type="submit" />
         <Toaster position="top-right" />
       </form>
+      {/* Link to order history */}
       <Link style={{ textDecoration: "none" }} to="/myprofile/orderhistory">
         <OrderHistoryWrapper>
           <Icon style={{ color: "white" }} icon={faMoneyCheck} />

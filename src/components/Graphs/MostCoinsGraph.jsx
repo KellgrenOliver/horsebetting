@@ -22,15 +22,20 @@ const Container = styled.div({
   },
 });
 const MostCoinsGraph = () => {
+  // Getting all users from auth context
   const { users } = useAuthContext();
 
   if (!users) return null;
 
+  // Sorting the array from highest to lowest coin value
   users.sort((a, b) => b.coins - a.coins);
 
+  // Gets the three first in array
   const top3Arr = users.slice(0, 3);
 
+  // Maps out user names
   const userNames = top3Arr.map((user) => user?.email);
+  // Maps out coin value from users
   const userCoins = top3Arr.map((user) => user?.coins);
 
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);

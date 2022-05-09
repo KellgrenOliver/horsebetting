@@ -4,6 +4,7 @@ import { useAuthContext } from "../../contexts/AuthContext";
 
 const StyledButton = styled.button(({ user }) => {
   return {
+    // Changes the color of the button depending on the users color settings
     background: `linear-gradient(to right, ${
       user?.primaryColor ? user?.primaryColor : "rgb(247, 141, 167)"
     }, ${user?.secondaryColor ? user?.secondaryColor : "rgb(153, 0, 239)"})`,
@@ -21,10 +22,13 @@ const StyledButton = styled.button(({ user }) => {
   };
 });
 
+// Reuseable button component
 const Button = ({ title, onClick }) => {
+  // Gets the logged in user from auth context
   const { user } = useAuthContext();
 
   return (
+    // Sends user as a prop to the styled component
     <StyledButton user={user} onClick={onClick}>
       {title}
     </StyledButton>

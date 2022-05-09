@@ -136,12 +136,15 @@ const Game = () => {
   const [guessedWinner, setGuessedWinner] = useState();
   const [renderGame, setRenderGame] = useState(true);
   const [activeId, setActiveId] = useState();
-  const { horses } = useHorseContext();
   const [guessedValue, setGuessedValue] = useState(0);
+  // Getting all horses from horse context
+  const { horses } = useHorseContext();
+  // Getting the logged in user from auth context
   const { user } = useAuthContext();
 
   const startRace = async (e) => {
     e.preventDefault();
+    // Gets a random winner
     const winner = horses[Math.floor(Math.random() * horses.length)];
     setWinner(winner);
     setRenderGame(false);
@@ -149,20 +152,24 @@ const Game = () => {
 
     const userData = {
       uid: user?.uid,
+      // You win if the horse you betted on wins the race
       wins:
         winner && winner.title.length > 0 && guessedWinner === winner?.title
           ? user && user.wins + 1
           : user && user.wins,
-
+      // You lose if the horse you betted didnt won the race
       losses:
         winner && winner.title.length > 0 && guessedWinner !== winner?.title
           ? user && user.losses + 1
           : user && user.losses,
       coins:
+        // If you win you get what betted on * all horses length
         winner && winner.title.length > 0 && guessedWinner === winner?.title
           ? user && user.coins + parseInt(guessedValue) * horses.length
-          : user && user.coins - guessedValue,
+          : // If you lose, you will lose the money you betted
+            user && user.coins - guessedValue,
     };
+    // Updates database
     updateDoc(doc(db, "users", `${userData.uid}`), userData);
 
     const horseRef = doc(db, "horses", `${winner.id}`);
@@ -170,11 +177,13 @@ const Game = () => {
     const horseData = (await getDoc(horseRef)).data();
 
     updateDoc(horseRef, {
+      // The winning horse gets a win
       wins: horseData.wins + 1,
     });
   };
 
   const playAgain = () => {
+    // Resets the game
     setRenderGame(true);
     setActiveId("");
     setGuessedValue();
@@ -187,12 +196,14 @@ const Game = () => {
       {renderGame && (
         <>
           <CompetitorContainer>
+            {/* Renders out all horses */}
             {horses?.map((horse) => {
               return (
                 <CompetitorWrapper key={horse.id}>
                   <Competitor
                     user={user}
                     image={horse.image}
+                    // When you click on a horse, it will be the horse you will bet on
                     onClick={() => {
                       setActiveId(horse.id);
                       setGuessedWinner(horse.title);
@@ -205,6 +216,7 @@ const Game = () => {
             })}
           </CompetitorContainer>
 
+          {/* If there is a active horse a form will be rendered */}
           {activeId && (
             <SubmitForm onSubmit={startRace}>
               <label>Enter coins</label>
@@ -220,6 +232,7 @@ const Game = () => {
                 title={"START RACE"}
                 type="submit"
                 onClick={() => {
+                  // If you try to start a race withot any coins it will send a error toast
                   if (user?.coins === 0) {
                     notify();
                   }
@@ -232,6 +245,7 @@ const Game = () => {
       )}
       {!renderGame && (
         <>
+          {/* Renders winner */}
           <WinnerContainer>
             <CompetitorContainer>
               <Winner image={winner.image} />
@@ -241,6 +255,7 @@ const Game = () => {
           </WinnerContainer>
           {winner && (
             <>
+              {/* If you won the race it will rain confetti */}
               {guessedWinner === winner.title && <StyledConfetti />}
               <H3>
                 {guessedWinner === winner.title
@@ -249,6 +264,7 @@ const Game = () => {
               </H3>
             </>
           )}
+          {/* Play again */}
           {winner && <Button title={"PLAY AGAIN"} onClick={playAgain} />}
         </>
       )}

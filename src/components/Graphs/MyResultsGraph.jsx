@@ -22,6 +22,7 @@ const Container = styled.div({
   },
 });
 const MostWinsGraph = () => {
+  // Getting the logged in user from auth context
   const { user } = useAuthContext();
 
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
@@ -33,7 +34,9 @@ const MostWinsGraph = () => {
     datasets: [
       {
         data: {
+          // The logged in users wins
           Wins: user?.wins,
+          // The logged in users losses
           Losses: user?.losses,
         },
         color: "white",

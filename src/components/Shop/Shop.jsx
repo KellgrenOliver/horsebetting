@@ -123,11 +123,14 @@ const SmallText = styled.div({
 });
 
 const Shop = () => {
+  // Get props from react-payment-inputs
   const { getCardNumberProps, getExpiryDateProps, getCVCProps } =
     usePaymentInputs();
 
+  // Gets shopOptions from shop context
   const { shopOptions } = useShopContext();
 
+  // Sorting the array from lowest to highest coin value
   shopOptions?.sort((a, b) => a.coins - b.coins);
 
   const [stepOne, setStepOne] = useState(true);
@@ -139,6 +142,7 @@ const Shop = () => {
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
 
+  // Gets logged in user from auth context
   const { user } = useAuthContext();
 
   const handleSubmit = async (e) => {
@@ -147,8 +151,10 @@ const Shop = () => {
     setStepThree(true);
     toast.success("Your purchase went through");
 
+    // Creates a random orderNumber to the order
     const orderNumber = Math.random().toString(36).slice(2);
 
+    // Timestamp
     const timestamp = Date.now();
     const formatedTime = new Intl.DateTimeFormat("eu", {
       year: "numeric",
@@ -157,11 +163,14 @@ const Shop = () => {
     }).format(timestamp);
 
     const userData = {
+      // Adding coins to user
       coins: user?.coins + chosenOption?.coins,
     };
+    // Updates database
     updateDoc(doc(db, "users", `${user?.uid}`), userData);
 
     const docData = {
+      // Sets order data
       userId: user?.uid,
       coins: chosenOption?.coins,
       money: chosenOption?.money,
@@ -173,17 +182,21 @@ const Shop = () => {
       city,
       address,
     };
+    // Adding order to database
     setDoc(doc(db, "orders", `${orderNumber}`), docData);
   };
 
   return (
     <>
+      {/* You choose value on step 1 */}
       {stepOne && (
         <>
           <SmallHeader title={"1. Select sum"} />
           <Container>
+            {/* Maps out shopOptions */}
             {shopOptions?.map((option, i) => (
               <OptionWrapper key={i}>
+                {/* When clicking on a option the option will be selected */}
                 <Option
                   onClick={() => {
                     setChosenOption(option);
@@ -199,6 +212,7 @@ const Shop = () => {
           </Container>
         </>
       )}
+      {/* You pay in step 2 */}
       {stepTwo && (
         <>
           <SmallHeader title={"2. Payment"} />
@@ -268,6 +282,7 @@ const Shop = () => {
           </form>
         </>
       )}
+      {/* You get your confirmation in step 3 */}
       {stepThree && (
         <>
           <div style={{ marginBottom: "1rem" }}>

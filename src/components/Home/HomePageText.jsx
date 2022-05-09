@@ -25,18 +25,21 @@ const Paragraph = styled.div({
 const Text = animated.div;
 
 const HomePageText = () => {
+  // First paragraph fades in after 600 milliseconds
   const fade1 = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
     delay: 600,
     config: config.molasses,
   });
+  // First paragraph fades in after 800 milliseconds
   const fade2 = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
     delay: 800,
     config: config.molasses,
   });
+  // First paragraph fades in after 1 second
   const fade3 = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },

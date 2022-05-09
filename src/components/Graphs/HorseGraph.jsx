@@ -22,21 +22,26 @@ const Container = styled.div({
   },
 });
 const HorseGraph = () => {
+  // Getting horses from horse context
   const { horses } = useHorseContext();
 
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
   ChartJS.defaults.color = "white";
   ChartJS.defaults.scale.grid.color = "gray";
 
+  // Getting all horse names
   const horseNames = horses && horses.map((horse) => horse.title);
+  // Getting all horse wins
   const horseWins = horses && horses.map((horse) => horse.wins);
 
+  // Sets labels to the horse names
   const labels = horseNames;
   const data = {
     labels: labels,
     datasets: [
       {
         color: "white",
+        // Sets data to the horse wins
         data: horseWins,
         backgroundColor: [
           "rgb(123, 220, 181",

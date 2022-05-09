@@ -52,27 +52,35 @@ const LogInLink = styled(Link)({
 const FadedSignUp = animated.div;
 
 const SignUpComp = () => {
+  // Creates reference to email
   const emailRef = useRef();
+  // Creates reference to password
   const passwordRef = useRef();
+  // Creates reference to confirmed password
   const passwordConfirmRef = useRef();
+  // Gets signup function from auth context
   const { signup } = useAuthContext();
   const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // If the password and the confirmed passworded dont match it will return error
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return toast.error("The passwords does not match");
     }
 
     try {
+      // Gives the signup function email and passowrd
       await signup(emailRef.current.value, passwordRef.current.value);
       history.push("/");
     } catch (e) {
+      // If there is an error it will be rendered with react toast
       toast.error(e.message);
     }
   };
 
+  // Animations from react-spring
   const fade = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
@@ -97,6 +105,7 @@ const SignUpComp = () => {
         </form>
         <LogInLink to="/login">Already have an account? Log in here</LogInLink>
       </Container>
+      {/* Renders toast in the top right corner */}
       <Toaster position="top-right" />
     </FadedSignUp>
   );
